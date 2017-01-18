@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<title>题目显示测试页面</title>
+</head>
+
+<body>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<form class="form-inline" role="form" action="" method="post">
+				<div class="form-group">
+					<label>Run ID</label> 
+					<input type="text" class="form-control" name="rid" />
+				</div>
+				<div class="form-group">
+					<label>Problem ID</label> 
+					<input type="text" class="form-control" name="pid" />
+				</div>
+				<div class="form-group">
+					<label>Programmer</label> 
+					<input type="text" class="form-control" name="Programmer" />
+				</div>
+				<div class="form-group">
+					<label>Language</label>
+					<select class="form-control" name="lang">
+						<option value="0">C</option>
+						<option value="1">G++</option>
+						<option value="2">C++</option>
+						<option value="3">Java</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Status</label>
+					<select class="form-control" name="status">
+						<option value="0">Accepted</option>
+						<option value="1">Wrong Answer</option>
+						<option value="2">Presentation Error</option>
+						<option value="3">Time Limit Exceeded</option>
+					</select>
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+			<table class="table table-hover">
+				<tr>
+					<th>Run ID</th>
+					<th>Submit Time</th>
+					<th>Problem ID</th>
+					<th>Time</th>
+					<th>Memory</th>
+					<th>Code Length</th>
+					<th>Judge Status</th>
+					<th>Language</th>
+					<th>Programmer</th>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-primary">Waiting</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-primary">Compiling</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-primary">Running</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-primary">Compiling</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-success">Accepted</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-warning">Wrong Answer</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-info">Presentation Error</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-info">Compilation Error</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-danger">Runtime Error</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-danger">Time Limit Exceeded</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-danger">Memory Limit Exceeded</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+				<tr>
+					<td>18815356</td>
+					<td>2016-11-03 16:43:14</td>
+					<td><a href="#">1000</a></td>
+					<td>1000MS</td>
+					<td>1234KB</td>
+					<td>325B</td>
+					<td>G++</td>
+					<td class="text-danger">Output Limit Exceeded</td>
+					<td><a href="#">Daemon</a></td>
+				</tr>
+			</table>
+			<nav>
+			  <ul class="pagination pagination-lg">
+			    <li><a href="#">&laquo;</a></li>
+			    <li><a href="#">1</a></li>
+			    <li><a href="#">2</a></li>
+			    <li><a href="#">3</a></li>
+			    <li><a href="#">4</a></li>
+			    <li><a href="#">5</a></li>
+			    <li><a href="#">&raquo;</a></li>
+			  </ul>
+			</nav>
+		</div>
+	</div>
+	﻿
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
