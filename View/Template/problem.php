@@ -60,7 +60,7 @@
 			<div class="modal-body">
 				<form class="form-inline">
 				<div class="form-group">
-					<input type="text" class="form-control"  name="pid" value="1000">
+					<input type="text" class="form-control"  name="pid" value="<?php echo $pro_id;?>">
 					<select class="form-control" name="lang">
 						<option value="0">G++</option>
 						<option value="1">GCC</option>

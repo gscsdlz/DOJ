@@ -1,5 +1,5 @@
 <?php
-namespace DOJ;
+
 class router{
 	
 	public $control;
@@ -16,6 +16,12 @@ class router{
 			}
 			if(isset($paths[1])) {
 				$this->action = $paths[1];
+			}
+			$i = 2;
+			$count = count($paths);
+			while($i < $count) {
+				$_GET['id'] = $paths[$i];
+				$i++;
 			}
 		}
 	}

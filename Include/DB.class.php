@@ -1,5 +1,5 @@
 <?php
-namespace DOJ;
+
 require_once 'Config/config.php';
 
 class DB{

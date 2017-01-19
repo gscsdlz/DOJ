@@ -37,7 +37,7 @@
 			<?php
 				foreach($args as $row) {
 					echo '<tr><td>'.$row[0].'</td>';
-					echo '<td align="left"><a href="#">&nbsp;'.$row[1].'</a></td>';
+					echo '<td align="left"><a href="/problem/show/'.$row[0].'">&nbsp;'.$row[1].'</a></td>';
 					echo '<td>0%</td></tr>'."\n";
 				}
 			?>

@@ -1,5 +1,5 @@
 <?php
-namespace DOJ;
+
 class VIEW{
 	
 	static private $assignMap = array();
