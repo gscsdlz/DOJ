@@ -54,15 +54,15 @@
 					<button type="submit" class="btn btn-default">搜索</button>
 				</form>
 
-				<?php
-					echo '<ul class="nav navbar-nav navbar-right">';
-					echo '<li data-toggle="modal" data-target="#signModal"><a href="#">登录</a></li>';
-					echo '<li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>';
-					echo '</ul>';
-				?>	
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li data-toggle="modal" data-target="#signModal"><a href="#">登录</a></li>
+					<li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
+				</ul>
+				
 				<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">root<?php if(isset($nickname)) echo $nickname;?> <span class="caret"></span></a>
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="realname"><span class="caret"></span></a>
 		          <ul class="dropdown-menu" role="menu">
 		            <li><a href="#">用户界面</a></li>
 		            <li><a href="#">信息修改</a></li>
@@ -174,6 +174,7 @@
 	<script>
 		$(document).ready(function(){
 			$("#loginError").hide();
+			$("#ul2").hide();
 			$("#sign").click(function(){
 				$("#loginError").hide();
 				var username = $("#inputUsername").val();
@@ -181,7 +182,7 @@
 				$.post("/login/login", {username:username, password:password}, function(data){
 					var arr = eval("(" + data + ")");
 					if(arr['status']) {
-						alert("Success");
+						//
 					} else {
 						$("#inputUsername").val("");
 						$("#inputPassword").val("");

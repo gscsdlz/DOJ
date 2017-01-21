@@ -1,46 +1,45 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<h1 class="text-center text-primary"><?php echo $pro_title;?></h1>
-		<h4 class="text-center text-danger">Time Limit: <?php echo $time_limit;?>MS Memory
-			Limit: <?php echo $memory_limit;?>KB</h4>
-		<h4 class="text-center text-danger">Total Submission(s): 612628
-			Accepted Submission(s): 191573</h4>
+		<h4 class="text-center text-danger">时间限制: <?php echo $time_limit;?> 内存限制: <?php echo $memory_limit;?>KB</h4>
+		<h4 class="text-center text-danger">通过次数: <?php echo $aSubmit;?>
+			总提交次数: <?php echo $tSubmit;?></h4>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="panel panel-default">
-					<div class="panel-heading">Problem Description</div>
+					<div class="panel-heading">问题描述</div>
 					<div class="panel-body"><?php echo $pro_descrip;?></div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading">Input</div>
+					<div class="panel-heading">输入描述</div>
 					<div class="panel-body"><?php echo $pro_in;?></div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading">Output</div>
+					<div class="panel-heading">输出描述</div>
 					<div class="panel-body"><?php echo $pro_out;?></div>
 				</div>
 				<div class="panel panel-default panel-danger">
-					<div class="panel-heading">Sample Input</div>
+					<div class="panel-heading">样例输入</div>
 					<div class="panel-body"><?php echo $pro_dataIn;?></div>
 				</div>
 				<div class="panel panel-default  panel-danger">
-					<div class="panel-heading">Sample Output</div>
+					<div class="panel-heading">样例输出</div>
 					<div class="panel-body"><?php echo $pro_dataOut;?></div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading">Author</div>
+					<div class="panel-heading">来源</div>
 					<div class="panel-body"><?php echo $author;?></div>
 				</div>
 				<div class="panel panel-default">
-					<div class="panel-heading">Hint</div>
+					<div class="panel-heading">提示</div>
 					<div class="panel-body"><?php echo $hint?></div>
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-body text-center">
 						<button type="button" class="btn btn-danger btn-lg"
-							data-toggle="modal" data-target="#codeModal">Submit</button>
-						<button type="button" class="btn btn-success btn-lg">Statistics</button>
-						<button type="button" class="btn btn-info btn-lg">Discuss</button>
+							data-toggle="modal" data-target="#codeModal">提交</button>
+						<button type="button" class="btn btn-success btn-lg">统计</button>
+						<button type="button" class="btn btn-info btn-lg">讨论</button>
 					</div>
 				</div>
 			</div>
