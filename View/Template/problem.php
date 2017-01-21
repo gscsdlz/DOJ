@@ -59,16 +59,17 @@
 			</div>
 			<div class="modal-body">
 				<form class="form-inline">
-				<div class="form-group">
-					<input type="text" class="form-control"  name="pid" value="<?php echo $pro_id;?>">
-					<select class="form-control" name="lang">
-						<option value="0">G++</option>
-						<option value="1">GCC</option>
-						<option value="2">Java</option>
-						<option value="3">C#</option>
-						<option value="4">Python</option>
-					</select>
-				</div>
+					<div class="form-group">
+						<input type="text" class="form-control" name="pid"
+							value="<?php echo $pro_id;?>"> <select class="form-control"
+							name="lang">
+							<option value="0">G++</option>
+							<option value="1">GCC</option>
+							<option value="2">Java</option>
+							<option value="3">C#</option>
+							<option value="4">Python</option>
+						</select>
+					</div>
 				</form>
 				<p></p>
 				<div class="form-group">
@@ -81,4 +82,5 @@
 			</div>
 		</div>
 	</div>
-</div>﻿
+</div>
+﻿
