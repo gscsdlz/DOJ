@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<h1 class="text-center text-primary"><?php echo $pro_title;?></h1>
-		<h4 class="text-center text-danger">时间限制: <?php echo $time_limit;?> 内存限制: <?php echo $memory_limit;?>KB</h4>
+		<h4 class="text-center text-danger">时间限制: <?php echo $time_limit;?>ms 内存限制: <?php echo $memory_limit;?>KB</h4>
 		<h4 class="text-center text-danger">通过次数: <?php echo $aSubmit;?>
 			总提交次数: <?php echo $tSubmit;?></h4>
 		<div class="panel panel-default">
@@ -36,8 +36,9 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-body text-center">
-						<button type="button" class="btn btn-danger btn-lg"
-							data-toggle="modal" data-target="#codeModal">提交</button>
+						<?php if(isset($_COOKIE['username'])) {?><button type="button"
+							class="btn btn-danger btn-lg" data-toggle="modal"
+							data-target="#codeModal">提交</button> <?php }?>
 						<button type="button" class="btn btn-success btn-lg">统计</button>
 						<button type="button" class="btn btn-info btn-lg">讨论</button>
 					</div>
@@ -46,6 +47,7 @@
 		</div>
 	</div>
 </div>
+<?php if(isset($_COOKIE['username'])) {?>
 <div class="modal fade" id="codeModal" tabindex="-1" role="dialog"
 	aria-labelledby="codeModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -82,4 +84,4 @@
 		</div>
 	</div>
 </div>
-﻿
+﻿<?php }?>

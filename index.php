@@ -1,6 +1,6 @@
 <?php
-$stime = microtime(true);
-define("APPPATH", dirname(__FILE__));
+$stime = microtime ( true );
+define ( "APPPATH", dirname ( __FILE__ ) );
 require_once 'Include/router.class.php';
 require_once 'Include/WORK.class.php';
 $router = new router ();

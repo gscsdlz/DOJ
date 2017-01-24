@@ -18,8 +18,8 @@ class problemControl {
 			$problemId = '1000';
 		$body = self::$model->get_problem ( $problemId ); // 获取页面主体
 		$submits = self::$model->get_submits ( $problemId );
-		$body ['aSubmit'] = $submits[0];
-		$body ['tSubmit'] = $submits[1];	
+		$body ['aSubmit'] = $submits [0];
+		$body ['tSubmit'] = $submits [1];
 		if ($body)
 			VIEW::show ( 'problem', $body );
 		else

@@ -13,32 +13,32 @@ class problemModel extends DB {
 		}
 	}
 	public function get_submits($problemId) {
-		$result = parent::query("SELECT COUNT(*) FROM status LEFT JOIN problem ON (status.pro_id = problem.pro_id) WHERE problem.pro_id = ? AND status = 1", $problemId);
-		$aSubmit = $result->fetch(PDO::FETCH_NUM)[0];
-		if(!$aSubmit)
+		$result = parent::query ( "SELECT COUNT(*) FROM status LEFT JOIN problem ON (status.pro_id = problem.pro_id) WHERE problem.pro_id = ? AND status = 1", $problemId );
+		$aSubmit = $result->fetch ( PDO::FETCH_NUM ) [0];
+		if (! $aSubmit)
 			$aSubmit = 0;
-		$result = parent::query("SELECT COUNT(*) FROM status WHERE pro_id = ?", $problemId);
-		$tSubmit = $result->fetch(PDO::FETCH_NUM)[0];
-		if(!$tSubmit)
+		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ?", $problemId );
+		$tSubmit = $result->fetch ( PDO::FETCH_NUM ) [0];
+		if (! $tSubmit)
 			$tSubmit = 0;
 		
-		return array(
-			$aSubmit, $tSubmit
+		return array (
+				$aSubmit,
+				$tSubmit 
 		);
 	}
-	
 	public function get_list($listId) {
 		$listId *= 50;
 		$result = parent::query ( "SELECT pro_id, pro_title FROM problem LIMIT $listId, 50" );
 		if ($result->rowCount () != 0) {
 			$arr = array ();
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
-				$submits = $this->get_submits($row[0]);
+				$submits = $this->get_submits ( $row [0] );
 				$arr [] = array (
 						$row [0],
 						$row [1],
-						$submits[0],
-						$submits[1]
+						$submits [0],
+						$submits [1] 
 				);
 			}
 			return $arr;

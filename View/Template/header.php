@@ -23,8 +23,6 @@
 				</button>
 				<a class="navbar-brand" href="#">NOJ</a>
 			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
@@ -34,18 +32,6 @@
 					<li><a href="#">排名</a></li>
 					<li><a href="#">比赛</a></li>
 					<li><a href="#">帮助</a></li>
-		<!--  <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>-->
 				</ul>
 				<form class="navbar-form navbar-left" role="search">
 					<div class="form-group">
@@ -54,23 +40,24 @@
 					<button type="submit" class="btn btn-default">搜索</button>
 				</form>
 
-				
+				<?php if(!isset($_COOKIE['username'])) {?>
 				<ul class="nav navbar-nav navbar-right">
 					<li data-toggle="modal" data-target="#signModal"><a href="#">登录</a></li>
 					<li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
 				</ul>
-				
+				<?php } else { ?>
 				<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="realname"><span class="caret"></span></a>
-		          <ul class="dropdown-menu" role="menu">
-		            <li><a href="#">用户界面</a></li>
-		            <li><a href="#">信息修改</a></li>
-		            <li class="divider"></li>
-		            <li><a href="#">退出登录</a></li>
-		          </ul>
-				</li>	
-				</ul>		
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" id="realname"><?php  echo $_COOKIE['username'];?><span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">用户界面</a></li>
+							<li><a href="#">信息修改</a></li>
+							<li class="divider"></li>
+							<li id="logout"><a href="#">退出登录</a></li>
+						</ul></li>
+				</ul>
+				<?php }?>
 			</div>
 			<!-- /.navbar-collapse -->
 		</div>
@@ -114,7 +101,7 @@
 			</div>
 		</div>
 	</div>
-
+	<?php if(!isset($_COOKIE['username'])) { ?>
 	<div class="modal fade" id="regModal" tabindex="-1" role="dialog"
 		aria-labelledby="regModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -131,35 +118,43 @@
 							<label for="Username" class="col-sm-2 control-label">用户名</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="Username"
-									name="newUsername" placeholder="Username">
+									name="newUsername" placeholder="Username"> <label
+									id="nameEmptyError" class="control-label text-danger">用户名不能为空！</label>
+								<label id="nameError" class="control-label text-danger">用户名已经注册过了！</label>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="nickname" class="col-sm-2 control-label">昵称</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="nickname"
+								<input type="text" class="form-control" id="Nickname"
 									name="newNickname" placeholder="Nickname">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="password" class="col-sm-2 control-label">密码</label>
 							<div class="col-sm-10">
-								<input type="password" class="form-control" id="password"
-									name="newPassword" placeholder="Password">
+								<input type="password" class="form-control" id="Password"
+									name="newPassword" placeholder="Password"> <label
+									id="passwordEmptyError" class="control-label text-danger">密码不能为空</label>
+
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="password2" class="col-sm-2 control-label">确认密码</label>
 							<div class="col-sm-10">
-								<input type="password" class="form-control" id="password2"
-									name="newPassword2" placeholder="Password2">
+								<input type="password" class="form-control" id="Password2"
+									name="newPassword2" placeholder="Password2"> <label
+									id="passwordError" class="control-label text-danger">两次输入的密码不一致</label>
+
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="email" class="col-sm-2 control-label">电子邮箱</label>
 							<div class="col-sm-10">
-								<input type="email" class="form-control" id="email" name="email"
-									placeholder="email">
+								<input type="email" class="form-control" id="Email" name="email"
+									placeholder="email"> <label id="emailEmptyError"
+									class="control-label text-danger">电子邮箱不能为空！</label> <label
+									id="emailError" class="control-label text-danger">该电子邮箱已经被注册过了！</label>
 							</div>
 						</div>
 					</form>
@@ -171,18 +166,30 @@
 			</div>
 		</div>
 	</div>
+	<?php }?>
 	<script>
-		$(document).ready(function(){
-			$("#loginError").hide();
+		$(document).ready(function() {
+	<?php if(!isset($_COOKIE['username'])) { ?>
+		$("#loginError").hide();
 			$("#ul2").hide();
-			$("#sign").click(function(){
+			$("#nameEmptyError").hide();
+			$("#passwordEmptyError").hide();
+			$("#emailEmptyError").hide();
+			$("#nameError").hide();
+			$("#passwordError").hide();
+			$("#emailError").hide();
+			
+			$("#sign").click(function() {
 				$("#loginError").hide();
 				var username = $("#inputUsername").val();
 				var password = $("#inputPassword").val();
-				$.post("/login/login", {username:username, password:password}, function(data){
+				$.post("/login", {
+					username : username,
+					password : password
+				}, function(data) {
 					var arr = eval("(" + data + ")");
-					if(arr['status']) {
-						//
+					if (arr['status']) {
+						window.location.reload();
 					} else {
 						$("#inputUsername").val("");
 						$("#inputPassword").val("");
@@ -190,5 +197,52 @@
 					}
 				})
 			})
+			$("#reg").click(function() {
+				$("#nameEmptyError").hide();
+				$("#passwordEmptyError").hide();
+				$("#emailEmptyError").hide();
+				$("#nameError").hide();
+				$("#passwordError").hide();
+				$("#emailError").hide();
+				
+				var username = $("#Username").val();
+				var nickname = $("#Nickname").val();
+				var password = $("#Password").val();
+				var password2 = $("#Password2").val();
+				var email = $("#Email").val();
+				if(username.length == 0)
+					$("#nameEmptyError").show();
+				else if(password.length == 0)
+					$("#passwordEmptyError").show();
+				else if(password !== password2)
+					$("#passwordError").show();
+				else if(email.length == 0)
+					$("#emailEmptyError").show();
+				else 
+				$.post("/login/register", {newUsername:username, newPassword:password, newPassword2:password, newNickname:nickname, email:email}, function(data){
+					var arr = eval ("(" + data + ")");
+					if(arr['status'] == 'username error') {
+						$("#nameError").show();
+					} else if(arr['status'] == 'email error'){
+						$("#emailError").show();
+					} else if(arr['status'] == true) {
+						window.location.reload();
+					}
+				})
+			})
+	<?php }?>
+		$("#logout").click(function() {
+				$.post("/login/logout", function(data) {
+					var arr = eval("(" + data + ")");
+					if (arr['status']) {
+						var d = new Date();
+						d.setTime(d.getTime() + (-1 * 24 * 60 * 60 * 1000));
+						var expires = "expires=" + d.toUTCString();
+						document.cookie = "username= ;" + expires;
+						window.location.reload();
+					}
+				})
+			})
 		})
-	</script>﻿
+	</script>
+	﻿

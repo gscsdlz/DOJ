@@ -1,6 +1,5 @@
 <?php
-
-require_once APPPATH.'/Config/config.php';
+require_once APPPATH . '/Config/config.php';
 class DB {
 	private static $pdo = null;
 	public function __construct() {
@@ -18,7 +17,7 @@ class DB {
 	}
 	public static function query($args) {
 		$argArray = func_get_args ();
-		$q = array_shift ( $argArray ); // 去掉第一个查询字符串
+		$q = array_shift ( $argArray );
 		try {
 			$result = self::$pdo->prepare ( $q );
 			$result->execute ( $argArray );
