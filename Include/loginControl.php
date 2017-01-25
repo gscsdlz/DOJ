@@ -11,17 +11,16 @@ class loginControl {
 	public function index() {
 		$this->login ();
 	}
-	
 	public function __call($method, $args) {
 		;
 	}
-	
 	public function login() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
 			if (self::$model->login ( $username, $password )) {
-				setcookie ( 'username', $username, time () + LOGINTIMEOUT );
+				session_start ();
+				$_SESSION ['username'] = $username;
 				echo json_encode ( array (
 						'status' => true 
 				) );
@@ -34,13 +33,16 @@ class loginControl {
 	}
 	public function logout() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			// //////////////这里暂时无法工作 正在调整 目前依靠客户端Js代码初步实现
-			setcookie ( 'username', "", time () - LOGINTIMEOUT );
+			session_start ();
+			if (isset ( $_SESSION ['username'] )) {
+				$_SESSION = array ();
+				session_destroy ();
+				setcookie ( 'PHPSESSID', '', time () - 3600, '/', '', 0, 0 );
+			}
 			echo json_encode ( array (
 					'status' => true 
 			) );
 			return;
-			// ///////////////////////////////////////////
 		}
 		echo json_encode ( array (
 				'status' => false 

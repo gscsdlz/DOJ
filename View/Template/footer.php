@@ -20,7 +20,7 @@
 				<td>ACM实验室</td>
 			</tr>
 		</table>
-		<h4>执行时间:<?php global $stime; echo microtime(true) - $stime;?></h4>
+		<h4>执行时间:<?php global $stime; echo  number_format(microtime(true) - $stime, 5, '.', '');?></h4>
 	</div>
 </div>
 ﻿

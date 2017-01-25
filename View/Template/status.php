@@ -1,34 +1,56 @@
 
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
-		<form class="form-inline text-center" role="form" action=""
-			method="get">
+	<div class="col-md-8 col-md-offset-2  text-center">
+		<form class="form-inline" role="form" action="" method="get">
 			<div class="form-group">
 				<label>提交号</label> <input type="text" class="form-control"
-					name="rid" />
+					name="rid"
+					value="<?php if(isset($_GET['rid'])) echo $_GET['rid']?>" />
 			</div>
 			<div class="form-group">
 				<label>题目编号</label> <input type="text" class="form-control"
-					name="pid" />
+					name="pid"
+					value="<?php if(isset($_GET['pid'])) echo $_GET['pid']?>" />
 			</div>
 			<div class="form-group">
 				<label>用户名</label> <input type="text" class="form-control"
-					name="Programmer" />
+					name="Programmer"
+					value="<?php if(isset($_GET['Programmer'])) echo $_GET['Programmer']?>" />
 			</div>
 			<div class="form-group">
 				<label>语言</label> <select class="form-control" name="lang">
-					<option value="0">C</option>
-					<option value="1">G++</option>
-					<option value="2">C++</option>
-					<option value="3">Java</option>
+				<?php
+				if (isset ( $_GET ['lang'] ))
+					$id = ( int ) $_GET ['lang'];
+				else
+					$id = - 1;
+				global $langArr;
+				$i = 0;
+				foreach ( $langArr as $row ) {
+					if ($i == $id)
+						echo '<option selected="selected" value="' . $i ++ . '">' . $row . '</option>';
+					else
+						echo '<option value="' . $i ++ . '">' . $row . '</option>';
+				}
+				?>
 				</select>
 			</div>
 			<div class="form-group">
 				<label>状态</label> <select class="form-control" name="status">
-					<option value="0">Accepted</option>
-					<option value="1">Wrong Answer</option>
-					<option value="2">Presentation Error</option>
-					<option value="3">Time Limit Exceeded</option>
+					<?php
+					if (isset ( $_GET ['status'] ))
+						$id = ( int ) $_GET ['status'];
+					else
+						$id = - 1;
+					global $statusArr;
+					$i = 0;
+					foreach ( $statusArr as $row ) {
+						if ($i == $id)
+							echo '<option selected="selected" value="' . $i ++ . '">' . $row . '</option>';
+						else
+							echo '<option value="' . $i ++ . '">' . $row . '</option>';
+					}
+					?>
 				</select>
 			</div>
 			<button type="submit" class="btn btn-default btn-primary">筛选</button>
@@ -47,8 +69,11 @@
 				<th>用户名</th>
 			</tr>
 			<?php
-			global $langArr;
 			if ($args != null) {
+				global $loginStatus;
+				if (isset ( $_SESSION ['username'] )) {
+					$loginStatus = true;
+				}
 				foreach ( $args as $row ) {
 					echo '<tr>';
 					echo '<td>' . $row [0] . '</td>';
@@ -56,10 +81,24 @@
 					echo '<td><a href="/problem/show/' . $row [2] . '">' . $row [2] . '</a></td>';
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
-					echo '<td>' . $row [5] . 'B</td>';
+					if ($loginStatus == true)
+						echo '<td><a href="#">' . $row [5] . 'B</a></td>';
+					else
+						echo '<td>' . $row [5] . 'B</td>';
 					echo '<td>' . $langArr [$row [6]] . '</td>';
-					echo '<td class="text-primary">Waiting</td>';
-					echo '<td><a href="#">Daemon</a></td>';
+					echo '<td class="text-';
+					if ($row [7] == 4)
+						echo 'danger';
+					else if ($row [7] == 5)
+						echo 'warning';
+					else if ($row [7] >= 6 && $row [7] <= 10)
+						echo 'success';
+					else if ($row [7] == 11)
+						echo 'primary';
+					else
+						echo 'muted';
+					echo '">' . $statusArr [$row [7]] . '</td>';
+					echo '<td><a href="#">' . $row [8] . '</a></td>';
 					echo "</tr>\n";
 				}
 			} else {
@@ -68,14 +107,14 @@
 			?>
 		</table>
 		<nav>
-			<ul class="pagination pagination-lg">
-				<li><a href="#">&laquo;</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#">&raquo;</a></li>
+			<ul class="pagination pagination-lg text-center">
+				<li><a href="#">首页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="#">上一页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="#">下一页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="#">尾页</a></li>
 			</ul>
 		</nav>
 	</div>

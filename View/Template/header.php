@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE HTML>
 <html lang="zh-CN">
 <head>
@@ -40,15 +41,20 @@
 					<button type="submit" class="btn btn-default">搜索</button>
 				</form>
 
-				<?php if(!isset($_COOKIE['username'])) {?>
+				<?php
+				if(!isset($_SESSION['username'])) {
+				$loginStatus = true;
+				?>
 				<ul class="nav navbar-nav navbar-right">
 					<li data-toggle="modal" data-target="#signModal"><a href="#">登录</a></li>
 					<li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
 				</ul>
-				<?php } else { ?>
+				<?php } else {
+				$loginStatus = false; 
+				?>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" id="realname"><?php  echo $_COOKIE['username'];?><span
+						data-toggle="dropdown" id="realname"><?php  echo $_SESSION['username'];?><span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="#">用户界面</a></li>
@@ -101,7 +107,7 @@
 			</div>
 		</div>
 	</div>
-	<?php if(!isset($_COOKIE['username'])) { ?>
+	<?php if($loginStatus) { ?>
 	<div class="modal fade" id="regModal" tabindex="-1" role="dialog"
 		aria-labelledby="regModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -169,7 +175,7 @@
 	<?php }?>
 	<script>
 		$(document).ready(function() {
-	<?php if(!isset($_COOKIE['username'])) { ?>
+	<?php if($loginStatus) { ?>
 		$("#loginError").hide();
 			$("#ul2").hide();
 			$("#nameEmptyError").hide();

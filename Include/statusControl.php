@@ -16,11 +16,11 @@ class statusControl {
 	}
 	
 	public function index() {
-		$submit_id = get('rid');
-		$pro_id = get('pid');
+		$submit_id = (int)get('rid');
+		$pro_id = (int)get('pid');
 		$username = get('Programmer');
-		$lang = get('lang');
-		$status = get('status');
+		$lang = (int)get('lang');
+		$status = (int)get('status');
 		$results = self::$model->getStatus($submit_id, $pro_id, $username, $lang, $status);
 		VIEW::loopshow('status', $results);
 	}

@@ -36,7 +36,7 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-body text-center">
-						<?php if(isset($_COOKIE['username'])) {?><button type="button"
+						<?php if(isset($_SESSION['username'])) {?><button type="button"
 							class="btn btn-danger btn-lg" data-toggle="modal"
 							data-target="#codeModal">提交</button> <?php }?>
 						<button type="button" class="btn btn-success btn-lg">统计</button>
@@ -47,7 +47,8 @@
 		</div>
 	</div>
 </div>
-<?php if(isset($_COOKIE['username'])) {?>
+<?php
+if(isset($_SESSION['username'])) {?>
 <div class="modal fade" id="codeModal" tabindex="-1" role="dialog"
 	aria-labelledby="codeModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
