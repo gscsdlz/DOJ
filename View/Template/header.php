@@ -27,8 +27,8 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li><a href="/">首页</a></li>
-					<li><a href="/problem/page/0">题目</a></li>
-					<li><a href="#">状态</a></li>
+					<li><a href="/problem/page">题目</a></li>
+					<li><a href="/status">状态</a></li>
 					<li><a href="#">排名</a></li>
 					<li><a href="#">比赛</a></li>
 					<li><a href="#">帮助</a></li>

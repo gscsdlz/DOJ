@@ -7,6 +7,8 @@ class WORK {
 			return new contestControl ();
 		else if ($className == "loginControl")
 			return new loginControl ();
+		else if($className == 'statusControl')
+			return new statusControl();
 		else
 			return new indexControl ();
 	}

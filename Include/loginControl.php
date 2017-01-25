@@ -11,6 +11,11 @@ class loginControl {
 	public function index() {
 		$this->login ();
 	}
+	
+	public function __call($method, $args) {
+		;
+	}
+	
 	public function login() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$username = post ( 'username' );

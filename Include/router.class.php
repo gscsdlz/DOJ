@@ -14,11 +14,24 @@ class router {
 			if (isset ( $paths [1] )) {
 				$this->action = $paths [1];
 			}
-			$i = 2;
-			$count = count ( $paths );
-			while ( $i < $count ) {
-				$_GET ['id'] = $paths [$i];
-				$i ++;
+			$pathstmp = explode('?',trim($path, '/'));
+			if(isset($pathstmp[1])) {
+				$paths = explode('&', $pathstmp[1]);
+				$i = 0;
+				$count = count ( $paths );
+				while ( $i < $count ) {
+					if(isset($paths[$i + 1])) {
+						$_GET [$path[$i]] = $paths [$i + 1];
+					}
+					$i+=2;
+				}
+			} else {
+				$i = 2;
+				$count = count ( $paths );
+				while ( $i < $count ) {					
+					$_GET ['id'] = $paths [$i];					
+					$i++;
+				}
 			}
 		}
 	}

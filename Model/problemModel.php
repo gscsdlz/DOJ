@@ -28,10 +28,14 @@ class problemModel extends DB {
 		);
 	}
 	public function get_list($listId) {
-		$listId *= 50;
-		$result = parent::query ( "SELECT pro_id, pro_title FROM problem LIMIT $listId, 50" );
+		$listId *= PAGEMAXSIZE;
+		$pms = PAGEMAXSIZE;
+		$result = parent::query ( "SELECT pro_id, pro_title FROM problem LIMIT $listId, $pms" );
 		if ($result->rowCount () != 0) {
-			$arr = array ();
+			$arr[] = array (
+					$this->get_maxProblem(),
+					$pms
+			);
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
 				$submits = $this->get_submits ( $row [0] );
 				$arr [] = array (
@@ -45,6 +49,15 @@ class problemModel extends DB {
 		} else {
 			return null;
 		}
+	}
+	
+	public function get_maxProblem() {
+		$result = parent::query("SELECT count(*) FROM problem");
+		return $result->fetch(PDO::FETCH_NUM)[0];
+	}
+	
+	public function get_status($proId, $userId) {
+		$result = parent::query("SELECT status FROM status WHERE user_id = ? AND pro_id = ?", $userId, $proId);		
 	}
 }
 ?>
