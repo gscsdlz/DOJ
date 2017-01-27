@@ -75,13 +75,16 @@
 					$loginStatus = true;
 				}
 				foreach ( $args as $row ) {
+					if (! isset ( $sid ))
+						$sid = $row [0];
+					$eid = $row [0];
 					echo '<tr>';
 					echo '<td>' . $row [0] . '</td>';
 					echo '<td>' . date ( "Y-m-d h:i:s", $row [1] ) . '</td>';
 					echo '<td><a href="/problem/show/' . $row [2] . '">' . $row [2] . '</a></td>';
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
-					if ($loginStatus == true)
+					if ($loginStatus == true && $row [8] == $_SESSION ['username'])
 						echo '<td><a href="#">' . $row [5] . 'B</a></td>';
 					else
 						echo '<td>' . $row [5] . 'B</td>';
@@ -108,13 +111,39 @@
 		</table>
 		<nav>
 			<ul class="pagination pagination-lg text-center">
-				<li><a href="#">首页</a></li>
+				<li><a href="/status?<?php
+				echo '&pid=' . get ( 'pid' );
+				echo '&Programmer=' . get ( 'Programmer' );
+				echo '&lang=' . get ( 'lang' );
+				echo '&status=' . get ( 'status' );
+				?>">首页</a></li>
 				<li><a href="#">...</a></li>
-				<li><a href="#">上一页</a></li>
+				<li><a href="/status?end=
+				<?php
+				if (isset ( $sid ))
+					echo ($sid + 1);
+				echo '&pid=' . get ( 'pid' );
+				echo '&Programmer=' . get ( 'Programmer' );
+				echo '&lang=' . get ( 'lang' );
+				echo '&status=' . get ( 'status' );
+				?>">上一页</a></li>
 				<li><a href="#">...</a></li>
-				<li><a href="#">下一页</a></li>
+				<li><a href="/status?start=
+				<?php
+				if (isset ( $eid ))
+					echo ($eid - 1);
+				echo '&pid=' . get ( 'pid' );
+				echo '&Programmer=' . get ( 'Programmer' );
+				echo '&lang=' . get ( 'lang' );
+				echo '&status=' . get ( 'status' );
+				?>">下一页</a></li>
 				<li><a href="#">...</a></li>
-				<li><a href="#">尾页</a></li>
+				<li><a href="/status?end=1<?php
+				echo '&pid=' . get ( 'pid' );
+				echo '&Programmer=' . get ( 'Programmer' );
+				echo '&lang=' . get ( 'lang' );
+				echo '&status=' . get ( 'status' );
+				?>">尾页</a></li>
 			</ul>
 		</nav>
 	</div>

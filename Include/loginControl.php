@@ -18,9 +18,10 @@ class loginControl {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
-			if (self::$model->login ( $username, $password )) {
+			if ($uid = self::$model->login ( $username, $password )) {
 				session_start ();
 				$_SESSION ['username'] = $username;
+				$_SESSION ['user_id'] = $uid;
 				echo json_encode ( array (
 						'status' => true 
 				) );

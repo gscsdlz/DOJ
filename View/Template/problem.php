@@ -48,7 +48,8 @@
 	</div>
 </div>
 <?php
-if(isset($_SESSION['username'])) {?>
+if (isset ( $_SESSION ['username'] )) {
+	?>
 <div class="modal fade" id="codeModal" tabindex="-1" role="dialog"
 	aria-labelledby="codeModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -57,25 +58,36 @@ if(isset($_SESSION['username'])) {?>
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 				</button>
-				<h4 class="modal-title" id="codeModalLabel">Parse Code</h4>
+				<h4 class="modal-title" id="codeModalLabel">请选择适当的语言并粘贴代码</h4>
 			</div>
 			<div class="modal-body">
 				<form class="form-inline">
 					<div class="form-group">
-						<input type="text" class="form-control" name="pid"
+						
+						<input type="text" class="form-control" id="pid"
 							value="<?php echo $pro_id;?>"> <select class="form-control"
-							name="lang">
-							<option value="0">G++</option>
-							<option value="1">GCC</option>
-							<option value="2">Java</option>
-							<option value="3">C#</option>
-							<option value="4">Python</option>
+							id="lang">
+							<?php
+	global $langArr;
+	$i = 0;
+	foreach ( $langArr as $row ) {
+		if ($i == 0) {
+			$i ++;
+			continue;
+		}
+		echo '<option value="' . $i ++ . '">' . $row . '</option>';
+	}
+	?>
 						</select>
+						
 					</div>
 				</form>
+				<label id="missPidError" class="text-danger">题目编号为空或非法</label>
 				<p></p>
 				<div class="form-group">
-					<textarea class="form-control" rows="10" name="code"></textarea>
+					<textarea class="form-control" rows="10" id="code"></textarea>
+					<label id="emptyCodeError" class="text-danger">代码为空</label>
+				<p></p>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -85,4 +97,29 @@ if(isset($_SESSION['username'])) {?>
 		</div>
 	</div>
 </div>
+<script>
+	$(document).ready(function(){
+
+		$("#missPidError").hide();
+		$("#emptyCodeError").hide();
+		$("#submitCode").click(function(){
+			$("#missPidError").hide();
+			$("#emptyCodeError").hide();
+			
+			var pid = $("#pid").val();
+			var lang = $("#lang").val();
+			var codes = $("#code").val();
+			if(pid.length != 4)
+				$("#missPidError").show();
+			if(codes.length == 0)
+				$("#emptyCodeError").show();
+			$.post("/submit", {pro_id:pid, lang:lang, codes:codes}, function(data){
+				var obj = eval(data);
+				if(obj['status'] == true) {
+					//
+				}
+			})
+		})
+	})
+</script>
 ﻿<?php }?>

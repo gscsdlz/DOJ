@@ -21,7 +21,9 @@ class statusControl {
 		$username = get('Programmer');
 		$lang = (int)get('lang');
 		$status = (int)get('status');
-		$results = self::$model->getStatus($submit_id, $pro_id, $username, $lang, $status);
+		$start = (int)get('start');
+		$end = (int)get('end');
+		$results = self::$model->getStatus($submit_id, $pro_id, $username, $lang, $status, $start, $end);
 		VIEW::loopshow('status', $results);
 	}
 }

@@ -28,8 +28,9 @@ class problemModel extends DB {
 		);
 	}
 	public function get_list($listId) {
-		$listId *= PAGEMAXSIZE;
-		$pms = PAGEMAXSIZE;
+		$pms = PROBLEMPAGEMAXSIZE;
+		$listId *= $pms;
+		
 		$result = parent::query ( "SELECT pro_id, pro_title FROM problem LIMIT $listId, $pms" );
 		if ($result->rowCount () != 0) {
 			$arr[] = array (
