@@ -63,7 +63,7 @@ if (isset ( $_SESSION ['username'] )) {
 			<div class="modal-body">
 				<form class="form-inline">
 					<div class="form-group">
-						
+						<h4 id="submitCodeError" class="text-danger">提交错误，请重试</h4>
 						<input type="text" class="form-control" id="pid"
 							value="<?php echo $pro_id;?>"> <select class="form-control"
 							id="lang">
@@ -79,7 +79,7 @@ if (isset ( $_SESSION ['username'] )) {
 	}
 	?>
 						</select>
-						
+
 					</div>
 				</form>
 				<label id="missPidError" class="text-danger">题目编号为空或非法</label>
@@ -87,7 +87,7 @@ if (isset ( $_SESSION ['username'] )) {
 				<div class="form-group">
 					<textarea class="form-control" rows="10" id="code"></textarea>
 					<label id="emptyCodeError" class="text-danger">代码为空</label>
-				<p></p>
+					<p></p>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -102,21 +102,26 @@ if (isset ( $_SESSION ['username'] )) {
 
 		$("#missPidError").hide();
 		$("#emptyCodeError").hide();
+		$("#submitCodeError").hide();
+		
 		$("#submitCode").click(function(){
 			$("#missPidError").hide();
 			$("#emptyCodeError").hide();
-			
+			$("#submitCodeError").hide();
 			var pid = $("#pid").val();
 			var lang = $("#lang").val();
 			var codes = $("#code").val();
 			if(pid.length != 4)
 				$("#missPidError").show();
-			if(codes.length == 0)
+			else if(codes.length == 0)
 				$("#emptyCodeError").show();
+			else 
 			$.post("/submit", {pro_id:pid, lang:lang, codes:codes}, function(data){
-				var obj = eval(data);
+				var obj = eval("(" + data + ")");
 				if(obj['status'] == true) {
-					//
+					location.href="/status";
+				} else {
+					$("#submitCodeError").show();
 				}
 			})
 		})

@@ -7,10 +7,10 @@ class loginModel extends DB {
 	public function login($username, $password) {
 		if (! empty ( $username ) && ! empty ( $password )) {
 			$res = parent::query ( "SELECT password, user_id, nickname FROM users WHERE username=?", $username );
-			$arr = $res->fetch(PDO::FETCH_NUM);
+			$arr = $res->fetch ( PDO::FETCH_NUM );
 			
-			if ($res->rowCount () != 0 && sha1 ( $password ) == $arr[0]) {
-				return $arr[1];
+			if ($res->rowCount () != 0 && sha1 ( $password ) == $arr [0]) {
+				return $arr [1];
 			}
 		}
 		return false;

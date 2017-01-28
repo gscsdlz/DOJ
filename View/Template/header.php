@@ -42,16 +42,18 @@
 				</form>
 
 				<?php
-				if(!isset($_SESSION['username'])) {
-				$loginStatus = true;
-				?>
+				if (! isset ( $_SESSION ['username'] )) {
+					$loginStatus = true;
+					?>
 				<ul class="nav navbar-nav navbar-right">
 					<li data-toggle="modal" data-target="#signModal"><a href="#">登录</a></li>
 					<li data-toggle="modal" data-target="#regModal"><a href="#">注册</a></li>
 				</ul>
-				<?php } else {
-				$loginStatus = false; 
-				?>
+				<?php
+				
+} else {
+					$loginStatus = false;
+					?>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" id="realname"><?php  echo $_SESSION['username'];?><span

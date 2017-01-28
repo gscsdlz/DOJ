@@ -12,11 +12,11 @@ class problemControl {
 	public function index() {
 		$this->show ();
 	}
-	
-	public function __call($method, $args){
-		VIEW::show('error', array('errorInfo' => 'Invalid action'));
+	public function __call($method, $args) {
+		VIEW::show ( 'error', array (
+				'errorInfo' => 'Invalid action' 
+		) );
 	}
-	
 	public function show() {
 		$problemId = get ( 'id' );
 		if (! $problemId)
@@ -34,7 +34,7 @@ class problemControl {
 	}
 	public function page() {
 		$pageId = get ( 'id' );
-		$_GET['id'] = $pageId;
+		$_GET ['id'] = $pageId;
 		$lists = self::$model->get_list ( $pageId );
 		if ($lists)
 			VIEW::loopshow ( 'problem_list', $lists );

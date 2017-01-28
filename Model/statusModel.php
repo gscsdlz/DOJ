@@ -22,7 +22,7 @@ class statusModel extends DB {
 		if ($start) {
 			$q .= "AND status.submit_id <= $start ";
 		} else if ($end) {
-			$start = $this->getStart($end, $maxNum, $q);
+			$start = $this->getStart ( $end, $maxNum, $q );
 			$q .= "AND status.submit_id <= $start ";
 		}
 		$q .= "ORDER BY status.submit_id DESC LIMIT $maxNum";
@@ -41,7 +41,7 @@ class statusModel extends DB {
 		$res = parent::query ( $q . "AND status.submit_id >= $end LIMIT $maxNum" );
 		if ($res->rowCount () != 0) {
 			while ( $row = $res->fetch ( PDO::FETCH_NUM ) ) {
-				$id = $row[0];
+				$id = $row [0];
 			}
 			return $id;
 		} else {
