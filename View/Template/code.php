@@ -2,15 +2,27 @@
 	<div class="col-md-8 col-md-offset-2 panel panel-default">
 		<div class="panel-heading">
 <?php
-if (isset ( $_SESSION ['username'] )) {
-	echo '用户' . $_SESSION ['username'] . '的代码，提交记录号：' . $submit_id . '，题目编号:' . $pro_id.'，提交时间：' . date ( "Y-m-d h:s:i", $submit_time );
+if (isset ( $_SESSION ['username'] ) && $_SESSION['user_id'] == $user_id) {
+		global $statusArr;
+		echo '<h3 class="text-success">用户<a href="#">'.$_SESSION ['username'].'</a>的提交记录  记录号：'.$submit_id.'</h3>';
+		echo '<h4 class="text-muted">题目编号：<a href="/problem/show/'.$pro_id.'">'.$pro_id.'</a></h4>';
+		echo '<h4 class="text-muted">提交时间：'.date( "Y-m-d h:s:i", $submit_time ).'</h4>';
+		echo '<h4 class="text-muted">运行时间：'.$run_time.'MS 运行内存：'.$run_memory.'KB</h4>';
+		echo '<h4 class="text-danger">状态：'.$statusArr[$status].'</h4>';
 } else {
-	echo '权限不足，或者未登录';
+	echo '<h3 class="text-danger text-center">权限不足，或者未登录 3秒后自动跳转<a href="/status">立即跳转</a></h3>';
+	echo <<<EOD
+<script>
+	$(document).ready(function(){
+		var t=setTimeout("location.href='/status';", 3000)
+	})
+</script>;
+EOD;
 }
 ?>
 		</div>
 		<div class="panel-body">
-<?php if(isset($_SESSION['username'])) {?>
+<?php if(isset($_SESSION['username']) && $_SESSION['user_id'] == $user_id) {?>
 <pre class="line-numbers command-line data-line"><code class="language-c" style="font-size: 18px;"><?php echo htmlspecialchars($code)?></code></pre>
 <?php }?>
 		</div>

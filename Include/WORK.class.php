@@ -13,6 +13,8 @@ class WORK {
 			return new submitControl ();
 		else if ($className == 'codeControl')
 			return new codeControl ();
+		else if ($className == 'userControl')
+			return new userControl ();
 		else {
 			require_once 'index.php';
 			return new indexControl ();

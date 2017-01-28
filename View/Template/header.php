@@ -11,6 +11,7 @@
 <script src="/View/Template/js/jquery.json.js"></script>
 <script src="/View/Template/js/bootstrap.min.js"></script>
 <script src="/View/Template/js/prism.js"></script>
+<script src="/View/Template/js/echarts.min.js"></script>
 <title>欢迎来到NUC Online Judge</title>
 </head>
 
@@ -61,7 +62,7 @@
 						data-toggle="dropdown" id="realname"><?php  echo $_SESSION['username'];?><span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">用户界面</a></li>
+							<li><a href="/user/show/<?php echo $_SESSION['username']?>">用户界面</a></li>
 							<li><a href="#">信息修改</a></li>
 							<li class="divider"></li>
 							<li id="logout"><a href="#">退出登录</a></li>
@@ -73,6 +74,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
+<?php if($loginStatus) { ?>
 	<div class="modal fade" id="signModal" tabindex="-1" role="dialog"
 		aria-labelledby="signModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -111,7 +113,7 @@
 			</div>
 		</div>
 	</div>
-	<?php if($loginStatus) { ?>
+
 	<div class="modal fade" id="regModal" tabindex="-1" role="dialog"
 		aria-labelledby="regModalLabel" aria-hidden="true">
 		<div class="modal-dialog">

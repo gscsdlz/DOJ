@@ -30,7 +30,7 @@ class DB {
 		self::$pdo->beginTransaction ();
 		try {
 			foreach ( $argArray as $q ) {
-				$affectRow = self::$pdo->exec ( $q );
+				$affectRow = self::$pdo->exec( $q );
 				if (! $affectRow) {
 					throw new PDOException ( "ERROR" );
 				}
