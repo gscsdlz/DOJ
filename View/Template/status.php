@@ -85,7 +85,7 @@
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
 					if ($loginStatus == true && $row [8] == $_SESSION ['username'])
-						echo '<td><a href="#">' . $row [5] . 'B</a></td>';
+						echo '<td><a href="/code/show/'.$row[0].'">' . $row [5] . 'B</a></td>';
 					else
 						echo '<td>' . $row [5] . 'B</td>';
 					echo '<td>' . $langArr [$row [6]] . '</td>';

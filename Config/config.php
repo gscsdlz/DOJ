@@ -6,7 +6,7 @@ $dbInfo = array (
 		'dbpass' => '1234' 
 );
 define ( 'LOGINTIMEOUT', 6 * 60 * 60 ); // 5小时 ACM标准比赛时间
-define ( 'PROBLEMPAGEMAXSIZE', 4 ); // 一页显示的题目数
+define ( 'PROBLEMPAGEMAXSIZE', 50 ); // 一页显示的题目数
 define ( 'STATUSPAGEMAXSIZE', 20 ); // 一页显示的状态数
 
 $langArr = array (

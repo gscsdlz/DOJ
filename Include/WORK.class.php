@@ -11,6 +11,8 @@ class WORK {
 			return new statusControl ();
 		else if ($className == 'submitControl')
 			return new submitControl ();
+		else if ($className == 'codeControl')
+			return new codeControl ();
 		else {
 			require_once 'index.php';
 			return new indexControl ();
