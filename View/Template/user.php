@@ -1,9 +1,9 @@
 <?php
 /*
- * $args[0]  题目饼图数据 变量
- * $args[1]  AC题目数量 数组
- * $args[2]  已提交没有AC题目数量 数组
- * $args[3]  用户基本数据信息 变量
+ * $args[0] 题目饼图数据 变量
+ * $args[1] AC题目数量 数组
+ * $args[2] 已提交没有AC题目数量 数组
+ * $args[3] 用户基本数据信息 变量
  */
 ?>
 <div class="row">
@@ -12,41 +12,45 @@
 		<img src="/Src/Image/header.jpg" alt="" class="img-circle"
 			width="200px">
 		<h1>
-			<?php extract($args[3]); if(isset($username)) echo $username;?> <small><?php extract($args[3]); if(isset($nickname)) echo $nickname;?></small>
+			<?php extract($args[3]); if(isset($username)) echo $username;?> 
+			<small><?php if(isset($nickname)) echo $nickname;?></small>
 		</h1>
 		<h3>
 			<small><?php if(isset($motto)) echo $motto;?></small>
 		</h3>
+		<?php
+		if (isset ( $_SESSION ['username'] )) {
+			?>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<button type="button" class="btn btn-primary btn-block">修改信息</button>
 			</div>
 		</div>
+		<?php }?>
 		<hr />
 		<table class="table text-left">
 			<tr>
 				<td>所在小组</td>
-				<td>14070642</td>
+				<td><?php if(isset($group_name)) echo $group_name;?></td>
 			</tr>
 			<tr>
 				<td>QQ</td>
-				<td>10086</td>
+				<td><?php if(isset($qq)) echo $qq;?></td>
 			</tr>
 			<tr>
 				<td>加入时间</td>
-				<td>2016-11-3 20:13</td>
+				<td><?php if(isset($regtime)) echo $regtime;?></td>
 			</tr>
 			<tr>
 				<td>电子邮箱</td>
-				<td>lz842063523@foxmail.com</td>
+				<td><?php if(isset($email)) echo $email;?></td>
 			</tr>
 		</table>
 	</div>
-	<div class="col-md-5 well" id="AllStatus"
-		style="height: 300px; margin-left: 10px;"></div>
+	<div class="col-md-6 well" id="AllStatus"
+		style="height: 300px; margin-left: 10px;">
+	</div>
 
-	<div class="col-md-5 well" id="SubmitFre"
-		style="height: 300px; margin-left: 10px"></div>
 	<div class="col-md-5 col-md-offset-4">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -89,7 +93,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
 	</div>
@@ -100,7 +104,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					<span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
 				</button>
 				<h4 class="modal-title" id="myModalLabel">还未解决的问题</h4>
 			</div>
