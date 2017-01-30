@@ -1,37 +1,43 @@
-
+<?php
+/*
+ * $args[0]  题目饼图数据 变量
+ * $args[1]  AC题目数量 数组
+ * $args[2]  已提交没有AC题目数量 数组
+ * $args[3]  用户基本数据信息 变量
+ */
+?>
 <div class="row">
 	<div class="col-md-2 col-md-offset-2 text-center well"
 		style="border-right-style: inset">
 		<img src="/Src/Image/header.jpg" alt="" class="img-circle"
 			width="200px">
 		<h1>
-			gscsdlz <small>Daemon</small>
+			<?php extract($args[3]); if(isset($username)) echo $username;?> <small><?php extract($args[3]); if(isset($nickname)) echo $nickname;?></small>
 		</h1>
-		<h2>
-			<small>I Will Always Love You..........</small>
-		</h2>
+		<h3>
+			<small><?php if(isset($motto)) echo $motto;?></small>
+		</h3>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<button type="button" class="btn btn-primary btn-block">Edit
-					Information</button>
+				<button type="button" class="btn btn-primary btn-block">修改信息</button>
 			</div>
 		</div>
 		<hr />
 		<table class="table text-left">
 			<tr>
-				<td>StudentID</td>
+				<td>所在小组</td>
 				<td>14070642</td>
 			</tr>
 			<tr>
-				<td>National</td>
-				<td>China</td>
+				<td>QQ</td>
+				<td>10086</td>
 			</tr>
 			<tr>
-				<td>Joined On</td>
+				<td>加入时间</td>
 				<td>2016-11-3 20:13</td>
 			</tr>
 			<tr>
-				<td>Mail</td>
+				<td>电子邮箱</td>
 				<td>lz842063523@foxmail.com</td>
 			</tr>
 		</table>
@@ -45,53 +51,15 @@
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
 				<form class="form-inline" role="form">
-					<button type="submit" class="btn btn-danger" data-toggle="modal"
-						data-target="#ACModal">已经解决的问题</button>
-					<button type="submit" class="btn btn-success" data-toggle="modal"
-						data-target="#nACModal">还未解决的问题</button>
+					<a href="#" class="btn btn-danger" data-toggle="modal"
+						data-target="#ACModal">已经解决的问题 <span class="badge"><?php echo count($args[1])?></span></a>
+					<a href="#" class="btn btn-success" data-toggle="modal"
+						data-target="#nACModal">还未解决的问题 <span class="badge"><?php echo count($args[2])?></span></a>
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="signModal" tabindex="-1" role="dialog"
-		aria-labelledby="signModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h2 class="modal-title" id="codeModalLabel">登录</h2>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal" role="form">
-						<div class="form-group text-center text-danger">
-							<label id="loginError" class="control-label ">用户名不存在或密码错误，请重试</label>
-						</div>
-						<div class="form-group">
-							<label for="inputUsername" class="col-sm-2 control-label">用户名</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="inputUsername"
-									name="username" placeholder="Username">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="inputPassword" class="col-sm-2 control-label">密码</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" id="inputPassword"
-									name="password" placeholder="Password">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" id="sign">登录</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
 <div class="modal fade" id="ACModal" tabindex="-1" role="dialog"
 	aria-labelledby="ACModalLabel" aria-hidden="true">
@@ -105,20 +73,19 @@
 			</div>
 			<div class="modal-body">
 				<table class="table">
-					<tr>
-						<td><a href="#">1000</a></td>
-						<td>1001</td>
-						<td>1002</td>
-						<td>1003</td>
-						<td>1004</td>
-						<td>1005</td>
-						<td>1000</td>
-						<td>1001</td>
-						<td>1002</td>
-						<td>1003</td>
-						<td>1004</td>
-						<td>1005</td>
-					</tr>
+						<?php
+						if (isset ( $args [1] ) && count ( $args [1] )) {
+							$i = 1;
+							foreach ( $args [1] as $row ) {
+								if ($i % 11 == 0 || $i == 1)
+									echo '<tr>';
+								echo '<td><a href="/problem/show/' . $row . '">' . $row . '</a></td>';
+								if ($i % 10 == 0)
+									echo '</tr>';
+								$i ++;
+							}
+						}
+						?>
 				</table>
 			</div>
 			<div class="modal-footer">
@@ -140,18 +107,19 @@
 			<div class="modal-body">
 				<table class="table">
 					<tr>
-						<td>1000</td>
-						<td>1001</td>
-						<td>1002</td>
-						<td>1003</td>
-						<td>1004</td>
-						<td>1005</td>
-						<td>1000</td>
-						<td>1001</td>
-						<td>1002</td>
-						<td>1003</td>
-						<td>1004</td>
-						<td>1005</td>
+<?php
+if (isset ( $args [2] ) && count ( $args [2] )) {
+	$i = 1;
+	foreach ( $args [2] as $row ) {
+		if ($i % 11 == 0 || $i == 1)
+			echo '<tr>';
+		echo '<td><a href="/problem/show/' . $row . '">' . $row . '</a></td>';
+		if ($i % 10 == 0)
+			echo '</tr>';
+		$i ++;
+	}
+}
+?>
 					</tr>
 				</table>
 			</div>
@@ -161,7 +129,7 @@
 		</div>
 	</div>
 </div>
-  <script type="text/javascript">
+<script type="text/javascript">
 		// 基于准备好的dom，初始化echarts实例
 		var myChartAllStatus = echarts.init(document
 				.getElementById('AllStatus'));
@@ -173,10 +141,10 @@
 			legend : {
 				orient : 'vertical',
 				left : 'left',
-				data : [ 'AC', 'WA', 'CE', 'TLE', 'MLE', 'OLE', 'RE', 'PE' ]
+				data : [ 'AC', 'PE', 'WA', 'RE', 'TLE', 'MLE', 'OLE', 'CE' ]
 			},
 			series : [ {
-				name : 'Total Submit',
+				name : '题数及百分比',
 				type : 'pie',
 				radius : [ '50%', '70%' ],
 				avoidLabelOverlap : false,
@@ -199,28 +167,28 @@
 					}
 				},
 				data : [ {
-					value : <?php echo $args[0];?>,
+					value : <?php echo $args[0][0];?>,
 					name : 'AC'
 				}, {
-					value : <?php echo $args[1];?>,
+					value : <?php echo $args[0][1];?>,
 					name : 'PE'
 				}, {
-					value : <?php echo $args[2];?>,
+					value : <?php echo $args[0][2];?>,
 					name : 'WA'
 				}, {
-					value : <?php echo $args[3];?>,
+					value : <?php echo $args[0][3];?>,
 					name : 'RE'
 				}, {
-					value : <?php echo $args[4];?>,
+					value : <?php echo $args[0][4];?>,
 					name : 'TLE'
 				}, {
-					value : <?php echo $args[5];?>,
+					value : <?php echo $args[0][5];?>,
 					name : 'MLE'
 				}, {
-					value : <?php echo $args[6];?>,
+					value : <?php echo $args[0][6];?>,
 					name : 'OLE'
 				}, {
-					value : <?php echo $args[7];?>,
+					value : <?php echo $args[0][7];?>,
 					name : 'CE'
 				} ]
 			} ]

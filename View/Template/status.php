@@ -80,7 +80,7 @@
 					$eid = $row [0];
 					echo '<tr>';
 					echo '<td>' . $row [0] . '</td>';
-					echo '<td>' . date ( "Y-m-d h:i:s", $row [1] ) . '</td>';
+					echo '<td>' . date ( "Y-m-d H:i:s", $row [1] ) . '</td>';
 					echo '<td><a href="/problem/show/' . $row [2] . '">' . $row [2] . '</a></td>';
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
@@ -101,7 +101,7 @@
 					else
 						echo 'muted';
 					echo '">' . $statusArr [$row [7]] . '</td>';
-					echo '<td><a href="#">' . $row [8] . '</a></td>';
+					echo '<td><a href="/user/show/'.$row[8].'">' . $row [8] . '</a></td>';
 					echo "</tr>\n";
 				}
 			} else {

@@ -13,7 +13,10 @@ class userControl{
 	public function show() {
 		$username = get('id');
 		$user_id = self::$model->getId($username);
-		$arg = self::$model->getStatus($user_id);
+		$arg[] = self::$model->getStatus($user_id);
+		$arg[] = self::$model->get_ac_problem($user_id);
+		$arg[] = self::$model->get_nac_problem($user_id);
+		$arg[] = self::$model->get_user_info($user_id);
 		VIEW::loopshow('user', $arg);
 	}
 }

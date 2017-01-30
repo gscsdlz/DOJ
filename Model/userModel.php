@@ -28,5 +28,28 @@ class userModel extends DB {
 		}
 		return $arr;
 	}
+	
+	public function get_ac_problem($user_id) {
+		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status = 4", $user_id);
+		$arr = null;
+		while($row = $result->fetch(PDO::FETCH_NUM)) {
+			$arr[] = $row[0];
+		}
+		return $arr;
+	}
+	
+	public function get_nac_problem($user_id) {
+		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status >= 5 AND status <= 11", $user_id);
+		$arr = null;
+		while($row = $result->fetch(PDO::FETCH_NUM)) {
+			$arr[] = $row[0];
+		}
+		return $arr;
+	}
+	
+	public function get_user_info($user_id) {
+		$result = parent::query("SELECT * FROM users WHERE user_id = ?", $user_id);
+		return $result->fetch(PDO::FETCH_NAMED);
+	}
 }
 ?>
