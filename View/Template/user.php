@@ -48,9 +48,19 @@
 		</table>
 	</div>
 	<div class="col-md-6 well" id="AllStatus"
-		style="height: 300px; margin-left: 10px;">
-	</div>
+		style="height: 300px; margin-left: 10px;"></div>
+	<div class="col-md-6 well list-group" style="height: 350px; margin-left: 10px;" id="contestList">
+		<h4 class="text-center">参加过的比赛</h4>
+		<a href="#" class="list-group-item">第四届国际大学生程序设计竞赛<span class="badge">3</span></a> 
+		<a href="#" class="list-group-item">第一届中国大学生程序设计竞赛<span class="badge">1</span></a> 
+		<a href="#" class="list-group-item">ACM-ICPC 。。。。。<span class="badge">4</span></a> 
+		<a href="#" class="list-group-item">第一届国际大学生程序设计竞赛<span class="badge">5</span></a> 
 
+		<p></p>
+		<button type="button" class="btn btn-primary" style="margin-left:40%;" id="prePage">上一页</button>
+		<button type="button" class="btn btn-primary" id="nextPage">下一页</button>
+	</div>
+	
 	<div class="col-md-5 col-md-offset-4">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -133,6 +143,36 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function(){
+		var currentValue = 0;
+		$("a.list-group-item").hide();
+		$("a.list-group-item:eq(0)").show();
+		$("a.list-group-item:eq(1)").show();
+		$("a.list-group-item:eq(2)").show();
+		$("a.list-group-item:eq(3)").show();
+		$("a.list-group-item:eq(4)").show();
+		
+		$("#prePage").click(function(){
+			currentValue -= 5;
+			if(currentValue < 0)
+				currentValue = 0;
+			$("a.list-group-item").hide();
+			for(var i = currentValue; i < currentValue + 5; i++)
+				$("a.list-group-item:eq("+ i + ")").fadeIn();
+		})
+		$("#nextPage").click(function(){
+			currentValue += 5;
+			if(currentValue > $("a.list-group-item").length)
+				currentValue = $("a.list-group-item").length;
+			$("a.list-group-item").hide();
+			for(var i = currentValue; i < currentValue + 5; i++)
+				$("a.list-group-item:eq("+ i + ")").fadeIn();
+		})
+	})
+</script>
+
 <script type="text/javascript">
 		// 基于准备好的dom，初始化echarts实例
 		var myChartAllStatus = echarts.init(document

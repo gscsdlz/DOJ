@@ -111,6 +111,7 @@ if (isset ( $_SESSION ['username'] )) {
 			var pid = $("#pid").val();
 			var lang = $("#lang").val();
 			var codes = $("#code").val();
+			
 			if(pid.length != 4)
 				$("#missPidError").show();
 			else if(codes.length == 0)

@@ -15,8 +15,8 @@ class submitModel extends DB {
 		$time = time ();
 		$q1 = "INSERT INTO status VALUES (NULL, $pro_id, $user_id, $time, 0, 0, 1, $lang)";
 		$code_length = strlen ( $codes );
+		$codes = addslashes($codes);
 		$q2 = "INSERT INTO codes VALUES (NULL, '$codes', $code_length)";
-		//////暂时无法解决 SQL注入
 		return parent::transaction_query ( $q1, $q2 );
 	}
 }

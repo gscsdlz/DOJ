@@ -168,7 +168,7 @@ pre[data-line] {
 
 pre.line-numbers {
 	position: relative;
-	padding-left: 3.8em;
+	padding-left: 5em;
 	counter-reset: linenumber;
 }
 
