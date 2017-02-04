@@ -36,9 +36,9 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-body text-center">
-						<?php if(isset($_SESSION['username'])) {?><button type="button"
+						<button type="button"
 							class="btn btn-danger btn-lg" data-toggle="modal"
-							data-target="#codeModal">提交</button> <?php }?>
+							data-target="#<?php if(isset($_SESSION['username'])) echo 'codeModal'; else echo 'signModal';?>">提交</button>
 						<button type="button" class="btn btn-success btn-lg">统计</button>
 						<button type="button" class="btn btn-info btn-lg">讨论</button>
 					</div>

@@ -13,5 +13,14 @@ class codeModel extends DB{
 			return null;
 		}
 	}
+	
+	public function getCEInfo($submit_id) {
+		$result = parent::query("SELECT status.*, ce_info.info FROM ce_info LEFT JOIN status ON (status.submit_id = ce_info.submit_id) WHERE status.submit_id = ?", $submit_id);
+		if($result->rowCount() != 0) {
+			return $result->fetch(PDO::FETCH_NAMED);
+		} else {
+			return null;
+		}
+	}
 }
 ?>

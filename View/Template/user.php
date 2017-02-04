@@ -12,7 +12,11 @@
 		<img src="/Src/Image/header.jpg" alt="" class="img-circle"
 			width="200px">
 		<h1>
-			<?php extract($args[3]); if(isset($username)) echo $username;?> 
+			<?php
+			extract ( $args [3] );
+			if (isset ( $username ))
+				echo $username;
+			?> 
 			<small><?php if(isset($nickname)) echo $nickname;?></small>
 		</h1>
 		<h3>
@@ -47,20 +51,39 @@
 			</tr>
 		</table>
 	</div>
-	<div class="col-md-6 well" id="AllStatus"
-		style="height: 300px; margin-left: 10px;"></div>
-	<div class="col-md-6 well list-group" style="height: 350px; margin-left: 10px;" id="contestList">
-		<h4 class="text-center">参加过的比赛</h4>
-		<a href="#" class="list-group-item">第四届国际大学生程序设计竞赛<span class="badge">3</span></a> 
-		<a href="#" class="list-group-item">第一届中国大学生程序设计竞赛<span class="badge">1</span></a> 
-		<a href="#" class="list-group-item">ACM-ICPC 。。。。。<span class="badge">4</span></a> 
-		<a href="#" class="list-group-item">第一届国际大学生程序设计竞赛<span class="badge">5</span></a> 
 
-		<p></p>
-		<button type="button" class="btn btn-primary" style="margin-left:40%;" id="prePage">上一页</button>
-		<button type="button" class="btn btn-primary" id="nextPage">下一页</button>
+	<div class="col-md-3 well" id="AllStatus"
+		style="height: 300px; margin-left: 10px;"></div>
+	<div class="col-md-3" style="height: 300px; margin-left: 10px;">
+		<div class=" panel panel-success">
+			<div class="panel-heading">
+				<h4 class="text-center">排名</h4>
+			</div>
+			<div class="panel-body">
+				114
+			</div>
+			
+		</div>
 	</div>
-	
+
+	<div class="col-md-6" style="margin-left: 15px;" id="contestList">
+		<div class=" panel panel-danger">
+			<div class="panel-heading">
+				<h4 class="text-center">参加过的比赛</h4>
+			</div>
+			<div class="list-group panel-body">
+				<a href="#" class="list-group-item">第四届国际大学生程序设计竞赛<span class="badge">3</span></a> 
+				<a href="#" class="list-group-item">第一届中国大学生程序设计竞赛<span class="badge">1</span></a> 
+				<a href="#" class="list-group-item">ACM-ICPC。。。。。<span class="badge">4</span></a> 
+				<a href="#" class="list-group-item">第一届国际大学生程序设计竞赛<span class="badge">5</span></a>
+			</div>
+			<div class="panel-footer">
+				<button type="button" class="btn btn-primary"
+					style="margin-left: 40%;" id="prePage">上一页</button>
+				<button type="button" class="btn btn-primary" id="nextPage">下一页</button>
+			</div>
+		</div>
+	</div>
 	<div class="col-md-5 col-md-offset-4">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -93,7 +116,7 @@
 							foreach ( $args [1] as $row ) {
 								if ($i % 11 == 0 || $i == 1)
 									echo '<tr>';
-								echo '<td><a href="/problem/show/' . $row . '">' . $row . '</a></td>';
+								echo '<td><a href="/status?rid=&pid=' . $row . '&Programmer=' . $username . '&lang=0&status=4">' . $row . '</a></td>';
 								if ($i % 10 == 0)
 									echo '</tr>';
 								$i ++;
@@ -127,7 +150,7 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 	foreach ( $args [2] as $row ) {
 		if ($i % 11 == 0 || $i == 1)
 			echo '<tr>';
-		echo '<td><a href="/problem/show/' . $row . '">' . $row . '</a></td>';
+		echo '<td><a href="/status?rid=&pid=' . $row . '&Programmer=' . $username . '&lang=0&status=0">' . $row . '</a></td>';
 		if ($i % 10 == 0)
 			echo '</tr>';
 		$i ++;
@@ -174,10 +197,15 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 </script>
 
 <script type="text/javascript">
+
 		// 基于准备好的dom，初始化echarts实例
 		var myChartAllStatus = echarts.init(document
 				.getElementById('AllStatus'));
 		optionA = {
+			 title: {
+				text: '提交记录统计',
+				left: 'center'
+			},
 			tooltip : {
 				trigger : 'item',
 				formatter : "{a} <br/>{b} : {c} ({d}%)"

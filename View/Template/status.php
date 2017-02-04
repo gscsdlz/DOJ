@@ -100,7 +100,10 @@
 						echo 'primary';
 					else
 						echo 'muted';
-					echo '">' . $statusArr [$row [7]] . '</td>';
+					if($row[7] == '11') //CE
+						echo '"><a href="/code/ce/'.$row[0].'">'.$statusArr [$row [7]] . '</a></td>';
+					else
+						echo '">' . $statusArr [$row [7]] . '</td>';
 					echo '<td><a href="/user/show/'.$row[8].'">' . $row [8] . '</a></td>';
 					echo "</tr>\n";
 				}
@@ -152,3 +155,8 @@
 		</nav>
 	</div>
 </div>
+<script>
+$(document).ready(function(){
+		var t=setTimeout("location.href='/status';", 10000)
+	})
+	</script>

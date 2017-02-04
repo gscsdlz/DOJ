@@ -20,5 +20,15 @@ class codeControl{
 		}
 		
 	}
+	
+	public function ce() {
+		$submit_id = (int)get("id");
+		$res = self::$model->getCEInfo($submit_id);
+		if($res) {
+			VIEW::show('code', $res);
+		} else {
+			VIEW::show('error', array('errorInfo' => 'Invalid ID'));
+		}
+	}
 }
 ?>

@@ -33,13 +33,13 @@
 					<li><a href="/">首页</a></li>
 					<li><a href="/problem/page">题目</a></li>
 					<li><a href="/status">状态</a></li>
-					<li><a href="#">排名</a></li>
-					<li><a href="#">比赛</a></li>
+					<li><a href="/ranklist">排名</a></li>
+					<li><a href="/contest/page">比赛</a></li>
 					<li><a href="#">帮助</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" role="search">
+				<form class="navbar-form navbar-left" role="search" method="get" action="/problem/search">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="题目搜索">
+						<input type="text" class="form-control" placeholder="题目搜索" name="key" value="<?php if(isset($_GET['key'])) echo $_GET['key'];?>">
 					</div>
 					<button type="submit" class="btn btn-default">搜索</button>
 				</form>

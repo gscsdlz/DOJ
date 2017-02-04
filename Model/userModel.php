@@ -39,7 +39,7 @@ class userModel extends DB {
 	}
 	
 	public function get_nac_problem($user_id) {
-		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status >= 5 AND status <= 11", $user_id);
+		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status >= 5 AND status <= 11 AND pro_id NOT IN (SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status = 4)", $user_id, $user_id);
 		$arr = null;
 		while($row = $result->fetch(PDO::FETCH_NUM)) {
 			$arr[] = $row[0];

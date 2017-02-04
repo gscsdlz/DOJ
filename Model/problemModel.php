@@ -58,5 +58,27 @@ class problemModel extends DB {
 	public function get_status($proId, $userId) {
 		$result = parent::query ( "SELECT status FROM status WHERE user_id = ? AND pro_id = ?", $userId, $proId );
 	}
+	
+	public function get_search_result($key) {
+		$pms = PROBLEMPAGEMAXSIZE;
+		
+		$result = parent::query ( "SELECT pro_id, pro_title FROM problem WHERE pro_title like '%$key%' OR author like '%$key%'");
+		
+		if ($result->rowCount () != 0) {
+			
+			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
+				$submits = $this->get_submits ( $row [0] );
+				$arr [] = array (
+						$row [0],
+						$row [1],
+						$submits [0],
+						$submits [1]
+				);
+			}
+			return $arr;
+		} else {
+			return null;
+		}
+	}
 }
 ?>

@@ -34,13 +34,23 @@ class problemControl {
 	}
 	public function page() {
 		$pageId = get ( 'id' );
-		$_GET ['id'] = $pageId;
+		$_GET ['id'] = $pageId; // 有用
 		$lists = self::$model->get_list ( $pageId );
 		if ($lists)
 			VIEW::loopshow ( 'problem_list', $lists );
 		else
 			VIEW::show ( 'error', array (
 					'errorInfo' => 'Invalid Index' 
+			) );
+	}
+	public function search() {
+		$key = get ( 'key' );
+		$lists = self::$model->get_search_result ( $key );
+		if ($lists)
+			VIEW::loopshow ( 'problem_list', $lists );
+		else
+			VIEW::show ( 'error', array (
+					'errorInfo' => 'Invalid Key' 
 			) );
 	}
 }

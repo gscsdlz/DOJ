@@ -1,5 +1,8 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3 text-center">
+		<?php
+			if(!isset($_GET['key'])) {
+		?>
 		<nav>
 			<ul class="pagination pagination-lg">
 				<li><a
@@ -19,6 +22,7 @@
 					href="/problem/page/<?php if($_GET['id'] + 1 == $maxPage) echo $_GET['id']; else echo $_GET['id'] + 1; ?>">&raquo;</a></li>
 			</ul>
 		</nav>
+		<?php }?>
 		<table class="table table-hover text-left">
 			<tr>
 				<th>题目编号</th>
@@ -53,6 +57,9 @@
 			}
 			?>
 		</table>
+		<?php
+			if(!isset($_GET['key'])) {
+		?>
 		<nav>
 			<ul class="pagination pagination-lg">
 				<li><a
@@ -73,6 +80,7 @@
 					href="/problem/page/<?php if($_GET['id'] + 1 == $maxPage) echo $_GET['id']; else echo $_GET['id'] + 1; ?>">&raquo;</a></li>
 			</ul>
 		</nav>
+		<?php }?>
 	</div>
 </div>
 ﻿
