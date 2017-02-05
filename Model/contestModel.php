@@ -16,5 +16,9 @@ class contestModel extends DB{
 			return null;
 		}
 	}
+	
+	public function get_problems() {
+		//$result = parent::query("")
+	}
 }
 ?>

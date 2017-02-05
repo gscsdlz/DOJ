@@ -36,8 +36,8 @@
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-body text-center">
-						<button type="button"
-							class="btn btn-danger btn-lg" data-toggle="modal"
+						<button type="button" class="btn btn-danger btn-lg"
+							data-toggle="modal"
 							data-target="#<?php if(isset($_SESSION['username'])) echo 'codeModal'; else echo 'signModal';?>">提交</button>
 						<button type="button" class="btn btn-success btn-lg">统计</button>
 						<button type="button" class="btn btn-info btn-lg">讨论</button>
@@ -126,6 +126,20 @@ if (isset ( $_SESSION ['username'] )) {
 				}
 			})
 		})
+		 $("textarea").on('keydown', function(e) {
+                if (e.keyCode == 9) {
+                    e.preventDefault();
+                    var indent = '    ';
+                    var start = this.selectionStart;
+                    var end = this.selectionEnd;
+                    var selected = window.getSelection().toString();
+                    selected = indent + selected.replace(/\n/g, '\n' + indent);
+                    this.value = this.value.substring(0, start) + selected
+                            + this.value.substring(end);
+                    this.setSelectionRange(start + indent.length, start
+                            + selected.length);
+                }
+            })
 	})
 </script>
 ﻿<?php }?>

@@ -34,6 +34,8 @@ class problemControl {
 	}
 	public function page() {
 		$pageId = get ( 'id' );
+		if(!$pageId)
+			$pageId = 0;
 		$_GET ['id'] = $pageId; // 有用
 		$lists = self::$model->get_list ( $pageId );
 		if ($lists)

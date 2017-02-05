@@ -19,7 +19,6 @@ class loginControl {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
 			if ($uid = self::$model->login ( $username, $password )) {
-				session_start ();
 				$_SESSION ['username'] = $username;
 				$_SESSION ['user_id'] = $uid;
 				echo json_encode ( array (
@@ -34,7 +33,6 @@ class loginControl {
 	}
 	public function logout() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
-			session_start ();
 			if (isset ( $_SESSION ['username'] )) {
 				$_SESSION = array ();
 				session_destroy ();

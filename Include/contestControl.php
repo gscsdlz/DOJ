@@ -13,4 +13,9 @@ class contestControl {
 		$args = self::$model->get_lists ();
 		VIEW::loopshow ( 'contest_list', $args );
 	}
+	
+	public function problem_list() {
+		$cid = get('id');
+		$args = self::$model->get_problems($cid);
+	}
 }

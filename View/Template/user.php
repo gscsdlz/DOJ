@@ -23,7 +23,7 @@
 			<small><?php if(isset($motto)) echo $motto;?></small>
 		</h3>
 		<?php
-		if (isset ( $_SESSION ['username'] )) {
+		if (isset ( $_SESSION ['username'] ) && $_SESSION['username'] == $username) {
 			?>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">

@@ -13,7 +13,7 @@ class submitModel extends DB {
 		if ($lang <= 0 || $lang >= count ( $langArr ))
 			return false;
 		$time = time ();
-		$q1 = "INSERT INTO status VALUES (NULL, $pro_id, $user_id, $time, 0, 0, 1, $lang)";
+		$q1 = "INSERT INTO status VALUES (NULL, $pro_id, $user_id, $time, 0, 0, 1, $lang, 0)";
 		$code_length = strlen ( $codes );
 		$codes = addslashes($codes);
 		$q2 = "INSERT INTO codes VALUES (NULL, '$codes', $code_length)";

@@ -1,5 +1,6 @@
 <?php
 $stime = microtime ( true );
+session_start();
 date_default_timezone_set("PRC");
 define ( "APPPATH", dirname ( __FILE__ ) );
 require_once 'Include/router.class.php';
