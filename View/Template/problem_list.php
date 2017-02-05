@@ -47,24 +47,28 @@
 				</td>
 			</tr>-->
 			<?php
-			foreach ( $args as $row ) {
-				
-				if (! isset ( $row [2] ))
-					continue;
-					// $row[4] => 是否通过
-					// $row[5] => 次数
-				if (isset ( $row [4]))
-					echo '<tr class="success">';
-				else if (isset ( $row [5] ) && $row[5] > 0)
-					echo '<tr class="danger">';
-				else
-					echo '<tr>';
-				echo '<td>' . $row [0];
-				if (isset ( $row [5] ) &&  $row [5] > 0 )
-					echo '<span class="badge">' . $row [5] . '</span>';
-				echo '</td>';
-				echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
-				echo '<td>' . $row [2] . '/' . $row [3] . '</td></tr>' . "\n";
+			if (isset ( $args ) && count ( $args ) != 0) {
+				foreach ( $args as $row ) {
+					
+					if (! isset ( $row [2] ))
+						continue;
+						// $row[4] => 是否通过
+						// $row[5] => 次数
+					if (isset ( $row [4] ))
+						echo '<tr class="success">';
+					else if (isset ( $row [5] ) && $row [5] > 0)
+						echo '<tr class="danger">';
+					else
+						echo '<tr>';
+					echo '<td>' . $row [0];
+					if (isset ( $row [5] ) && $row [5] > 0)
+						echo '<span class="badge">' . $row [5] . '</span>';
+					echo '</td>';
+					echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
+					echo '<td>' . $row [2] . '/' . $row [3] . '</td></tr>' . "\n";
+				}
+			} else {
+				echo '<tr><td colspan="3" class="text-danger text-center">找不到题目</td></tr>';
 			}
 			?>
 		</table>

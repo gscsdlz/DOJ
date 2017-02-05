@@ -20,6 +20,6 @@ class userControl{
 		if($arg[3] != null)
 			VIEW::loopshow('user', $arg);
 		else
-			VIEW::show('error', array('errorInfo' => 'No Such User'));
+			VIEW::show('error', array('errorInfo' => 'Invalid User'));
 	}
 }

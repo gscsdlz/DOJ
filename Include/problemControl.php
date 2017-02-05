@@ -10,11 +10,11 @@ class problemControl {
 		}
 	}
 	public function index() {
-		$this->show ();
+		$this->page ();
 	}
 	public function __call($method, $args) {
 		VIEW::show ( 'error', array (
-				'errorInfo' => 'Invalid action' 
+				'errorInfo' => 'Invalid Action' 
 		) );
 	}
 	public function show() {
@@ -23,37 +23,34 @@ class problemControl {
 			$problemId = '1000';
 		$body = self::$model->get_problem ( $problemId ); // 获取页面主体
 		$submits = self::$model->get_submits ( $problemId );
-		$body ['aSubmit'] = $submits [0];
-		$body ['tSubmit'] = $submits [1];
-		if ($body)
+		
+		if ($body) {
+			$body ['aSubmit'] = $submits [0];
+			$body ['tSubmit'] = $submits [1];
 			VIEW::show ( 'problem', $body );
+		}
 		else
 			VIEW::show ( 'error', array (
-					'errorInfo' => 'Invalid Page' 
+					'errorInfo' => 'Invalid Id' 
 			) );
 	}
 	public function page() {
 		$pageId = get ( 'id' );
 		if(!$pageId)
 			$pageId = 0;
-		$_GET ['id'] = $pageId; // 有用
+		$_GET ['id'] = $pageId; // 这里重新设置ID的意义在于 @problem_list:4 需要通过读取GET数组确定分页单元的显示
 		$lists = self::$model->get_list ( $pageId );
 		if ($lists)
 			VIEW::loopshow ( 'problem_list', $lists );
 		else
 			VIEW::show ( 'error', array (
-					'errorInfo' => 'Invalid Index' 
+					'errorInfo' => 'Invalid Id' 
 			) );
 	}
 	public function search() {
 		$key = get ( 'key' );
 		$lists = self::$model->get_search_result ( $key );
-		if ($lists)
-			VIEW::loopshow ( 'problem_list', $lists );
-		else
-			VIEW::show ( 'error', array (
-					'errorInfo' => 'Invalid Key' 
-			) );
+		VIEW::loopshow ( 'problem_list', $lists );
 	}
 }
 ?>

@@ -100,7 +100,7 @@
 						echo 'primary';
 					else
 						echo 'muted';
-					if($row[7] == '11') //CE
+					if($row[7] == '11' && isset($_SESSION['username']) && $_SESSION['username'] == $row[8]) //CE
 						echo '"><a href="/code/ce/'.$row[0].'">'.$statusArr [$row [7]] . '</a></td>';
 					else
 						echo '">' . $statusArr [$row [7]] . '</td>';

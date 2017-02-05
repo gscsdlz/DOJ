@@ -16,7 +16,7 @@ class codeControl{
 		if($res) {
 			VIEW::show('code', $res);
 		} else {
-			VIEW::show('error', array('errorInfo' => 'Invalid ID'));
+			VIEW::show('error', array('errorInfo' => 'Invalid Id'));
 		}
 		
 	}
@@ -27,7 +27,7 @@ class codeControl{
 		if($res) {
 			VIEW::show('code', $res);
 		} else {
-			VIEW::show('error', array('errorInfo' => 'Invalid ID'));
+			VIEW::show('error', array('errorInfo' => 'Invalid Id'));
 		}
 	}
 }
