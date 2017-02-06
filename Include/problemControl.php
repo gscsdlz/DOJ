@@ -38,8 +38,8 @@ class problemControl {
 		$pageId = get ( 'id' );
 		if(!$pageId)
 			$pageId = 0;
-		$_GET ['id'] = $pageId; // 这里重新设置ID的意义在于 @problem_list:4 需要通过读取GET数组确定分页单元的显示
-		$lists = self::$model->get_list ( $pageId );
+		$_GET ['pageid'] = $pageId; // 这里重新设置ID的意义在于 @problem_list:4 需要通过读取GET数组确定分页单元的显示
+		$lists = self::$model->get_list ( $pageId); //0意味着这不属于比赛中的提交
 		if ($lists)
 			VIEW::loopshow ( 'problem_list', $lists );
 		else

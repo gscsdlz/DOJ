@@ -4,6 +4,11 @@ class problemModel extends DB {
 	public function __construct() {
 		parent::__construct ();
 	}
+	/**
+	 * 
+	 * @param unknown $problemId
+	 * @return mixed|NULL
+	 */
 	public function get_problem($problemId) { // 从数据库选择指定ID的题目详情
 		$result = parent::query ( "SELECT * FROM problem WHERE pro_id = ? LIMIT 1", $problemId );
 		if ($result->rowCount () != 0) {
@@ -12,12 +17,18 @@ class problemModel extends DB {
 			return null;
 		}
 	}
-	public function get_submits($problemId) {
-		$result = parent::query ( "SELECT COUNT(*) FROM status LEFT JOIN problem ON (status.pro_id = problem.pro_id) WHERE problem.pro_id = ? AND status = 4", $problemId );
+	/**
+	 * 获取总提交数 $contest_id = 0是表示非比赛的提交
+	 * @param int $problemId 题目真实ID
+	 * @param int $contest_id 比赛ID
+	 * @return number[]|mixed[] 返回两个数字 包括AC提交数，总提交数
+	 */
+	public function get_submits($problemId, $contest_id) {
+		$result = parent::query ( "SELECT COUNT(*) FROM status LEFT JOIN problem ON (status.pro_id = problem.pro_id) WHERE problem.pro_id = ? AND status = 4 AND contest_id = ?", $problemId, $contest_id );
 		$aSubmit = $result->fetch ( PDO::FETCH_NUM ) [0];
 		if (! $aSubmit)
 			$aSubmit = 0;
-		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ?", $problemId );
+		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND contest_id = ?", $problemId, $contest_id);
 		$tSubmit = $result->fetch ( PDO::FETCH_NUM ) [0];
 		if (! $tSubmit)
 			$tSubmit = 0;
@@ -27,14 +38,21 @@ class problemModel extends DB {
 				$tSubmit 
 		);
 	}
-	public function get_my_submits($problemId, $user_id) {
-		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND status = 4 AND user_id = ?", $problemId, $user_id );
+	/**
+	 * 
+	 * @param unknown $problemId
+	 * @param unknown $user_id
+	 * @param unknown $contest_id
+	 * @return NULL[]|boolean[]|mixed[]
+	 */
+	public function get_my_submits($problemId, $user_id, $contest_id) {
+		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND status = 4 AND user_id = ? AND contest_id = ? ", $problemId, $user_id, $contest_id);
 		$aSubmit = null;
 		$wSubmit = null;
 		if ($result->rowCount () != 0 && $result->fetch(PDO::FETCH_NUM)[0] > 0) {
 			$aSubmit = true;
 		} else {
-			$result2 = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND user_id = ?", $problemId, $user_id );
+			$result2 = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND user_id = ? AND contest_id = ?", $problemId, $user_id, $contest_id );
 			if ($result2->rowCount () != 0) {
 				$wSubmit = $result2->fetch ( PDO::FETCH_NUM ) [0];
 			}
@@ -44,6 +62,11 @@ class problemModel extends DB {
 				$wSubmit 
 		);
 	}
+	/**
+	 * 
+	 * @param unknown $listId
+	 * @return string[]|unknown[][]|NULL[]|number[][]|mixed[][]|NULL[][]|boolean[][]|NULL
+	 */
 	public function get_list($listId) {
 		$pms = PROBLEMPAGEMAXSIZE;
 		$listId *= $pms;
@@ -60,9 +83,9 @@ class problemModel extends DB {
 				$user_id = $_SESSION ['user_id'];
 			}
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
-				$submits = $this->get_submits ( $row [0] );
+				$submits = $this->get_submits ( $row [0], 0);
 				if ($needGets) {
-					$mySubmits = $this->get_my_submits ( $row [0], $user_id );
+					$mySubmits = $this->get_my_submits ( $row [0], $user_id , 0);
 					$arr [] = array (
 							$row [0],
 							$row [1],
@@ -85,13 +108,19 @@ class problemModel extends DB {
 			return null;
 		}
 	}
+	/**
+	 * 
+	 * @return mixed
+	 */
 	public function get_maxProblem() {
 		$result = parent::query ( "SELECT count(*) FROM problem" );
 		return $result->fetch ( PDO::FETCH_NUM ) [0];
 	}
-	public function get_status($proId, $userId) {
-		$result = parent::query ( "SELECT status FROM status WHERE user_id = ? AND pro_id = ?", $userId, $proId );
-	}
+	/**
+	 * 
+	 * @param unknown $key
+	 * @return unknown[]|number[]|mixed[]|NULL
+	 */
 	public function get_search_result($key) {
 		$pms = PROBLEMPAGEMAXSIZE;
 		

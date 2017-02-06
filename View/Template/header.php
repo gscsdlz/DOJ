@@ -28,6 +28,10 @@
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
+				<?php
+				global $contest;  //参数引自@config.php
+				if(!$contest) {
+?>
 				<ul class="nav navbar-nav">
 					<li><a href="/">首页</a></li>
 					<li><a href="/problem/page">题目</a></li>
@@ -36,13 +40,25 @@
 					<li><a href="/contest/page">比赛</a></li>
 					<li><a href="#">帮助</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" role="search" method="get" action="/problem/search">
+				<form class="navbar-form navbar-left" role="search" method="get"
+					action="/problem/search">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="题目搜索" name="key" value="<?php if(isset($_GET['key'])) echo $_GET['key'];?>">
+						<input type="text" class="form-control" placeholder="题目搜索"
+							name="key"
+							value="<?php if(isset($_GET['key'])) echo $_GET['key'];?>">
 					</div>
 					<button type="submit" class="btn btn-default">搜索</button>
 				</form>
-
+				<?php }  else {?>
+				<ul class="nav navbar-nav">
+					<li><a href="/contest/page">返回</a></li>
+					<li><a href="/contest/show/10">题目</a></li>
+					<li><a href="/contest/status/">状态</a></li>
+					<li><a href="/contest/ranklist">排名</a></li>
+					<li><a href="/contest/ask">提问</a></li>
+					<li><a href="/contest/info">通知</a></li>
+				</ul>
+				<?php }?>
 				<?php
 				if (! isset ( $_SESSION ['username'] )) {
 					$loginStatus = true;
@@ -73,7 +89,7 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
-<?php if($loginStatus) { ?>
+	<?php if($loginStatus) { ?>
 	<div class="modal fade" id="signModal" tabindex="-1" role="dialog"
 		aria-labelledby="signModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -189,7 +205,7 @@
 			$("#nameError").hide();
 			$("#passwordError").hide();
 			$("#emailError").hide();
-			
+
 			$("#sign").click(function() {
 				$("#loginError").hide();
 				var username = $("#inputUsername").val();
@@ -215,31 +231,37 @@
 				$("#nameError").hide();
 				$("#passwordError").hide();
 				$("#emailError").hide();
-				
+
 				var username = $("#Username").val();
 				var nickname = $("#Nickname").val();
 				var password = $("#Password").val();
 				var password2 = $("#Password2").val();
 				var email = $("#Email").val();
-				if(username.length == 0)
+				if (username.length == 0)
 					$("#nameEmptyError").show();
-				else if(password.length == 0)
+				else if (password.length == 0)
 					$("#passwordEmptyError").show();
-				else if(password !== password2)
+				else if (password !== password2)
 					$("#passwordError").show();
-				else if(email.length == 0)
+				else if (email.length == 0)
 					$("#emailEmptyError").show();
-				else 
-				$.post("/login/register", {newUsername:username, newPassword:password, newPassword2:password, newNickname:nickname, email:email}, function(data){
-					var arr = eval ("(" + data + ")");
-					if(arr['status'] == 'username error') {
-						$("#nameError").show();
-					} else if(arr['status'] == 'email error'){
-						$("#emailError").show();
-					} else if(arr['status'] == true) {
-						window.location.reload();
-					}
-				})
+				else
+					$.post("/login/register", {
+						newUsername : username,
+						newPassword : password,
+						newPassword2 : password,
+						newNickname : nickname,
+						email : email
+					}, function(data) {
+						var arr = eval("(" + data + ")");
+						if (arr['status'] == 'username error') {
+							$("#nameError").show();
+						} else if (arr['status'] == 'email error') {
+							$("#emailError").show();
+						} else if (arr['status'] == true) {
+							window.location.reload();
+						}
+					})
 			})
 	<?php }?>
 		$("#logout").click(function() {

@@ -157,6 +157,11 @@
 </div>
 <script>
 $(document).ready(function(){
-		var t=setTimeout("location.href='/status';", 10000)
+		var t=setTimeout("location.href='/status?<?php
+				echo 'pid=' . get ( 'pid' );
+				echo '&Programmer=' . get ( 'Programmer' );
+				echo '&lang=' . get ( 'lang' );
+				echo '&status=' . get ( 'status' );
+				?>';", 10000)
 	})
 	</script>

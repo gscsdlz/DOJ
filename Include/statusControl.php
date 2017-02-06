@@ -22,7 +22,7 @@ class statusControl {
 		$status = ( int ) get ( 'status' );
 		$start = ( int ) get ( 'start' );
 		$end = ( int ) get ( 'end' );
-		$results = self::$model->getStatus ( $submit_id, $pro_id, $username, $lang, $status, $start, $end );
+		$results = self::$model->getStatus ( $submit_id, $pro_id, $username, $lang, $status, $start, $end, 0);
 		VIEW::loopshow ( 'status', $results );
 	}
 }

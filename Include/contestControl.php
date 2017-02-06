@@ -14,8 +14,13 @@ class contestControl {
 		VIEW::loopshow ( 'contest_list', $args );
 	}
 	
-	public function problem_list() {
+	public function show() {
 		$cid = get('id');
-		$args = self::$model->get_problems($cid);
+		$args = self::$model->get_problem_list($cid);
+		
+		global $contest;
+		$contest = true;
+		
+		VIEW::loopshow('problem_list', $args);
 	}
 }
