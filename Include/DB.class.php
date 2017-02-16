@@ -24,13 +24,13 @@ class DB {
 			echo $e->getMessage ();
 		}
 	}
-	public function transaction_query($args) {
 	/**
 	 * 支持事务处理的函数
 	 * 提交的语句必须经过转义
 	 * $args形式为字符串数组
 	 * @var array $argArray
 	 */
+	public function transaction_query($args) {
 		$argArray = func_get_args ();
 		self::$pdo->setAttribute ( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 		self::$pdo->beginTransaction ();

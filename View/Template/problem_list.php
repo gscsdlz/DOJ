@@ -1,6 +1,14 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3 text-center">
 		<?php
+		global $contest;
+		if($contest && isset($args[0]) && count($args[0])){
+			$row = $args[0][0];
+			echo '<h1>'.$row['contest_name'].'</h1>';
+			echo '<h4 class="text-danger">开始时间：'.date ( "Y-m-d H:i:s", $row ['c_stime'] ).' 结束时间：'.date ( "Y-m-d H:i:s", $row ['c_etime'] ).'</h4>';
+			$args = $args[1];
+		}
+		
 		if (isset ( $_GET ['pageid'] )) {
 			$pageid = $_GET['pageid'];
 			?>
@@ -36,25 +44,10 @@
 				<th>题目名</th>
 				<th>题目通过率</th>
 			</tr>
-
-			<!--<tr class="success">
-				<td>1000</td>
-				<td align="left"><a href="showproblem.php?pid=1000">&nbsp;A
-						+ B Problem</a></td>
-				<td>31.27%(<a href="status.php?pid=1000&amp;status=5">191570</a>/<a
-					href="status.php?pid=1000">612622</a>)
-				</td>
-			</tr>
-			 <tr class="danger">
-				<td>1001 <span class="badge">14</span></td>
-				<td align="left"><a href="showproblem.php?pid=1001">&nbsp;Sum
-						Problem</a></td>
-				<td>25.10%(<a href="status.php?pid=1001&amp;status=5">109310</a>/<a
-					href="status.php?pid=1001">435538</a>)
-				</td>
-			</tr>-->
 			<?php
+			
 			if (isset ( $args ) && count ( $args ) != 0) {
+				$contest_id = $args[0][0];
 				foreach ( $args as $row ) {
 					
 					if (! isset ( $row [2] ))
@@ -71,7 +64,11 @@
 					if (isset ( $row [5] ) && $row [5] > 0)
 						echo '<span class="badge">' . $row [5] . '</span>';
 					echo '</td>';
-					echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
+					if($contest){
+						echo '<td align="left"><a href="/contest/problem/'.$contest_id .'/'. $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
+					} else {
+						echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
+					}
 					echo '<td>' . $row [2] . '/' . $row [3] . '</td></tr>' . "\n";
 				}
 			} else {

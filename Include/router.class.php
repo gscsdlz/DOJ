@@ -26,12 +26,15 @@ class router {
 					$i += 2;
 				}
 			} else {
-				$i = 2;
+				//URL => /control/method
+				//URL => /control/method/arg
+				//URL => /control/method/arg/arg
+				
 				$count = count ( $paths );
-				while ( $i < $count ) {
-					$_GET ['id'] = $paths [$i];
-					$i ++;
-				}
+				if($count >= 3)
+					$_GET['id'] = $paths[2];
+				if($count >= 4)
+					$_GET['pid'] = $paths[3];
 			}
 		}
 	}

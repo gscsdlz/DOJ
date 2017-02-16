@@ -14,5 +14,6 @@ class VIEW {
 		require_once 'Template/' . $fileName . '.php';
 		require_once 'Template/footer.php';
 	}
+	
 }
 ?>

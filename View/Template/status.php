@@ -53,6 +53,7 @@
 					?>
 				</select>
 			</div>
+			<input type="hidden" value="<?php if($contest) echo $contest;?>" name="cid">
 			<button type="submit" class="btn btn-default btn-primary">筛选</button>
 		</form>
 		<hr />
@@ -71,6 +72,7 @@
 			<?php
 			if ($args != null) {
 				global $loginStatus;
+				global $contest;
 				if (isset ( $_SESSION ['username'] )) {
 					$loginStatus = true;
 				}
@@ -81,12 +83,20 @@
 					echo '<tr>';
 					echo '<td>' . $row [0] . '</td>';
 					echo '<td>' . date ( "Y-m-d H:i:s", $row [1] ) . '</td>';
-					echo '<td><a href="/problem/show/' . $row [2] . '">' . $row [2] . '</a></td>';
+					if ($contest) {
+						echo '<td><a href="/contest/problem/' . $contest . '/' . $row [2] . '">' . $row [2] . '</a></td>';
+					} else {
+						echo '<td><a href="/problem/show/' . $row [2] . '">' . $row [2] . '</a></td>';
+					}
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
-					if ($loginStatus == true && $row [8] == $_SESSION ['username'])
-						echo '<td><a href="/code/show/'.$row[0].'">' . $row [5] . 'B</a></td>';
-					else
+					if ($loginStatus == true && $row [8] == $_SESSION ['username']) {
+						if ($contest) {
+							echo '<td><a href="/contest/code/' . $contest . '/' . $row [0] . '">' . $row [5] . 'B</a></td>';
+						} else {
+							echo '<td><a href="/code/show/' . $row [0] . '">' . $row [5] . 'B</a></td>';
+						}
+					} else
 						echo '<td>' . $row [5] . 'B</td>';
 					echo '<td>' . $langArr [$row [6]] . '</td>';
 					echo '<td class="text-';
@@ -100,11 +110,11 @@
 						echo 'primary';
 					else
 						echo 'muted';
-					if($row[7] == '11' && isset($_SESSION['username']) && $_SESSION['username'] == $row[8]) //CE
-						echo '"><a href="/code/ce/'.$row[0].'">'.$statusArr [$row [7]] . '</a></td>';
+					if ($row [7] == '11' && isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $row [8]) // CE
+						echo '"><a href="/code/ce/' . $row [0] . '">' . $statusArr [$row [7]] . '</a></td>';
 					else
 						echo '">' . $statusArr [$row [7]] . '</td>';
-					echo '<td><a href="/user/show/'.$row[8].'">' . $row [8] . '</a></td>';
+					echo '<td><a href="/user/show/' . $row [8] . '">' . $row [8] . '</a></td>';
 					echo "</tr>\n";
 				}
 			} else {
@@ -116,6 +126,8 @@
 			<ul class="pagination pagination-lg text-center">
 				<li><a
 					href="/status?<?php
+					if ($contest)
+						echo '&cid=' . $contest;
 					echo '&pid=' . get ( 'pid' );
 					echo '&Programmer=' . get ( 'Programmer' );
 					echo '&lang=' . get ( 'lang' );
@@ -127,6 +139,8 @@
 				<?php
 				if (isset ( $sid ))
 					echo ($sid + 1);
+				if ($contest)
+					echo '&cid=' . $contest;
 				echo '&pid=' . get ( 'pid' );
 				echo '&Programmer=' . get ( 'Programmer' );
 				echo '&lang=' . get ( 'lang' );
@@ -138,6 +152,8 @@
 				<?php
 				if (isset ( $eid ))
 					echo ($eid - 1);
+				if ($contest)
+					echo '&cid=' . $contest;
 				echo '&pid=' . get ( 'pid' );
 				echo '&Programmer=' . get ( 'Programmer' );
 				echo '&lang=' . get ( 'lang' );
@@ -146,6 +162,8 @@
 				<li><a href="#">...</a></li>
 				<li><a
 					href="/status?end=1<?php
+					if($contest)
+						echo '&cid='.$contest;
 					echo '&pid=' . get ( 'pid' );
 					echo '&Programmer=' . get ( 'Programmer' );
 					echo '&lang=' . get ( 'lang' );
@@ -158,10 +176,12 @@
 <script>
 $(document).ready(function(){
 		var t=setTimeout("location.href='/status?<?php
-				echo 'pid=' . get ( 'pid' );
-				echo '&Programmer=' . get ( 'Programmer' );
-				echo '&lang=' . get ( 'lang' );
-				echo '&status=' . get ( 'status' );
-				?>';", 10000)
+		if($contest)
+			echo '&cid='.$contest;
+		echo 'pid=' . get ( 'pid' );
+		echo '&Programmer=' . get ( 'Programmer' );
+		echo '&lang=' . get ( 'lang' );
+		echo '&status=' . get ( 'status' );
+		?>';", 10000)
 	})
 	</script>

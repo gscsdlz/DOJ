@@ -15,6 +15,10 @@ class statusControl {
 		) );
 	}
 	public function index() {
+		global $contest;
+		$cid = (int) get('cid');
+		if($cid)
+			$contest = $cid;
 		$submit_id = ( int ) get ( 'rid' );
 		$pro_id = ( int ) get ( 'pid' );
 		$username = get ( 'Programmer' );
@@ -22,7 +26,7 @@ class statusControl {
 		$status = ( int ) get ( 'status' );
 		$start = ( int ) get ( 'start' );
 		$end = ( int ) get ( 'end' );
-		$results = self::$model->getStatus ( $submit_id, $pro_id, $username, $lang, $status, $start, $end, 0);
+		$results = self::$model->getStatus ( $submit_id, $pro_id, $username, $lang, $status, $start, $end, $cid);
 		VIEW::loopshow ( 'status', $results );
 	}
 }

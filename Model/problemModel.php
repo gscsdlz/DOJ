@@ -23,7 +23,7 @@ class problemModel extends DB {
 	 * @param int $contest_id 比赛ID
 	 * @return number[]|mixed[] 返回两个数字 包括AC提交数，总提交数
 	 */
-	public function get_submits($problemId, $contest_id) {
+	public function get_submits($problemId, $contest_id = 0) {
 		$result = parent::query ( "SELECT COUNT(*) FROM status LEFT JOIN problem ON (status.pro_id = problem.pro_id) WHERE problem.pro_id = ? AND status = 4 AND contest_id = ?", $problemId, $contest_id );
 		$aSubmit = $result->fetch ( PDO::FETCH_NUM ) [0];
 		if (! $aSubmit)
@@ -45,7 +45,7 @@ class problemModel extends DB {
 	 * @param unknown $contest_id
 	 * @return NULL[]|boolean[]|mixed[]
 	 */
-	public function get_my_submits($problemId, $user_id, $contest_id) {
+	public function get_my_submits($problemId, $user_id, $contest_id = 0) {
 		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND status = 4 AND user_id = ? AND contest_id = ? ", $problemId, $user_id, $contest_id);
 		$aSubmit = null;
 		$wSubmit = null;
@@ -83,9 +83,9 @@ class problemModel extends DB {
 				$user_id = $_SESSION ['user_id'];
 			}
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
-				$submits = $this->get_submits ( $row [0], 0);
+				$submits = $this->get_submits ( $row [0]);
 				if ($needGets) {
-					$mySubmits = $this->get_my_submits ( $row [0], $user_id , 0);
+					$mySubmits = $this->get_my_submits ( $row [0], $user_id);
 					$arr [] = array (
 							$row [0],
 							$row [1],

@@ -11,13 +11,15 @@ class submitControl {
 		$this->submit ();
 	}
 	public function submit() {
-		session_start ();
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST' || ! isset ( $_SESSION ['user_id'] )) {
 			$pro_id = (int)post ( 'pro_id' );
 			$lang = (int)post ( 'lang' );
 			$codes = post ( 'codes' );
+			$contestId = post('contestId');
+			if(!$contestId)
+				$contestId = 0;
 			$user_id = $_SESSION ['user_id'];
-			$res = self::$model->insert ( $user_id, $pro_id, $lang, $codes );
+			$res = self::$model->insert ( $user_id, $pro_id, $lang, $codes, $contestId);
 			
 			if ($res) {
 				echo json_encode ( array (

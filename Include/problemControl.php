@@ -22,7 +22,7 @@ class problemControl {
 		if (! $problemId)
 			$problemId = '1000';
 		$body = self::$model->get_problem ( $problemId ); // 获取页面主体
-		$submits = self::$model->get_submits ( $problemId );
+		$submits = self::$model->get_submits ( $problemId);
 		
 		if ($body) {
 			$body ['aSubmit'] = $submits [0];
@@ -39,7 +39,7 @@ class problemControl {
 		if(!$pageId)
 			$pageId = 0;
 		$_GET ['pageid'] = $pageId; // 这里重新设置ID的意义在于 @problem_list:4 需要通过读取GET数组确定分页单元的显示
-		$lists = self::$model->get_list ( $pageId); //0意味着这不属于比赛中的提交
+		$lists = self::$model->get_list ( $pageId);
 		if ($lists)
 			VIEW::loopshow ( 'problem_list', $lists );
 		else

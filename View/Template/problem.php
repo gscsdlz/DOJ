@@ -117,10 +117,16 @@ if (isset ( $_SESSION ['username'] )) {
 			else if(codes.length == 0)
 				$("#emptyCodeError").show();
 			else 
-			$.post("/submit", {pro_id:pid, lang:lang, codes:codes}, function(data){
+			$.post("/submit", {pro_id:pid, lang:lang, codes:codes<?php global $contest; if($contest) echo ',contestId:'.$contest;?>}, function(data){
 				var obj = eval("(" + data + ")");
 				if(obj['status'] == true) {
-					location.href="/status";
+					<?php
+						if($contest) {
+							echo 'location.href="/status?cid='.$contest.'";';
+						} else {
+							echo 'location.href="/status";';
+						}
+					?>
 				} else {
 					$("#submitCodeError").show();
 				}
