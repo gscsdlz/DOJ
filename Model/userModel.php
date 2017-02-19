@@ -51,5 +51,17 @@ class userModel extends DB {
 		$result = parent::query("SELECT * FROM `users` lEFT JOIN `group` ON `group`.group_id = `users`.group_id WHERE user_id = ?", $user_id);
 		return $result->fetch(PDO::FETCH_NAMED);
 	}
+	
+	public function get_contest_info($user_id){
+		$result = parent::query("SELECT contest_name, COUNT(DISTINCT pro_id), contest.contest_id FROM contest INNER JOIN status ON (contest.contest_id = status.contest_id) WHERE status.user_id = ? AND status.status = 4 GROUP BY status.contest_id", $user_id);
+		if($result->rowCount() != 0) {
+			while($row = $result->fetch(PDO::FETCH_NUM)){
+				$args[] = $row;
+			}
+			return $args;
+		} else {
+			return null;
+		}
+	}
 }
 ?>

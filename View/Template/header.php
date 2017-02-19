@@ -15,7 +15,7 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-default" role="navigation">
+	<nav class="navbar navbar-inverse" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -24,7 +24,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">NOJ</a>
+				<a class="navbar-brand" href="#">Welcome to NUC Online Judge</a>
 			</div>
 			<div class="collapse navbar-collapse"
 				id="bs-example-navbar-collapse-1">
@@ -43,7 +43,7 @@
 				<form class="navbar-form navbar-left" role="search" method="get"
 					action="/problem/search">
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="题目搜索"
+						<input type="text" class="form-control" placeholder="输入题目或者来源信息	"
 							name="key"
 							value="<?php if(isset($_GET['key'])) echo $_GET['key'];?>">
 					</div>
@@ -52,7 +52,7 @@
 				<?php }  else {?>
 				<ul class="nav navbar-nav">
 					<li><a href="/contest/page">比赛列表</a></li>
-					<li><a href="/contest/show/<?php echo $contest;?>">题目</a></li>
+					<li class="active"><a href="/contest/show/<?php echo $contest;?>">题目</a></li>
 					<li><a href="/status?cid=<?php echo $contest;?>">状态</a></li>
 					<li><a href="/contest/ranklist">排名</a></li>
 					<li><a href="/contest/ask">问答</a></li>

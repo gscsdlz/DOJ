@@ -110,8 +110,13 @@
 						echo 'primary';
 					else
 						echo 'muted';
-					if ($row [7] == '11' && isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $row [8]) // CE
-						echo '"><a href="/code/ce/' . $row [0] . '">' . $statusArr [$row [7]] . '</a></td>';
+					if ($row [7] == '11' && isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $row [8]) {// CE
+						if($contest) {
+							echo '"><a href="/contest/ce/'  . $contest . '/' . $row [0] . '">' . $statusArr [$row [7]] .  '</a></td>';
+						} else {
+							echo '"><a href="/code/ce/' . $row [0] . '">' . $statusArr [$row [7]] . '</a></td>';
+						}
+					}
 					else
 						echo '">' . $statusArr [$row [7]] . '</td>';
 					echo '<td><a href="/user/show/' . $row [8] . '">' . $row [8] . '</a></td>';

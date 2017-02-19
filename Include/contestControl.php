@@ -63,12 +63,28 @@ class contestControl {
 		$submit_id = (int)get ( 'pid' );
 		$contestId = (int)get ( 'id' );
 		$contest = $contestId;
-		$res = self::$codeModel->getCode ( $submit_id );
+		$res = self::$codeModel->getCode ( $submit_id, $contest);
 		if ($res) {
 			VIEW::show ( 'code', $res );
 		} else {
 			VIEW::show ( 'error', array (
 					'errorInfo' => 'Invalid Id' 
+			) );
+		}
+	}
+	
+	public function ce() {
+		global $contest;
+	
+		$submit_id = (int)get ( 'pid' );
+		$contestId = (int)get ( 'id' );
+		$contest = $contestId;
+		$res = self::$codeModel->getCEInfo( $submit_id, $contest);
+		if ($res) {
+			VIEW::show ( 'code', $res );
+		} else {
+			VIEW::show ( 'error', array (
+					'errorInfo' => 'Invalid Id'
 			) );
 		}
 	}

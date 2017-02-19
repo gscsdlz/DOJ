@@ -72,11 +72,17 @@
 				<h4 class="text-center">参加过的比赛</h4>
 			</div>
 			<div class="list-group panel-body">
-				<a href="#" class="list-group-item">第四届国际大学生程序设计竞赛<span class="badge">3</span></a> 
-				<a href="#" class="list-group-item">第一届中国大学生程序设计竞赛<span class="badge">1</span></a> 
-				<a href="#" class="list-group-item">ACM-ICPC。。。。。<span class="badge">4</span></a> 
-				<a href="#" class="list-group-item">第一届国际大学生程序设计竞赛<span class="badge">5</span></a>
-			</div>
+			<?php
+				if(isset($args[4]) && count($args[4])) {
+					foreach ($args[4] as $row) {
+						echo '<a href="/contest/show/'.$row[2].'" class="list-group-item">'.$row[0].'<span class="badge">'.$row[1].'</span></a>';
+ 	;
+					}
+				} else {
+					echo '<a href="#" class="list-group-item text-center">还用户目前还未参加比赛</a>' ;
+				}
+			?>
+	</div>
 			<div class="panel-footer">
 				<button type="button" class="btn btn-primary"
 					style="margin-left: 40%;" id="prePage">上一页</button>

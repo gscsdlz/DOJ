@@ -64,7 +64,7 @@ if (isset ( $_SESSION ['username'] )) {
 				<form class="form-inline">
 					<div class="form-group">
 						<h4 id="submitCodeError" class="text-danger">提交错误，请重试</h4>
-						<input type="text" class="form-control" id="pid"
+						<input type="text" readonly="true" class="form-control" id="pid"
 							value="<?php echo $pro_id;?>"> <select class="form-control"
 							id="lang">
 							<?php
@@ -91,8 +91,8 @@ if (isset ( $_SESSION ['username'] )) {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary" id="submitCode">Submit</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				<button type="button" class="btn btn-primary" id="submitCode">提交</button>
 			</div>
 		</div>
 	</div>

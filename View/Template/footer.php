@@ -20,7 +20,7 @@
 				<td>ACM实验室</td>
 			</tr>
 		</table>
-		<h4>执行时间:<?php global $stime; echo  number_format(microtime(true) - $stime, 5, '.', '');?></h4>
+		<h4>执行时间:<?php global $stime; echo  number_format(microtime(true) - $stime, 5, '.', '');?> 服务器时间:<?php echo date('Y-m-d H:i:s', time());?></h4>
 	</div>
 </div>
 ﻿
