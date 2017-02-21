@@ -5,13 +5,24 @@ class contestModel extends DB {
 	private $model;
 	public function __construct() {
 		parent::__construct ();
-		$this->model = new problemModel();
+		$this->model = new problemModel ();
+	}
+	public function timeCheck($contestId) {
+		$timeNow = time ();
+		$times = parent::query ( "SELECT c_stime, c_etime FROM contest WHERE contest_id = ? ", $contestId );
+		if ($times->rowCount () != 0) {
+			$row = $times->fetch ( PDO::FETCH_NUM );
+			if ($timeNow < $row [0])
+				return false;
+			return true;
+		}
+		return false;
 	}
 	public function get_lists($cid = 0) {
-		if($cid){
-			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id) WHERE contest_id = ? ORDER BY contest_id DESC", $cid);
+		if ($cid) {
+			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id) WHERE contest_id = ? ORDER BY contest_id DESC", $cid );
 		} else {
-			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id)  ORDER BY contest_id DESC");
+			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id)  ORDER BY contest_id DESC" );
 		}
 		
 		if ($result->rowCount () != 0) {
@@ -31,18 +42,20 @@ class contestModel extends DB {
 				$needGets = true;
 				$user_id = $_SESSION ['user_id'];
 			}
-			$arr[] = array($contest_id);
+			$arr [] = array (
+					$contest_id 
+			);
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
 				$Submits = $this->model->get_submits ( $row [2], $contest_id );
 				if ($needGets) {
-					$mySubmits = $this->model->get_my_submits($row[2], $user_id, $contest_id);
+					$mySubmits = $this->model->get_my_submits ( $row [2], $user_id, $contest_id );
 					$arr [] = array (
 							$row [0],
 							$row [1],
 							$Submits [0],
 							$Submits [1],
-							$mySubmits[0],
-							$mySubmits[1]
+							$mySubmits [0],
+							$mySubmits [1] 
 					);
 				} else {
 					$arr [] = array (
@@ -58,23 +71,20 @@ class contestModel extends DB {
 			return null;
 		}
 	}
-	
 	public function get_real_Id($pid, $contest_id) {
-		$result = parent::query("SELECT pro_id FROM contest_pro WHERE contest_id = ? AND inner_id = ? LIMIT 1", $contest_id, $pid);
-		if($result->rowCount() != 0) {
-			 return $result->fetch(PDO::FETCH_NUM)[0];
+		$result = parent::query ( "SELECT pro_id FROM contest_pro WHERE contest_id = ? AND inner_id = ? LIMIT 1", $contest_id, $pid );
+		if ($result->rowCount () != 0) {
+			return $result->fetch ( PDO::FETCH_NUM ) [0];
 		} else {
-			return -1;
+			return - 1;
 		}
 	}
-	
 	public function get_problem($pid, $inner_id) {
-		$body = $this->model->get_problem($pid);
-		if(isset($body['pro_id'])) {
-			$body['pro_id'] = $inner_id;
+		$body = $this->model->get_problem ( $pid );
+		if (isset ( $body ['pro_id'] )) {
+			$body ['pro_id'] = $inner_id;
 		}
 		return $body;
 	}
-	
 }
 ?>

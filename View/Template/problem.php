@@ -2,8 +2,8 @@
 	<div class="col-md-6 col-md-offset-3">
 		<h1 class="text-center text-primary"><?php echo $pro_title;?></h1>
 		<h4 class="text-center text-danger">时间限制: <?php echo $time_limit;?>ms 内存限制: <?php echo $memory_limit;?>KB</h4>
-		<h4 class="text-center text-danger">通过次数: <?php echo $aSubmit;?>
-			总提交次数: <?php echo $tSubmit;?></h4>
+		<h4 class="text-center text-danger">通过次数: <span class="badge"><?php echo $aSubmit;?></span>
+			总提交次数: <span class="badge"><?php echo $tSubmit;?></span></h4>
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<div class="panel panel-default">

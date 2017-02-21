@@ -5,7 +5,6 @@ require_once 'Model/problemModel.php';
 require_once 'Model/statusModel.php';
 require_once 'Model/codeModel.php';
 require_once 'View/VIEW.class.php';
-
 class contestControl {
 	private static $model = null;
 	private static $problemModel = null;
@@ -33,9 +32,15 @@ class contestControl {
 		global $contest;
 		$cid = get ( 'id' );
 		$contest = $cid;
-		$args[] = self::$model->get_lists($cid);
-		$args[] = self::$model->get_problem_list ( $cid );
-		VIEW::loopshow ( 'problem_list', $args );
+		if (self::$model->timeCheck ( $cid )) { //检查比赛是否开始
+			$args [] = self::$model->get_lists ( $cid );
+			$args [] = self::$model->get_problem_list ( $cid );
+			VIEW::loopshow ( 'contest_problem_list', $args );
+		} else {
+			VIEW::show('error', array(
+				'errorInfo' => 'Time Error'	
+			));
+		}
 	}
 	public function problem() {
 		global $contest;
@@ -43,27 +48,32 @@ class contestControl {
 		$innerId = get ( 'pid' );
 		$contestId = get ( 'id' );
 		$contest = $contestId;
-		$problemId = self::$model->get_real_id ( $innerId, $contestId );
-		$body = self::$model->get_problem ( $problemId, $innerId );
-		$submits = self::$problemModel->get_submits ( $problemId, $contest );
-		
-		if ($body) {
-			$body ['aSubmit'] = $submits [0];
-			$body ['tSubmit'] = $submits [1];
-			VIEW::show ( 'problem', $body );
-		} else
-			VIEW::show ( 'error', array (
-					'errorInfo' => 'Invalid Id' 
-			) );
+		if (self::$model->timeCheck ( $contestId )) { //检查比赛是否开始
+			$problemId = self::$model->get_real_id ( $innerId, $contestId );
+			$body = self::$model->get_problem ( $problemId, $innerId );
+			$submits = self::$problemModel->get_submits ( $problemId, $contest );
+			
+			if ($body) {
+				$body ['aSubmit'] = $submits [0];
+				$body ['tSubmit'] = $submits [1];
+				VIEW::show ( 'problem', $body );
+			} else
+				VIEW::show ( 'error', array (
+						'errorInfo' => 'Invalid Id' 
+				) );
+		} else {
+			VIEW::show('error', array(
+				'errorInfo' => 'Time Error'	
+			));
+		}
 	}
-	
 	public function code() {
 		global $contest;
 		
-		$submit_id = (int)get ( 'pid' );
-		$contestId = (int)get ( 'id' );
+		$submit_id = ( int ) get ( 'pid' );
+		$contestId = ( int ) get ( 'id' );
 		$contest = $contestId;
-		$res = self::$codeModel->getCode ( $submit_id, $contest);
+		$res = self::$codeModel->getCode ( $submit_id, $contest );
 		if ($res) {
 			VIEW::show ( 'code', $res );
 		} else {
@@ -72,19 +82,18 @@ class contestControl {
 			) );
 		}
 	}
-	
 	public function ce() {
 		global $contest;
-	
-		$submit_id = (int)get ( 'pid' );
-		$contestId = (int)get ( 'id' );
+		
+		$submit_id = ( int ) get ( 'pid' );
+		$contestId = ( int ) get ( 'id' );
 		$contest = $contestId;
-		$res = self::$codeModel->getCEInfo( $submit_id, $contest);
+		$res = self::$codeModel->getCEInfo ( $submit_id, $contest );
 		if ($res) {
 			VIEW::show ( 'code', $res );
 		} else {
 			VIEW::show ( 'error', array (
-					'errorInfo' => 'Invalid Id'
+					'errorInfo' => 'Invalid Id' 
 			) );
 		}
 	}

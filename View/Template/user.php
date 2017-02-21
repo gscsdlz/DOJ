@@ -4,6 +4,8 @@
  * $args[1] AC题目数量 数组
  * $args[2] 已提交没有AC题目数量 数组
  * $args[3] 用户基本数据信息 变量
+ * $args[4] 比赛信息
+ * $args[5] 小组信息
  */
 ?>
 <div class="row">
@@ -23,13 +25,109 @@
 			<small><?php if(isset($motto)) echo $motto;?></small>
 		</h3>
 		<?php
-		if (isset ( $_SESSION ['username'] ) && $_SESSION['username'] == $username) {
+		if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {
 			?>
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				<button type="button" class="btn btn-primary btn-block">修改信息</button>
+				<button type="button" class="btn btn-primary btn-block"
+					data-toggle="modal" data-target="#updateModal">修改信息</button>
 			</div>
 		</div>
+<div class="modal fade text-left" id="updateModal" tabindex="-1" role="dialog"
+	aria-labelledby="updateModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h2 class="text-center modal-title" id="codeModalLabel">修改用户信息</h2>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="Username" class="col-sm-2 control-label">用户名</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control"
+								value="<?php if(isset($username)) echo $username?>"
+								readonly="readonly">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Nickname" class="col-sm-2 control-label">昵称</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="Nickname"
+								name="newNickname" placeholder="Nickname"
+								value="<?php  if(isset($nickname)) echo $nickname?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Motto" class="col-sm-2 control-label">签名</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="Motto"
+								placeholder="签名" value="<?php  if(isset($motto)) echo $motto?>">
+							<label id="mottoError" class="control-label text-danger">签名超过最大字数</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="QQ" class="col-sm-2 control-label">QQ</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="QQ" placeholder="QQ号"
+								value="<?php  if(isset($qq) && $qq > 0) echo $qq?>">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="Group" class="col-sm-2 control-label">小组</label>
+						<div class="col-sm-10">
+							<select id="Gourp" class="form-cotrol">
+								<?php
+								
+								foreach ( $args [5] as $row ) {
+									echo '<option value="' . $row [0] . '">' . $row [1] . '</option>';
+								}
+								?>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="email" class="col-sm-2 control-label">电子邮箱</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="Email" name="email"
+								placeholder="email" value="<?php echo $email;?>"> <label
+								id="emailError" class="control-label text-danger">该电子邮箱已经被注册过了！</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="head" class="col-sm-2 control-label">头像</label>
+						<div class="col-sm-10">
+							 <label	 class="control-label text-success">头像请双击图片修改</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password" class="col-sm-2 control-label">密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="Password"
+								name="newPassword" placeholder="输入密码则表示修改密码">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="password2" class="col-sm-2 control-label">确认密码</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control" id="Password2"
+								name="newPassword2" placeholder="确认密码"> <label
+								id="passwordError" class="control-label text-danger">两次输入的密码不一致</label>
+
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary" id="update">修改</button>
+			</div>
+		</div>
+	</div>
+</div>
 		<?php }?>
 		<hr />
 		<table class="table text-left">
@@ -39,7 +137,7 @@
 			</tr>
 			<tr>
 				<td>QQ</td>
-				<td><?php if(isset($qq)) echo $qq;?></td>
+				<td><?php if(isset($qq) && $qq > 0) echo $qq;?></td>
 			</tr>
 			<tr>
 				<td>加入时间</td>
@@ -59,10 +157,8 @@
 			<div class="panel-heading">
 				<h4 class="text-center">排名</h4>
 			</div>
-			<div class="panel-body">
-				114
-			</div>
-			
+			<div class="panel-body">114</div>
+
 		</div>
 	</div>
 
@@ -73,14 +169,14 @@
 			</div>
 			<div class="list-group panel-body">
 			<?php
-				if(isset($args[4]) && count($args[4])) {
-					foreach ($args[4] as $row) {
-						echo '<a href="/contest/show/'.$row[2].'" class="list-group-item">'.$row[0].'<span class="badge">'.$row[1].'</span></a>';
- 	;
-					}
-				} else {
-					echo '<a href="#" class="list-group-item text-center">还用户目前还未参加比赛</a>' ;
+			if (isset ( $args [4] ) && count ( $args [4] )) {
+				foreach ( $args [4] as $row ) {
+					echo '<a href="/contest/show/' . $row [2] . '" class="list-group-item">' . $row [0] . '<span class="badge">' . $row [1] . '</span></a>';
+					;
 				}
+			} else {
+				echo '<a href="#" class="list-group-item text-center">还用户目前还未参加比赛</a>';
+			}
 			?>
 	</div>
 			<div class="panel-footer">
@@ -175,6 +271,37 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 
 <script>
 	$(document).ready(function(){
+		$("#mottoError").hide();
+		$("#emailError").hide();
+		$("#passwordError").hide();
+		
+		$("#update").click(function(){
+			$("#mottoError").hide();
+			$("#emailError").hide();
+			$("#passwordError").hide();
+			
+			var nickname = $("#Nickname").val();
+			var motto = $("#Motto").val();
+			var qq = $("#QQ").val();
+			var email = $("#Email").val();
+			var group = $("#Group").val();
+			var password= $("#Password").val();
+			var password2 = $("#Password2").val();
+			if(password != password2)
+				$("#passwordError").show();
+			else if(motto.length > 30)
+				$("#mottoError").show();
+			else
+			$.post("/login/update", {nickname:nickname, motto:motto, qq:qq, email:email, group:group, password:password, password2:password2}, function(data){
+				var arr = eval("(" + data + ")");
+				if (arr['status']) {
+					window.location.reload();
+				} else if(arr['status'] == 'email error'){
+					$("#emailError").show();	
+				}
+			})
+		})
+		
 		var currentValue = 0;
 		$("a.list-group-item").hide();
 		$("a.list-group-item:eq(0)").show();
@@ -209,7 +336,7 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 				.getElementById('AllStatus'));
 		optionA = {
 			 title: {
-				text: '提交记录统计',
+				text: '提交记录统计 总计<?php echo array_sum($args[0])?>次',
 				left: 'center'
 			},
 			tooltip : {

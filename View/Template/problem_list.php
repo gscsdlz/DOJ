@@ -1,13 +1,6 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3 text-center">
 		<?php
-		global $contest;
-		if($contest && isset($args[0]) && count($args[0])){
-			$row = $args[0][0];
-			echo '<h1>'.$row['contest_name'].'</h1>';
-			echo '<h4 class="text-danger">开始时间：'.date ( "Y-m-d H:i:s", $row ['c_stime'] ).' 结束时间：'.date ( "Y-m-d H:i:s", $row ['c_etime'] ).'</h4>';
-			$args = $args[1];
-		}
 		
 		if (isset ( $_GET ['pageid'] )) {
 			$pageid = $_GET['pageid'];
@@ -32,12 +25,6 @@
 			</ul>
 		</nav>
 		<?php }?>
-		<?php
-			global $contest; //引自@config.php
-			if($contest) {
-				echo '<h1></h1>';
-			}
-		?>
 		<table class="table table-hover text-left">
 			<tr>
 				<th>题目编号</th>
@@ -64,11 +51,7 @@
 					if (isset ( $row [5] ) && $row [5] > 0)
 						echo '<span class="badge">' . $row [5] . '</span>';
 					echo '</td>';
-					if($contest){
-						echo '<td align="left"><a href="/contest/problem/'.$contest_id .'/'. $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
-					} else {
-						echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
-					}
+					echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
 					echo '<td>' . $row [2] . '/' . $row [3] . '</td></tr>' . "\n";
 				}
 			} else {

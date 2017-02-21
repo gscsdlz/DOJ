@@ -77,7 +77,6 @@
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
 							<li><a href="/user/show/<?php echo $_SESSION['username']?>">用户界面</a></li>
-							<li><a href="#">信息修改</a></li>
 							<li class="divider"></li>
 							<li id="logout"><a href="#">退出登录</a></li>
 						</ul></li>

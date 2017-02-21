@@ -18,6 +18,7 @@ class userControl{
 		$arg[] = self::$model->get_nac_problem($user_id);
 		$arg[] = self::$model->get_user_info($user_id);
 		$arg[] = self::$model->get_contest_info($user_id);
+		$arg[] = self::$model->get_group_info();
 		if($arg[3] != null)
 			VIEW::loopshow('user', $arg);
 		else

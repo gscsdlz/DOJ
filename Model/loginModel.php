@@ -30,4 +30,36 @@ class loginModel extends DB {
 		}
 		return 1;
 	}
+	public function update($userid, $password, $password2, $nickname, $email, $qq, $motto, $group) {
+		if ($password && $password == $password2) {
+			parent::query ( "UPDATE users SET password = sha1(?)	 WHERE user_id = ? LIMIT 1", $password, $userid );
+		}
+		$res = parent::query ( "SELECT user_id FROM users WHERE email=? AND user_id != ?", $email, $userid );
+		if ($res->rowCount () != 0) {
+			return - 1; // 邮箱已经被使用过了
+		}
+		$res = parent::query ( "SELECT * FROM group WHERE group_id = ?", $group );
+		if ($res->rowCount () != 0) {
+			return - 2; // groupID不合法
+		}
+		/**
+		 * 这个地方需要调整
+		 */
+		if ($nickname) {			
+			parent::query ( "UPDATE users SET nickname=? WHERE user_id = ? LIMIT 1", $nickname, $userid);
+		}
+		if ($email) {
+			parent::query ( "UPDATE users SET email=? WHERE user_id = ? LIMIT 1", $email, $userid );
+		}
+		if ($qq) {
+			parent::query ( "UPDATE users SET qq=? WHERE user_id = ? LIMIT 1", $qq, $userid );
+		}
+		if($motto) {
+			parent::query("UPDATE users SET motto=? WHERE user_id = ? LIMIT 1", $motto, $userid);
+		}
+		if($group) {
+			parent::query("UPDATE users SET group=? WHERE user_id = ? LIMIT 1", $group, $userid);
+		}
+		return 0;
+	}
 }

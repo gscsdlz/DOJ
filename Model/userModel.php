@@ -63,5 +63,13 @@ class userModel extends DB {
 			return null;
 		}
 	}
+	
+	public function get_group_info() {
+		$result = parent::query("SELECT * FROM `group`");
+		while($row = $result->fetch(PDO::FETCH_NUM)){
+			$arg[] = $row;
+		}
+		return $arg;
+	}
 }
 ?>

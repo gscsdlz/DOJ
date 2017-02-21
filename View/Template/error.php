@@ -20,7 +20,10 @@
 			} else if ($errorInfo == 'Invalid User') {
 				echo '<h1>你要查看的用户还没有注册，所以：</h1>';
 				echo '<img src="/Src/Image/Invalid User.jpg" alt="..."  width="400px" class="img-rounded">';
-			} 
+			} else if ($errorInfo == 'Time Error') {
+				echo '<h1>比赛还未开始，所以：</h1>';
+				echo '<img src="/Src/Image/Invalid User.jpg" alt="..."  width="400px" class="img-rounded">';	
+			}
 		 ?>
 	</div>
 </div>
