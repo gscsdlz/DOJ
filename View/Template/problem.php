@@ -64,7 +64,7 @@ if (isset ( $_SESSION ['username'] )) {
 				<form class="form-inline">
 					<div class="form-group">
 						<h4 id="submitCodeError" class="text-danger">提交错误，请重试</h4>
-						<input type="text" readonly="true" class="form-control" id="pid"
+						<input type="text" readonly="readonly" class="form-control" id="pid"
 							value="<?php echo $pro_id;?>"> <select class="form-control"
 							id="lang">
 							<?php

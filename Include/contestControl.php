@@ -32,14 +32,47 @@ class contestControl {
 		global $contest;
 		$cid = get ( 'id' );
 		$contest = $cid;
-		if (self::$model->timeCheck ( $cid )) { //检查比赛是否开始
-			$args [] = self::$model->get_lists ( $cid );
+		if (isset ( $_SESSION ['user_id'] ))
+			$uid = $_SESSION ['user_id'];
+		else
+			$uid = 0;
+		$status = self::$model->privilege_check ( $cid, $uid );
+		/**
+		 * $status = 0 一切正常开始显示
+		 * = 1弹出需要输入密码框
+		 * = -1比赛未开始
+		 * = -2 比赛权限不足
+		 */
+		$args [] = self::$model->get_lists ( $cid );
+		if ($status == 0) { // 检查用户权限以及比赛是否开始			
 			$args [] = self::$model->get_problem_list ( $cid );
 			VIEW::loopshow ( 'contest_problem_list', $args );
+		} else if ($status == 1) {
+			$args[] = array('pass' => true);
+			VIEW::loopshow ( 'contest_problem_list', $args);
+		} else if($status == -1) {
+			$args[] = array('timeError' => true);
+			VIEW::loopshow ( 'contest_problem_list', $args);
 		} else {
-			VIEW::show('error', array(
-				'errorInfo' => 'Time Error'	
-			));
+			$args[] = array('privilegeError' => true);
+			VIEW::loopshow ( 'contest_problem_list', $args);
+		}
+	}
+	public function check() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+			$cid = ( int ) get ( 'id' );
+			$password = post ( 'contestpass' );
+			if (isset ( $_SESSION ['user_id'] )) {
+				$user_id = $_SESSION ['user_id'];
+				if (self::$model->check ( $user_id, $cid, $password ))
+					echo json_encode ( array (
+							'status' => true 
+					) );
+				else
+					echo json_encode ( array (
+							'status' => false 
+					) );
+			}
 		}
 	}
 	public function problem() {
@@ -48,7 +81,7 @@ class contestControl {
 		$innerId = get ( 'pid' );
 		$contestId = get ( 'id' );
 		$contest = $contestId;
-		if (self::$model->timeCheck ( $contestId )) { //检查比赛是否开始
+		if (self::$model->timeCheck ( $contestId ) == 0) { // 检查比赛是否开始
 			$problemId = self::$model->get_real_id ( $innerId, $contestId );
 			$body = self::$model->get_problem ( $problemId, $innerId );
 			$submits = self::$problemModel->get_submits ( $problemId, $contest );
@@ -62,9 +95,9 @@ class contestControl {
 						'errorInfo' => 'Invalid Id' 
 				) );
 		} else {
-			VIEW::show('error', array(
-				'errorInfo' => 'Time Error'	
-			));
+			VIEW::show ( 'error', array (
+					'errorInfo' => 'Time Error' 
+			) );
 		}
 	}
 	public function code() {

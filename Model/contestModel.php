@@ -13,11 +13,52 @@ class contestModel extends DB {
 		if ($times->rowCount () != 0) {
 			$row = $times->fetch ( PDO::FETCH_NUM );
 			if ($timeNow < $row [0])
-				return false;
-			return true;
+				return -1;
+			return 0;
 		}
-		return false;
+		return -1;
 	}
+	public function privilege_check($cid, $uid) {
+		$res = parent::query_one ( "SELECT contest_pass FROM contest WHERE contest_id = ?", $cid );
+		/**
+		 * contest_pass = 1 不需要密码
+		 * 				= 2 指定用户可进入
+		 * 				= 其他6位以上字符 输入密码可进入
+		 * 返回值 1 需要密码 0 一切正常 -1 比赛未开始 -2 权限不足
+		 */
+		
+		if ($res) {
+			$contest_pass = $res [0];
+			if ($contest_pass != 1) {
+				$res2 = parent::query_one ( "SELECT user_id FROM contest_user WHERE contest_id = ? AND user_id = ?", $cid, $uid );
+				if (!$res2) {
+					if(strlen($contest_pass) > 1) {
+						return 1;
+					} else {
+						return -2;
+					}
+				}
+			}
+		} else { //找不到这个比赛
+			return -1;
+		}
+		return $this->timeCheck($cid);
+	}
+	
+	public function check($user_id, $cid, $password) {
+		$res = parent::query_one("SELECT contest_pass FROM contest WHERE contest_id = ?", $cid);
+		if($res) {
+			if($password == $res[0]) {
+				parent::query("INSERT INTO contest_user (user_id, contest_id) VALUES (?, ?)", $user_id, $cid);
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+	
 	public function get_lists($cid = 0) {
 		if ($cid) {
 			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id) WHERE contest_id = ? ORDER BY contest_id DESC", $cid );

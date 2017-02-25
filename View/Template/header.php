@@ -36,7 +36,7 @@
 					<li><a href="/">首页</a></li>
 					<li><a href="/problem/page">题目</a></li>
 					<li><a href="/status">状态</a></li>
-					<li><a href="/ranklist">排名</a></li>
+					<li><a href="/rank/page">排名</a></li>
 					<li><a href="/contest/page">比赛</a></li>
 					<li><a href="#">帮助</a></li>
 				</ul>

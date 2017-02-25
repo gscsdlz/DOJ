@@ -20,8 +20,8 @@
 			} else if ($errorInfo == 'Invalid User') {
 				echo '<h1>你要查看的用户还没有注册，所以：</h1>';
 				echo '<img src="/Src/Image/Invalid User.jpg" alt="..."  width="400px" class="img-rounded">';
-			} else if ($errorInfo == 'Time Error') {
-				echo '<h1>比赛还未开始，所以：</h1>';
+			} else if ($errorInfo == 'Privilege Error' || $errorInfo == 'Time Error') {
+				echo '<h1>权限不足或者比赛还未开始，所以：</h1>';
 				echo '<img src="/Src/Image/Invalid User.jpg" alt="..."  width="400px" class="img-rounded">';	
 			}
 		 ?>
@@ -29,6 +29,10 @@
 </div>
 ﻿<script>
 $(document).ready(function(){
+		<?php if ($errorInfo == 'Privilege Error') {?>
+			var t=setTimeout("location.href='/contest/page';", 3000)
+		<?php } else {?>
 		var t=setTimeout("location.href='/';", 3000)
+		<?php }?>
 })
 </script>

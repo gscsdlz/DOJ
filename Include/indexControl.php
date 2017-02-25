@@ -6,4 +6,9 @@ class indexControl {
 	public function index() {
 		VIEW::loopshow ( 'default', array () );
 	}
+	public function __call($method, $args) {
+		VIEW::show ( 'error', array (
+				'errorInfo' => 'Invalid Action'
+		) );
+	}
 }

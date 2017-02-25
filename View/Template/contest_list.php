@@ -25,10 +25,12 @@
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_stime'] ) . '</td>';
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_etime'] ) . '</td>';
 					echo '<td><a href="/user/show/' . $row ['username'] . '">' . $row ['username'] . '</a></td>';
-					if ($row ['contest_pass'])
-						echo '<td>需要密码</td>';
-					else
+					if ($row ['contest_pass'] == 1)
 						echo '<td>公开</td>';
+					else if ($row ['contest_pass'] == 2)
+						echo '<td>私有比赛</td>';
+					else
+						echo '<td>需要密码</td>';
 					echo "<tr>\n";
 				}
 			}
@@ -54,14 +56,16 @@
 				if ($time < $row ['c_stime']) {
 					echo '<tr>';
 					echo '<td>' . $row ['contest_id'] . '</td>';
-					echo '<td><a href="#">' . $row ['contest_name'] . '</a></td>';
+					echo '<td><a href="/contest/show/' . $row ['contest_id'] . '">' . $row ['contest_name'] . '</a></td>';
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_stime'] ) . '</td>';
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_etime'] ) . '</td>';
 					echo '<td><a href="/user/show/' . $row ['username'] . '">' . $row ['username'] . '</a></td>';
-					if ($row ['contest_pass'])
-						echo '<td>需要密码</td>';
-					else
+					if ($row ['contest_pass'] == 1)
 						echo '<td>公开</td>';
+					else if ($row ['contest_pass'] == 2)
+						echo '<td>私有比赛</td>';
+					else
+						echo '<td>需要密码</td>';
 					echo "<tr>\n";
 				}
 			}
@@ -90,10 +94,12 @@
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_stime'] ) . '</td>';
 					echo '<td>' . date ( "Y-m-d H:i:s", $row ['c_etime'] ) . '</td>';
 					echo '<td><a href="/user/show/' . $row ['username'] . '">' . $row ['username'] . '</a></td>';
-					if ($row ['contest_pass'])
-						echo '<td>需要密码</td>';
-					else
+					if ($row ['contest_pass'] == 1)
 						echo '<td>公开</td>';
+					else if ($row ['contest_pass'] == 2)
+						echo '<td>私有比赛</td>';
+					else
+						echo '<td>需要密码</td>';
 					echo "<tr>\n";
 				}
 			}
