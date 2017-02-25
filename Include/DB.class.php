@@ -24,10 +24,27 @@ class DB {
 			echo $e->getMessage ();
 		}
 	}
+	public function query_one($args) {
+		$argArray = func_get_args ();
+		$q = array_shift ( $argArray );
+		try {
+			$result = self::$pdo->prepare ( $q );
+			$result->execute ( $argArray );
+		} catch ( PDOException $e ) {
+			echo $e->getMessage ();
+		}
+		
+		if ($result->rowCount () != 0) {
+			return $result->fetch ( PDO::FETCH_NUM );
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * 支持事务处理的函数
 	 * 提交的语句必须经过转义
 	 * $args形式为字符串数组
+	 * 
 	 * @var array $argArray
 	 */
 	public function transaction_query($args) {
@@ -36,7 +53,7 @@ class DB {
 		self::$pdo->beginTransaction ();
 		try {
 			foreach ( $argArray as $q ) {
-				$affectRow = self::$pdo->exec( $q );
+				$affectRow = self::$pdo->exec ( $q );
 				if (! $affectRow) {
 					throw new PDOException ( "ERROR" );
 				}
