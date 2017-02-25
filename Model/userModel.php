@@ -10,7 +10,7 @@ class userModel extends DB {
 	}
 	
 	public function getStatus($user_id) {
-		$result = parent::query ( "SELECT status, count(*) FROM `status` where user_id = ? group BY (status)", $user_id );
+		$result = parent::query ( "SELECT status, count(*) FROM `status` where user_id = ? AND contest_id = 0 group BY (status)", $user_id );
 		$arr = array (
 				0,
 				0,
@@ -30,7 +30,7 @@ class userModel extends DB {
 	}
 	
 	public function get_ac_problem($user_id) {
-		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status = 4", $user_id);
+		$result = parent::query("SELECT DISTINCT pro_id FROM status WHERE user_id = ? AND status = 4 AND contest_id=0", $user_id);
 		$arr = null;
 		while($row = $result->fetch(PDO::FETCH_NUM)) {
 			$arr[] = $row[0];
