@@ -15,8 +15,10 @@ class WORK {
 			return new codeControl ();
 		else if ($className == 'userControl')
 			return new userControl ();
+		else if ($className == 'rankControl')
+				return new rankControl ();
 		else {
-			require_once 'index.php';
+			require_once 'indexControl.php';
 			return new indexControl ();
 		}
 	}
