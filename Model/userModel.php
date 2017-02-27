@@ -71,5 +71,15 @@ class userModel extends DB {
 		}
 		return $arg;
 	}
+	
+	public function save_filename($filename, $user_id) {
+		parent::query("UPDATE users SET headerpath = ? WHERE user_id = ?", $filename, $user_id);
+		return true;
+	}
+	
+	public function get_filename($user_id) {
+		$res = parent::query_one("SELECT headerpath FROM users WHERE user_id = ?", $user_id);
+		return $res[0];
+	}
 }
 ?>

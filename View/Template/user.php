@@ -11,11 +11,41 @@
 <div class="row">
 	<div class="col-md-2 col-md-offset-2 text-center well"
 		style="border-right-style: inset">
-		<img src="/Src/Image/header.jpg" alt="" class="img-circle"
-			width="200px">
+		<img
+			src="/Src/Image/header/
+		<?php
+		extract ( $args [3] );
+		echo $headerpath;
+		?>
+		"
+			alt="" class="img-circle" width="200px" height="200px" id="header">
+		<?php if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {?>
+		<form id="uploadImg" class="form-horizontal" role="form" method="post" action=""
+			enctype="multipart/form-data">
+			<label>请选择图片文件：<input class="form-control" type="file" name="file"
+				id="uploadFile" /></label>
+		</form>
+		<script>
+		$(document).ready(function() {
+			$("#uploadImg").hide();
+			$("#header").dblclick(function(){
+				$("#uploadImg").show();	
+			})
+			
+			$("#uploadFile").AjaxFileUpload({
+				action: "/user/uploadHeader",
+				onComplete: function(filename, response) {
+					 var arg = eval(response);
+					$("#header").attr("src", "\\Src\\Image\\header\\" + arg['status']);
+					$("#uploadImg").hide();
+				}
+			});
+		});
+	</script>
+	<?php }	?>
 		<h1>
 			<?php
-			extract ( $args [3] );
+			
 			if (isset ( $username ))
 				echo $username;
 			?> 
@@ -33,101 +63,103 @@
 					data-toggle="modal" data-target="#updateModal">修改信息</button>
 			</div>
 		</div>
-<div class="modal fade text-left" id="updateModal" tabindex="-1" role="dialog"
-	aria-labelledby="updateModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">
-					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-				</button>
-				<h2 class="text-center modal-title" id="codeModalLabel">修改用户信息</h2>
-			</div>
-			<div class="modal-body">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="Username" class="col-sm-2 control-label">用户名</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control"
-								value="<?php if(isset($username)) echo $username?>"
-								readonly="readonly">
-						</div>
+		<div class="modal fade text-left" id="updateModal" tabindex="-1"
+			role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h2 class="text-center modal-title" id="codeModalLabel">修改用户信息</h2>
 					</div>
-					<div class="form-group">
-						<label for="Nickname" class="col-sm-2 control-label">昵称</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="Nickname"
-								name="newNickname" placeholder="Nickname"
-								value="<?php  if(isset($nickname)) echo $nickname?>">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="Motto" class="col-sm-2 control-label">签名</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="Motto"
-								placeholder="签名" value="<?php  if(isset($motto)) echo $motto?>">
-							<label id="mottoError" class="control-label text-danger">签名超过最大字数</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="QQ" class="col-sm-2 control-label">QQ</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" id="QQ" placeholder="QQ号"
-								value="<?php  if(isset($qq) && $qq > 0) echo $qq?>">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="Group" class="col-sm-2 control-label">小组</label>
-						<div class="col-sm-10">
-							<select id="Gourp" class="form-cotrol">
+					<div class="modal-body">
+						<form class="form-horizontal" role="form">
+							<div class="form-group">
+								<label for="Username" class="col-sm-2 control-label">用户名</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control"
+										value="<?php if(isset($username)) echo $username?>"
+										readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="Nickname" class="col-sm-2 control-label">昵称</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="Nickname"
+										name="newNickname" placeholder="Nickname"
+										value="<?php  if(isset($nickname)) echo $nickname?>">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="Motto" class="col-sm-2 control-label">签名</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="Motto"
+										placeholder="签名"
+										value="<?php  if(isset($motto)) echo $motto?>"> <label
+										id="mottoError" class="control-label text-danger">签名超过最大字数</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="QQ" class="col-sm-2 control-label">QQ</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" id="QQ"
+										placeholder="QQ号"
+										value="<?php  if(isset($qq) && $qq > 0) echo $qq?>">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="Group" class="col-sm-2 control-label">小组</label>
+								<div class="col-sm-10">
+									<select id="Gourp" class="form-cotrol">
 								<?php
-								
-								foreach ( $args [5] as $row ) {
-									echo '<option value="' . $row [0] . '">' . $row [1] . '</option>';
-								}
-								?>
+			
+			foreach ( $args [5] as $row ) {
+				echo '<option value="' . $row [0] . '">' . $row [1] . '</option>';
+			}
+			?>
 							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="email" class="col-sm-2 control-label">电子邮箱</label>
-						<div class="col-sm-10">
-							<input type="email" class="form-control" id="Email" name="email"
-								placeholder="email" value="<?php echo $email;?>"> <label
-								id="emailError" class="control-label text-danger">该电子邮箱已经被注册过了！</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="head" class="col-sm-2 control-label">头像</label>
-						<div class="col-sm-10">
-							 <label	 class="control-label text-success">头像请双击图片修改</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="password" class="col-sm-2 control-label">密码</label>
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="Password"
-								name="newPassword" placeholder="输入密码则表示修改密码">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="password2" class="col-sm-2 control-label">确认密码</label>
-						<div class="col-sm-10">
-							<input type="password" class="form-control" id="Password2"
-								name="newPassword2" placeholder="确认密码"> <label
-								id="passwordError" class="control-label text-danger">两次输入的密码不一致</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="email" class="col-sm-2 control-label">电子邮箱</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" id="Email"
+										name="email" placeholder="email" value="<?php echo $email;?>">
+									<label id="emailError" class="control-label text-danger">该电子邮箱已经被注册过了！</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="head" class="col-sm-2 control-label">头像</label>
+								<div class="col-sm-10">
+									<label class="control-label text-success">头像请双击图片修改</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="password" class="col-sm-2 control-label">密码</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="Password"
+										name="newPassword" placeholder="输入密码则表示修改密码">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="password2" class="col-sm-2 control-label">确认密码</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" id="Password2"
+										name="newPassword2" placeholder="确认密码"> <label
+										id="passwordError" class="control-label text-danger">两次输入的密码不一致</label>
 
-						</div>
+								</div>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button type="button" class="btn btn-primary" id="update">修改</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" id="update">修改</button>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
 		<?php }?>
 		<hr />
 		<table class="table text-left">
