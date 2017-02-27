@@ -11,6 +11,7 @@
 <script src="/View/Template/js/bootstrap.min.js"></script>
 <script src="/View/Template/js/prism.js"></script>
 <script src="/View/Template/js/echarts.min.js"></script>
+<script src="/View/Template/js/AjaxFileUpload.js"></script>
 <title>欢迎来到NUC Online Judge</title>
 </head>
 
@@ -107,15 +108,25 @@
 							<label for="inputUsername" class="col-sm-2 control-label">用户名</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="inputUsername"
-									name="username" placeholder="Username">
+									name="username" placeholder="请输入用户名">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="inputPassword" class="col-sm-2 control-label">密码</label>
 							<div class="col-sm-10">
 								<input type="password" class="form-control" id="inputPassword"
-									name="password" placeholder="Password">
+									name="password" placeholder="请输入密码">
 							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPassword" class="col-sm-2 control-label">验证码</label>
+							
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="vcode"
+									name="vcode" placeholder="请输入验证码">
+							</div>
+							<image src="/Src/Image/header/default.jpg" alt="验证码区域" height="20px"/>
+							<a href="#" id="newVcode">看不清楚,换一张</a>
 						</div>
 					</form>
 				</div>
@@ -195,6 +206,13 @@
 	<script>
 		$(document).ready(function() {
 	<?php if($loginStatus) { ?>
+	
+	
+		$("#newVcode").click(function(){
+			var randId = new Date().getTime();
+			$("#vcode").attr("src", "/login/vcode"+randId);	
+		});
+		
 		$("#loginError").hide();
 			$("#ul2").hide();
 			$("#nameEmptyError").hide();

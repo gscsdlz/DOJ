@@ -2,6 +2,8 @@
 // /处理登录
 require_once 'Include/function.php';
 require_once 'Model/loginModel.php';
+require_once 'Include/vcode.class.php';
+
 class loginControl {
 	private static $model = null;
 	public function __construct() {
@@ -18,6 +20,7 @@ class loginControl {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
+			$vcode = post('vcode');
 			if ($uid = self::$model->login ( $username, $password )) {
 				$_SESSION ['username'] = $username;
 				$_SESSION ['user_id'] = $uid;
@@ -31,6 +34,12 @@ class loginControl {
 				'status' => false 
 		) );
 	}
+	
+	public function vcode() {
+		var_dump("123");
+		echo new vcode();
+	}
+	
 	public function logout() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			if (isset ( $_SESSION ['username'] )) {
