@@ -21,6 +21,12 @@ class loginControl {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
 			$vcode = post('vcode');
+			if($vcode != $_SESSION['vcode']) {
+				echo json_encode ( array (
+						'status' => 'vcode error' 
+				) );
+				return;
+			}
 			if ($uid = self::$model->login ( $username, $password )) {
 				$_SESSION ['username'] = $username;
 				$_SESSION ['user_id'] = $uid;
@@ -36,7 +42,6 @@ class loginControl {
 	}
 	
 	public function vcode() {
-		var_dump("123");
 		echo new vcode();
 	}
 	
@@ -63,7 +68,13 @@ class loginControl {
 			$password2 = post ( 'newPassword2' );
 			$email = post ( 'email' );
 			$nickname = post ( 'newNickname' );
-			
+			$vcode = post('vcode');
+			if($vcode != $_SESSION['vcode']) {
+				echo json_encode ( array (
+						'status' => 'vcode error'
+				) );
+				return;
+			}
 			$status = self::$model->register ( $username, $password, $password2, $nickname, $email );
 			if ($status == - 1)
 				echo json_encode ( array (
