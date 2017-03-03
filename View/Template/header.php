@@ -122,10 +122,10 @@
 							<label for="inputPassword" class="col-sm-2 control-label">验证码</label>
 							
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="vcode"
+								<input type="text" class="form-control" id="vcodeText"
 									name="vcode" placeholder="请输入验证码">
 							</div>
-							<image src="/Src/Image/header/default.jpg" alt="验证码区域" height="20px"/>
+							<img src="/login/vcode" alt="验证码区域" height="20px" id="vcodeImg"/>
 							<a href="#" id="newVcode">看不清楚,换一张</a>
 						</div>
 					</form>
@@ -210,7 +210,7 @@
 	
 		$("#newVcode").click(function(){
 			var randId = new Date().getTime();
-			$("#vcode").attr("src", "/login/vcode"+randId);	
+			$("#vcodeImg").attr("src", "/login/vcode/"+randId);	
 		});
 		
 		$("#loginError").hide();
