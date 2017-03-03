@@ -8,7 +8,7 @@ class vcode {
 	private $checkCode;
 	private $imageHandle;
 	
-	public function __construct($width = 80, $height = 20, $codeNum = 4) {
+	public function __construct($width = 100, $height = 30, $codeNum = 4) {
 		$this->width = $width;
 		$this->height = $height;
 		$this->codeNum = $codeNum;
@@ -55,7 +55,7 @@ class vcode {
 	}
 	
 	private function setDisturbcolor(){
-		for($i = 0; $i < $this->disturbColorNum; ++$i) {
+		/*for($i = 0; $i < $this->disturbColorNum; ++$i) {
 			$color = imagecolorallocate($this->imageHandle, rand(0, 255), rand(0, 255), rand(0, 255));
 			imagesetpixel($this->imageHandlege, $this->width, $thid->height, $color);
 		}
@@ -63,13 +63,13 @@ class vcode {
 		for($i = 0; $i < 10; ++$i) {
 			$color = imagecolorallocate($this->imageHandle, rand(0, 128), rand(0, 128), rand(0, 128));
 			imagearc($this->imageHandle, rand(-10, $this->width), rand(-10, $this->height), rand(30, 300), rand(20, 200), 55, 44, $color);
-		}
+		}*/
 	}
 	
 	private function outputText(){
 		for($i = 0; $i <= $this->codeNum; ++$i) {
 			$fontcolor = imagecolorallocate($this->imageHandle, rand(0, 128), rand(0, 128), rand(0, 128));
-			$fontsize = rand(3, 5);
+			$fontsize = rand(5, 10);
 			$x = floor($this->width / $this->codeNum) * $i + 3;
 			$y = rand(0, $this->height-imagefontheight($fontsize));
 			imagechar($this->imageHandle, $fontsize, $x, $y, $this->checkCode{$i}, $fontcolor);
