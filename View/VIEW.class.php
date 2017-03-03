@@ -4,15 +4,17 @@ class VIEW {
 		extract ( $args );
 		if($fileName == 'error')
 			header('HTTP/1.1 404 Not Found');
-		require_once 'Template/header.php';
-		require_once 'Template/' . $fileName . '.php';
-		require_once 'Template/footer.php';
+		require 'Template/header.php';
+		require 'Template/navbar.php';
+		require 'Template/' . $fileName . '.php';
+		require 'Template/footer.php';
 	}
 
 	static public function loopshow($fileName, $args) {
-		require_once 'Template/header.php';
-		require_once 'Template/' . $fileName . '.php';
-		require_once 'Template/footer.php';
+		require 'Template/header.php';
+		require 'Template/navbar.php';
+		require 'Template/' . $fileName . '.php';
+		require 'Template/footer.php';
 	}
 	
 }
