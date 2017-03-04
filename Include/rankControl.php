@@ -16,7 +16,8 @@ class rankControl {
 	
 	public function page() {
 		$page = (int)get('id');
-		VIEW::show('ranklist', '');
+		$args = self::$model->getRank();
+		VIEW::loopshow('ranklist', $args);
 	}
 }
 ?>
