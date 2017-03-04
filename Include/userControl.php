@@ -2,11 +2,17 @@
 require_once 'Include/function.php';
 require_once 'View/VIEW.class.php';
 require_once 'Model/userModel.php';
+require_once 'Model/rankModel.php';
+
 class userControl {
 	private static $model = null;
+	private static $rankmodel = null;
 	public function __construct() {
 		if (self::$model == null) {
 			self::$model = new userModel ();
+		}
+		if (self::$rankmodel == null) {
+			self::$rankmodel = new rankModel ();
 		}
 	}
 	public function show() {
@@ -18,6 +24,7 @@ class userControl {
 		$arg [] = self::$model->get_user_info ( $user_id );
 		$arg [] = self::$model->get_contest_info ( $user_id );
 		$arg [] = self::$model->get_group_info ();
+		$arg [] = self::$rankmodel->getRank(0, $user_id);
 		if ($arg [3] != null)
 			VIEW::loopshow ( 'user', $arg );
 		else

@@ -13,11 +13,13 @@ class rankModel extends DB {
 					$row [1],
 					$row [2],
 					0,
-					0 
+					0,
+					0
 			);
 		}
 	}
-	public function getRank($page = 0) {
+	
+	public function getRank($page = 0, $user_id = 0) {
 		$this->get_users ();
 		$this->getAcNum ();
 		$this->getnAcNum ();
@@ -34,6 +36,27 @@ class rankModel extends DB {
 			}
 		}
 		uasort ( $this->users, "cmp" );
+		$i = 1;
+		foreach($this->users as &$row) {
+			$row[4] = $i++;
+		}
+		if($user_id) {
+			$args[0] = $this->users[$user_id];
+
+			prev($this->users);
+			$args[1] = current($this->users);
+			if($args[1] == false) {
+				reset($this->users);
+				next($this->users);
+			} else {
+				next($this->users);
+				next($this->users);
+			}
+			$args[2] = current($this->users);
+			
+			unset($this->users);
+			return $args;
+		}
 		return $this->users;
 	}
 	private function getAcNum() {

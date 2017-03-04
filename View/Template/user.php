@@ -20,8 +20,8 @@
 		"
 			alt="" class="img-circle" width="200px" height="200px" id="header">
 		<?php if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {?>
-		<form id="uploadImg" class="form-horizontal" role="form" method="post" action=""
-			enctype="multipart/form-data">
+		<form id="uploadImg" class="form-horizontal" role="form" method="post"
+			action="" enctype="multipart/form-data">
 			<label>请选择图片文件：<input class="form-control" type="file" name="file"
 				id="uploadFile" /></label>
 		</form>
@@ -189,8 +189,33 @@
 			<div class="panel-heading">
 				<h4 class="text-center">排名</h4>
 			</div>
-			<div class="panel-body">114</div>
-
+			<div class="panel-body">
+				<table class="table">
+					<tr>
+						<th>排名</th>
+						<th>用户名</th>
+						<th>通过数</th>
+						<th>AC率</th>
+					</tr>
+					<?php
+					$tmp = $args [6] [1];
+					$args [6] [1] = $args [6] [0];
+					$args [6] [0] = $tmp;
+					foreach ( $args [6] as $row ) {
+						if ($row) {
+							echo '<tr>';
+							echo '<td>'.$row[4].'</td>';
+							echo '<td><a href="/user/show/'.$row[0].'">'.$row[0].'</a></td>';
+							echo '<td>'.$row[2].'</td>';
+							if($row[3] == 0)
+								$row[3] = 1;
+							echo '<td>'.number_format($row[2] / $row[3] * 100, 2, '.', '').'%</td>';
+							echo "</tr>\n";
+						}
+					}
+					?>
+				</table>
+			</div>
 		</div>
 	</div>
 
