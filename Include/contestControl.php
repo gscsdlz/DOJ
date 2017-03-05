@@ -130,4 +130,9 @@ class contestControl {
 			) );
 		}
 	}
+	
+	public function ranklist() {
+		$cid = (int)get('id');
+		VIEW::show('contest_ranklist', array());
+	}
 }
