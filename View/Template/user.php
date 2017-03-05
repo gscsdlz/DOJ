@@ -195,18 +195,17 @@
 						<th>排名</th>
 						<th>用户名</th>
 						<th>通过数</th>
+						<th>总提交数</th>
 						<th>AC率</th>
 					</tr>
 					<?php
-					$tmp = $args [6] [1];
-					$args [6] [1] = $args [6] [0];
-					$args [6] [0] = $tmp;
 					foreach ( $args [6] as $row ) {
 						if ($row) {
 							echo '<tr>';
 							echo '<td>'.$row[4].'</td>';
 							echo '<td><a href="/user/show/'.$row[0].'">'.$row[0].'</a></td>';
 							echo '<td>'.$row[2].'</td>';
+							echo '<td>'.$row[3].'</td>';
 							if($row[3] == 0)
 								$row[3] = 1;
 							echo '<td>'.number_format($row[2] / $row[3] * 100, 2, '.', '').'%</td>';

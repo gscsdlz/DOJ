@@ -11,7 +11,6 @@
 			</tr>
 			<?php
 				if(isset($args)) {
-					var_dump($args);
 					foreach($args as $row) {
 						if(isset($_SESSION['username']) && $_SESSION['username'] == $row[0]){
 							echo '<tr class="bg-danger">';
@@ -19,7 +18,7 @@
 							echo '<tr>';
 						}
 						echo '<td>'.$row[4].'</td>';
-						echo '<td>'.$row[0].'</td>';
+						echo '<td><a href="/user/show/'.$row[0].'">'.$row[0].'</a></td>';
 						echo '<td>'.$row[1].'</td>';
 						echo '<td>'.$row[2].'</td>';
 						echo '<td>'.$row[3].'</td>';

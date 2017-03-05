@@ -14,11 +14,10 @@ class rankModel extends DB {
 					$row [2],
 					0,
 					0,
-					0
+					0 
 			);
 		}
 	}
-	
 	public function getRank($page = 0, $user_id = 0) {
 		$this->get_users ();
 		$this->getAcNum ();
@@ -28,7 +27,7 @@ class rankModel extends DB {
 				if ($a [3] == $b [3])
 					return $a [0] < $b [0] ? - 1 : 1;
 				if ($a [2] == 0)
-					return $a [3] > $b [3] ? -1 : 1;
+					return $a [3] > $b [3] ? - 1 : 1;
 				else
 					return $a [3] > $b [3] ? 1 : - 1;
 			} else {
@@ -37,24 +36,23 @@ class rankModel extends DB {
 		}
 		uasort ( $this->users, "cmp" );
 		$i = 1;
-		foreach($this->users as &$row) {
-			$row[4] = $i++;
+		foreach ( $this->users as &$row ) { //通过引用修改原数组的值
+			$row [4] = $i ++;
 		}
-		if($user_id) {
-			$args[0] = $this->users[$user_id];
 
-			prev($this->users);
-			$args[1] = current($this->users);
-			if($args[1] == false) {
-				reset($this->users);
-				next($this->users);
-			} else {
-				next($this->users);
+		if ($user_id) {
+			/*
+			 * 可能存在性能BUG
+			 */
+			$tmp = $this->users[$user_id];
+			reset($this->users);
+			for($i = 0; $i < $tmp[4] - 3; ++$i) {
 				next($this->users);
 			}
-			$args[2] = current($this->users);
-			
-			unset($this->users);
+			for($i = 0; $i < 4; $i++) {
+				$args[] = current($this->users);
+				next($this->users);
+			}
 			return $args;
 		}
 		return $this->users;
