@@ -15,5 +15,5 @@
 <title>欢迎来到NUC Online Judge</title>
 </head>
 
-<body>
+<body style="overflow:scroll;overflow-x:hidden">	<!--禁止横向滑动-->
 	
