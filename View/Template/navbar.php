@@ -40,7 +40,7 @@
 					<li><a href="/contest/page">比赛列表</a></li>
 					<li class="active"><a href="/contest/show/<?php echo $contest;?>">题目</a></li>
 					<li><a href="/status?cid=<?php echo $contest;?>">状态</a></li>
-					<li><a href="/contest/ranklist">排名</a></li>
+					<li><a href="/contest/ranklist/<?php echo $contest;?>">排名</a></li>
 					<li><a href="/contest/ask">问答</a></li>
 				</ul>
 				<?php }?>
