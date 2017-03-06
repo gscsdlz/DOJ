@@ -1,6 +1,6 @@
 <div class="row">
-	<div class="col-md-8 col-md-offset-2">
-		<table class="table table-hover">
+	<div class="col-md-8 col-md-offset-2 text-center">
+		<table class="table table-hover text-left">
 			<tr>
 				<th>排名</th>
 				<th>用户名</th>
@@ -30,6 +30,17 @@
 				}
 			?>
 		</table>
+		<nav>
+			<ul class="pagination pagination-lg text-center">
+				<li><a href="/rank/page/0">首页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="/rank/page/0">上一页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="/rank/page/0">下一页</a></li>
+				<li><a href="#">...</a></li>
+				<li><a href="/rank/page/-1">尾页</a></li>
+			</ul>
+		</nav>
 	</div>
 </div>
 <?php

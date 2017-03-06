@@ -4,12 +4,14 @@ require_once 'Model/contestModel.php';
 require_once 'Model/problemModel.php';
 require_once 'Model/statusModel.php';
 require_once 'Model/codeModel.php';
+require_once 'Model/rankModel.php';
 require_once 'View/VIEW.class.php';
 class contestControl {
 	private static $model = null;
 	private static $problemModel = null;
 	private static $statusModel = null;
 	private static $codeModel = null;
+	private static $rankModel = null;
 	public function __construct() {
 		if (self::$model == null) {
 			self::$model = new contestModel ();
@@ -22,6 +24,9 @@ class contestControl {
 		}
 		if (self::$codeModel == null) {
 			self::$codeModel = new codeModel ();
+		}
+		if (self::$rankModel == null) {
+			self::$rankModel = new rankModel ();
 		}
 	}
 	public function page() {
@@ -44,18 +49,24 @@ class contestControl {
 		 * = -2 比赛权限不足
 		 */
 		$args [] = self::$model->get_lists ( $cid );
-		if ($status == 0) { // 检查用户权限以及比赛是否开始			
+		if ($status == 0) { // 检查用户权限以及比赛是否开始
 			$args [] = self::$model->get_problem_list ( $cid );
 			VIEW::loopshow ( 'contest_problem_list', $args );
 		} else if ($status == 1) {
-			$args[] = array('pass' => true);
-			VIEW::loopshow ( 'contest_problem_list', $args);
-		} else if($status == -1) {
-			$args[] = array('timeError' => true);
-			VIEW::loopshow ( 'contest_problem_list', $args);
+			$args [] = array (
+					'pass' => true 
+			);
+			VIEW::loopshow ( 'contest_problem_list', $args );
+		} else if ($status == - 1) {
+			$args [] = array (
+					'timeError' => true 
+			);
+			VIEW::loopshow ( 'contest_problem_list', $args );
 		} else {
-			$args[] = array('privilegeError' => true);
-			VIEW::loopshow ( 'contest_problem_list', $args);
+			$args [] = array (
+					'privilegeError' => true 
+			);
+			VIEW::loopshow ( 'contest_problem_list', $args );
 		}
 	}
 	public function check() {
@@ -130,9 +141,19 @@ class contestControl {
 			) );
 		}
 	}
-	
 	public function ranklist() {
-		$cid = (int)get('id');
-		VIEW::show('contest_ranklist', array());
+		global $contest;
+		
+		$cid = ( int ) get ( 'id' );
+		$contest = $cid;
+		$args[] = self::$model->get_all_inner_id ( $cid );
+		if ($args) {
+			$args [] = self::$rankModel->contest_rank ( $cid );
+			VIEW::loopshow ( 'contest_ranklist', $args );
+		} else {
+			VIEW::show ( 'error', array (
+					'errorInfo' => 'Time Error' 
+			) );
+		}
 	}
 }

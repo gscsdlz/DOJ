@@ -112,10 +112,23 @@ class contestModel extends DB {
 			return null;
 		}
 	}
+	
+	public function get_all_inner_id($contest_id) {
+		$res = parent::query("SELECT inner_id FROM contest_pro WHERE contest_id = ? ORDER BY inner_id", $contest_id);
+		if($res->rowCount() != 0) {
+			while($row = $res->fetch(PDO::FETCH_NUM)) {
+				$args[] = $row[0];
+			}
+			return $args;
+		} else {
+			return null;
+		}
+	}
+	
 	public function get_real_Id($pid, $contest_id) {
-		$result = parent::query ( "SELECT pro_id FROM contest_pro WHERE contest_id = ? AND inner_id = ? LIMIT 1", $contest_id, $pid );
-		if ($result->rowCount () != 0) {
-			return $result->fetch ( PDO::FETCH_NUM ) [0];
+		$result = parent::query_one( "SELECT pro_id FROM contest_pro WHERE contest_id = ? AND inner_id = ? LIMIT 1", $contest_id, $pid );
+		if ($result) {
+			return $result[0];
 		} else {
 			return - 1;
 		}
