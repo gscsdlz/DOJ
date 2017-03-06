@@ -13,4 +13,16 @@ function post($arg) {
 		return null;
 	}
 }
+/**
+ * 格式化时间为小时:分钟:秒
+ */
+function format_time($t){
+	if($t < 0)
+		return;
+	$h = (int)($t / 60 / 60);
+	$t -= $h * 60 * 60;
+	$m = (int)($t / 60);
+	$t -= $m * 60;
+	return $h.':'.$m.':'.$t;
+}
 ?>
