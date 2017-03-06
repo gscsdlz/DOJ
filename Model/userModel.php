@@ -49,6 +49,7 @@ class userModel extends DB {
 	
 	public function get_user_info($user_id) {
 		$result = parent::query("SELECT * FROM `users` lEFT JOIN `group` ON `group`.group_id = `users`.group_id WHERE user_id = ?", $user_id);
+		
 		return $result->fetch(PDO::FETCH_NAMED);
 	}
 	

@@ -6,10 +6,10 @@ class loginModel extends DB {
 	}
 	public function login($username, $password) {
 		if (! empty ( $username ) && ! empty ( $password )) {
-			$res = parent::query ( "SELECT password, user_id, nickname FROM users WHERE username=?", $username );
+			$res = parent::query ( "SELECT password, user_id, nickname, username FROM users WHERE username=?", $username );
 			$arr = $res->fetch ( PDO::FETCH_NUM );
 			
-			if ($res->rowCount () != 0 && sha1 ( $password ) == $arr [0]) {
+			if ($res->rowCount () != 0 && $arr[3] == $username && sha1 ( $password ) == $arr [0]) { //暂时无法解决由于大小写带来的错误登录
 				return $arr [1];
 			}
 		}
