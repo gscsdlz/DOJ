@@ -101,12 +101,12 @@ class rankModel extends DB {
 					$len = count($pro);
 					$pro_time = 0; //单个题目总秒数
 					$pro_wa  = 0;//单个题目总错误次数
+					$pro_ac = false;
 					foreach($pro as $status) {
 						if($status[0] != 4) {
-							$pro_time += ((int)$status[1] - $c_stime) + 20 * 60 ;  //考虑罚时
 							$pro_wa++;
 						} else {  //一旦通过 之后的提交都不在计算
-							$total_ac ++;
+							$pro_ac = true;
 							$pro_time += (int)$status[1] - $c_stime;
 							break;
 						}
@@ -116,11 +116,14 @@ class rankModel extends DB {
 					 * time = 0， wa = n 错误了n次 仍然为通过
 					 * time = n，wa = m 再经过m次错误以后，通过题目 m可以为0
 					 */
-					if($pro_wa)
+					if(!$pro_ac)
 						$tmp[$key][$key2] = array(0, $pro_wa);
 					else
-						$tmp[$key][$key2] = array($pro_time, $pro_wa);
-					$total_time += $pro_time;
+					{
+						$total_ac++;
+						$tmp[$key][$key2] = array($pro_time , $pro_wa);
+						$total_time += $pro_time + $pro_wa * 20 * 60; //加上罚时
+					}
 				} //$pro
 				$tmp[$key][0] = $total_time;
 				$tmp[$key][1] = $total_ac;
@@ -139,6 +142,7 @@ class rankModel extends DB {
 			}
 		}
 		uasort ( $tmp, "cmp" );
+		var_dump($tmp);
 		return $tmp;
 	}
 	
