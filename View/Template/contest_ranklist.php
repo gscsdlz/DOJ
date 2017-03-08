@@ -32,7 +32,7 @@
 							if($row[$i][0] && !$row[$i][1])  //通过且没有罚时
 								echo 'class="bg-success">'.format_time($row[$i][0]);
 							else if($row[$i][0] && $row[$i][1]) //通过且有罚时
-								echo 'class="bg-success">'.format_time($row[$i][0]).'<br/>('.$row[$i][1].')';
+								echo 'class="bg-success">'.format_time($row[$i][0]).'<br/>(-'.$row[$i][1].')';
 							else
 								echo 'class="bg-danger text-center">-'.$row[$i][1];
 							echo '</td>';
