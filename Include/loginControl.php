@@ -30,6 +30,7 @@ class loginControl {
 			if ($uid = self::$model->login ( $username, $password )) {
 				$_SESSION ['username'] = $username;
 				$_SESSION ['user_id'] = $uid;
+				$_SESSION ['timeout'] = time() + LOGINTIMEOUT; //@config.php
 				echo json_encode ( array (
 						'status' => true 
 				) );
