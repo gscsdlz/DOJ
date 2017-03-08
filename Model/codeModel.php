@@ -1,5 +1,4 @@
 <?php
-require_once 'Include/DB.class.php';
 class codeModel extends DB {
 	public function __construct() {
 		parent::__construct ();

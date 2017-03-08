@@ -1,5 +1,5 @@
 <?php
-require_once APPPATH . '/Config/config.php';
+require '/Config/config.php';
 class DB {
 	private static $pdo = null;
 	public function __construct() {

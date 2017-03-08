@@ -1,5 +1,5 @@
 <?php
-require_once 'View/VIEW.class.php';
+require 'View/VIEW.class.php';
 class indexControl {
 	public function __construct() {
 	}

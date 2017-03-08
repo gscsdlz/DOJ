@@ -1,6 +1,5 @@
 <?php
-require_once 'Include/function.php';
-require_once 'Model/submitModel.php';
+require 'Model/submitModel.php';
 class submitControl {
 	private static $model = null;
 	public function __construct() {

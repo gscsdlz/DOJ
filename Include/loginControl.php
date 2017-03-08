@@ -1,8 +1,8 @@
 <?php
 // /处理登录
-require_once 'Include/function.php';
-require_once 'Model/loginModel.php';
-require_once 'Include/vcode.class.php';
+
+require 'Model/loginModel.php';
+require 'Include/vcode.class.php';
 
 class loginControl {
 	private static $model = null;

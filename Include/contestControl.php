@@ -1,11 +1,11 @@
 <?php
-require_once 'Include/function.php';
-require_once 'Model/contestModel.php';
-require_once 'Model/problemModel.php';
-require_once 'Model/statusModel.php';
-require_once 'Model/codeModel.php';
-require_once 'Model/rankModel.php';
-require_once 'View/VIEW.class.php';
+
+require 'Model/contestModel.php';
+require 'Model/problemModel.php';
+require 'Model/statusModel.php';
+require 'Model/codeModel.php';
+require 'Model/rankModel.php';
+require 'View/VIEW.class.php';
 class contestControl {
 	private static $model = null;
 	private static $problemModel = null;

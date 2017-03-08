@@ -1,5 +1,5 @@
 <?php
-require_once 'Include/DB.class.php';
+
 class rankModel extends DB {
 	private $users = array ();
 	private $contestrank = array ();
@@ -142,7 +142,6 @@ class rankModel extends DB {
 			}
 		}
 		uasort ( $tmp, "cmp" );
-		var_dump($tmp);
 		return $tmp;
 	}
 	

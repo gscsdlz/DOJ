@@ -1,6 +1,5 @@
 <?php
-require_once 'Include/DB.class.php';
-require_once 'Model/problemModel.php';
+
 class contestModel extends DB {
 	private $model;
 	public function __construct() {

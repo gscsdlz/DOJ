@@ -1,7 +1,7 @@
 <?php
-require_once 'Include/function.php';
-require_once 'Model/statusModel.php';
-require_once 'View/VIEW.class.php';
+
+require 'Model/statusModel.php';
+require 'View/VIEW.class.php';
 class statusControl {
 	private static $model = null;
 	public function __construct() {

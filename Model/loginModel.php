@@ -1,5 +1,5 @@
 <?php
-require_once 'Include\DB.class.php';
+
 class loginModel extends DB {
 	public function __construct() {
 		parent::__construct ();

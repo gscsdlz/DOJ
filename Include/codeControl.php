@@ -1,5 +1,5 @@
 <?php
-require_once 'Include/function.php';
+
 require_once 'Model/codeModel.php';
 require_once 'View/VIEW.class.php';
 class codeControl{

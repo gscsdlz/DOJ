@@ -1,7 +1,7 @@
 <?php
-require_once 'Include/function.php';
-require_once 'Model/problemModel.php';
-require_once 'View/VIEW.class.php';
+
+require'Model/problemModel.php';
+require 'View/VIEW.class.php';
 class problemControl {
 	private static $model = null;
 	public function __construct() {

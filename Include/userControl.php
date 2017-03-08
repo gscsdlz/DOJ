@@ -1,8 +1,7 @@
 <?php
-require_once 'Include/function.php';
-require_once 'View/VIEW.class.php';
-require_once 'Model/userModel.php';
-require_once 'Model/rankModel.php';
+require 'View/VIEW.class.php';
+require 'Model/userModel.php';
+require 'Model/rankModel.php';
 
 class userControl {
 	private static $model = null;

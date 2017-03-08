@@ -6,6 +6,8 @@ define ( "APPPATH", dirname ( __FILE__ ) );
 
 require 'Include/router.class.php';
 require 'Include/WORK.class.php';
+require 'Include/DB.class.php';
+require 'Include/function.php';
 $router = new router ();
 $controlClass = $router->control;
 $action = $router->action;
