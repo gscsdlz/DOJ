@@ -17,6 +17,8 @@ class WORK {
 			return new userControl ();
 		else if ($className == 'rankControl')
 				return new rankControl ();
+		else if ($className == 'askControl')
+				return new askControl ();
 		else {
 			require_once 'indexControl.php';
 			return new indexControl ();

@@ -6,12 +6,15 @@ require 'Model/statusModel.php';
 require 'Model/codeModel.php';
 require 'Model/rankModel.php';
 require 'View/VIEW.class.php';
+require 'Model/askModel.php';
+
 class contestControl {
 	private static $model = null;
 	private static $problemModel = null;
 	private static $statusModel = null;
 	private static $codeModel = null;
 	private static $rankModel = null;
+	private static $askModel = null;
 	public function __construct() {
 		if (self::$model == null) {
 			self::$model = new contestModel ();
@@ -27,6 +30,9 @@ class contestControl {
 		}
 		if (self::$rankModel == null) {
 			self::$rankModel = new rankModel ();
+		}
+		if (self::$askModel == null) {
+			self::$askModel = new askModel ();
 		}
 	}
 	public function page() {
@@ -179,7 +185,11 @@ class contestControl {
 	}
 	public function asklist() {
 		$cid = get ( 'id' );
-		VIEW::show ( 'contest_asklist', array () );
+		global $contest;
+		$contest = $cid;
+		$args[] = self::$model->get_problem_list($cid);
+		$args[] = self::$askModel->get_list_by_cid($cid);
+		VIEW::show ( 'contest_asklist', $args );
 	}
 	public function ask() {
 	}
