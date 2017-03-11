@@ -10,12 +10,14 @@
 				<th>提问者</th>
 				<th>主题</th>
 				<th>提问时间</th>
+				<th>其他</th>
 			</tr>
 			<?php
+				global $contest;
 				if(isset($args[1]) && count($args[1])) {
 					foreach($args[1]  as $row) {
 						echo '<tr>';
-						echo '<td>'.$row[0].'</td>';
+						echo '<td><a href="/contest/ask/'.$contest.'/'.$row[0].'">'.$row[0].'</a></td>';
 						if($row[5] == 0)
 							echo '<td>全局消息</td>';
 						else
@@ -23,6 +25,9 @@
 						echo '<td><a href="/user/show/'.$row[6].'">'.$row[6].'</a></td>';
 						echo '<td>'.$row[1].'</td>';
 						echo '<td>'.date("Y-m-d H:i:s", $row[4]).'</td>';
+						if(isset($_SESSION['username']) && $row[6] == $_SESSION['username']) {
+							echo '<td><button data-toggle="modal"  data-target="#deleteModal" type="button" class="btn btn-danger" id="del'.$row[0].'">删除</button></td>';
+						}
 						echo '</tr>';
 					}
 				}
@@ -30,6 +35,27 @@
 		</table>
 	</div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	aria-labelledby="deleteModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h3 class="modal-title" id="codeModalLabel">删除不可逆！确认删除吗？</h3>
+			</div>
+			<div class="model-body text-center" id="errorInfo">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-danger" id="deleteAsk">删除</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="modal fade" id="askModal" tabindex="-1" role="dialog"
 	aria-labelledby="askModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -76,7 +102,20 @@
 	</div>
 </div>
 <script>
+	var id;
 	$(document).ready(function(){
+			$("#deleteAsk").click(function(){
+				$.post("/ask/delete_question", {question_id:id}, function(data) {
+					var arr = eval("(" + data + ")");
+					if(arr['status'] == true)
+						window.location.reload();
+					else
+						$("#errorInfo").append('<span class="text-danger">删除失败。请重试</span>');
+				})	
+			})
+			$(".btn-danger").click(function(){	
+				id = parseInt($(this).attr("id").substr(3));			
+			})
 			$("#topicEmptyError").hide();
 			$("#topicError").hide();
 			$("#submit").click(function(){
@@ -87,7 +126,7 @@
 				if(topic.length == 0) {
 					$("#topicEmptyError").show();
 				} else {
-					$.post("/ask/submit", {pro_id:pro_id, topic:topic, contest:<?php global $contest; echo $contest;?>}, function(data){
+					$.post("/ask/submit_question", {pro_id:pro_id, topic:topic, contest:<?php global $contest; echo $contest;?>}, function(data){
 						var arr = eval("(" + data +")");
 						if(arr['status']) {
 							window.location.reload();

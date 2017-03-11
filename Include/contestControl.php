@@ -162,27 +162,8 @@ class contestControl {
 			) );
 		}
 	}
-	public function submit() {
-		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
-			$pro_id = ( int ) post ( 'pro_id' );
-			$topic = post ( 'topic' );
-			$user_id = $_SESSION ['user_id'];
-			$cid = ( int ) post ( 'contest_id' );
-			$time = time ();
-			if ($topic) {
-				$staus = self::$model->submit_ask ( $pro_id, $topic, $time, $user_id );
-				if ($staus) {
-					echo json_encode ( array (
-							'status' => true 
-					) );
-					return;
-				}
-			}
-		}
-		echo json_encode ( array (
-				'status' => false 
-		) );
-	}
+
+	
 	public function asklist() {
 		$cid = get ( 'id' );
 		global $contest;
@@ -192,5 +173,11 @@ class contestControl {
 		VIEW::show ( 'contest_asklist', $args );
 	}
 	public function ask() {
+		$cid = (int)get ( 'id' );
+		$topic = (int)get('pid');
+		global $contest;
+		$contest = $cid;
+		$args = self::$askModel->get_answer($topic);
+		VIEW::loopshow ( 'contest_ask', $args );
 	}
 }

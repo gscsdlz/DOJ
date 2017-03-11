@@ -34,8 +34,9 @@ class DB {
 			echo $e->getMessage ();
 		}
 		
-		if ($result->rowCount () != 0) {
-			return $result->fetch ( PDO::FETCH_NUM );
+		if ($result->rowCount () != 0) {			
+			$row =  $result->fetch ( PDO::FETCH_NUM );
+			return $row;
 		} else {
 			return null;
 		}

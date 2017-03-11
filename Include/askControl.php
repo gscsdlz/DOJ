@@ -1,6 +1,5 @@
 <?php
 require 'Model/askModel.php';
-
 class askControl {
 	private static $model = null;
 	public function __construct() {
@@ -8,22 +7,70 @@ class askControl {
 			self::$model = new askModel ();
 		}
 	}
-	public function asklist() {
-		global $contest;
-		$cid = ( int ) post ( 'id' );
-		$contest = $cid;
-		$args = self::$model->get_list_by_cid ( $cid );
-		var_dump ( $args );
-	}
-	public function submit() {
+
+	public function submit_question() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
 			$pro_id = ( int ) post ( 'pro_id' );
 			$topic = post ( 'topic' );
+			$user_id = $_SESSION ['user_id'];
 			$cid = ( int ) post ( 'contest' );
-			$user_id = $_SESSION['user_id'];
-			global $contest;
-			$contest = $cid;
-			if (self::$model->put_ask ( $pro_id, $user_id, $topic, $cid )) {
+			$time = time ();
+			if ($topic) {
+				$staus = self::$model->put_question($pro_id, $user_id, $topic, $cid);
+				if ($staus) {
+					echo json_encode ( array (
+							'status' => true
+					) );
+					return;
+				}
+			}
+		}
+		echo json_encode ( array (
+				'status' => false
+		) );
+	}
+	
+	public function submit_answer() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
+			$topic = post ( 'answer' );
+			$user_id = $_SESSION ['user_id'];
+			$qid = ( int ) post ( 'question_id' );
+			if ($topic) {
+				$staus = self::$model->put_answer($qid, $user_id, $topic);
+				if ($staus) {
+					echo json_encode ( array (
+							'status' => true
+					) );
+					return;
+				}
+			}
+		}
+		echo json_encode ( array (
+				'status' => false
+		) );
+	}
+	public function delete_question() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
+			$askid = ( int ) post ( 'question_id' );
+			$user_id = $_SESSION ['user_id'];
+			
+			if (self::$model->delete_question ( $askid, $user_id )) {
+				echo json_encode ( array (
+						'status' => true 
+				) );
+				return;
+			}
+		}
+		echo json_encode ( array (
+				'status' => false 
+		) );
+	}
+	public function delete_answer() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
+			$askid = ( int ) post ( 'answer_id' );
+			$user_id = $_SESSION ['user_id'];
+			
+			if (self::$model->delete_answer ( $askid, $user_id )) {
 				echo json_encode ( array (
 						'status' => true 
 				) );
