@@ -4,7 +4,7 @@
 			<div class="panel-heading">
 <?php
 global $contest;
-if (isset ( $_SESSION ['username'] ) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {
+if (isset ( $_SESSION ['username'] ) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {
 	global $statusArr;
 	global $langArr;
 
@@ -31,7 +31,7 @@ EOD;
 ?>
 		</div>
 			<div class="panel-body">
-<?php if(isset($_SESSION['username']) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {?>
+<?php if(isset($_SESSION['username']) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {?>
 <pre class="line-numbers command-line data-line"><code class="language-<?php
 	if ($lang == 1)
 		echo 'c';

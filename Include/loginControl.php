@@ -30,7 +30,11 @@ class loginControl {
 			if ($arg = self::$model->login ( $username, $password )) {
 				$_SESSION ['username'] = $username;
 				$_SESSION ['user_id'] = $arg[0];
-				$_SESSION ['privilege'] = $arg[1];
+				$_SESSION['privilege'][0] = 0;
+				if($arg[1] == 1)
+					$_SESSION ['privilege'][0] = 1;
+				else if(count($arg[1]))
+					$_SESSION['privilege'][1] = $arg[1];
 				$_SESSION ['timeout'] = time() + LOGINTIMEOUT; //@config.php
 				echo json_encode ( array (
 						'status' => true 

@@ -16,4 +16,3 @@
 </head>
 
 <body style="overflow:scroll;overflow-x:hidden">	<!--禁止横向滑动-->
-	

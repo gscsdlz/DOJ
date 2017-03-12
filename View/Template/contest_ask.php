@@ -32,7 +32,7 @@
 					echo '<div class="panel panel-default"><div class="panel-head"><ol class="breadcrumb">';
 					echo '<li><a href="/user/show/' . $args [$i] [5] . '">' . $args [$i] [5] . '</a></li>';
 					echo '<li class="active">' . date ( "Y-m-d H:i:s", $args [$i] [4] ) . '</li>';
-					if (isset ( $_SESSION ['user_id'] ) && ($_SESSION ['user_id'] == $args [$i] [3] || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest))
+					if (isset ( $_SESSION ['user_id'] ) && ($_SESSION ['user_id'] == $args [$i] [3] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest])))
 						echo '<li><button id="del'.$args[$i][0].'"type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" >删除</button></li>';
 					echo '</ol></div><div class="panel-body">';
 					echo $args [$i] [2];

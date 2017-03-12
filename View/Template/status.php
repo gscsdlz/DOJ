@@ -90,7 +90,7 @@
 					}
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
-					if ($loginStatus == true && ( $row [8] == $_SESSION ['username'] || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {
+					if ($loginStatus == true && ( $row [8] == $_SESSION ['username'] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {
 						if ($contest) {
 							echo '<td><a href="/contest/code/' . $contest . '/' . $row [0] . '">' . $row [5] . 'B</a></td>';
 						} else {
@@ -110,7 +110,7 @@
 						echo 'primary';
 					else
 						echo 'muted';
-					if ($row [7] == '11' && isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $row [8]) {// CE
+					if ($row [7] == '11' && isset ( $_SESSION ['username'] ) && ($_SESSION ['username'] == $row [8] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {// CE
 						if($contest) {
 							echo '"><a href="/contest/ce/'  . $contest . '/' . $row [0] . '">' . $statusArr [$row [7]] .  '</a></td>';
 						} else {

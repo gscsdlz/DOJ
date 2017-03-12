@@ -52,8 +52,10 @@ class contestControl {
 		 * $status = 0 一切正常开始显示
 		 * = 1弹出需要输入密码框
 		 * = -1比赛未开始
-		 * = -2 比赛权限不足
+		 * = -2 比赛权限不足	
 		 */
+		if(isset($_SESSION['privilege']) && ($_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest])))
+			$status = 0;
 		$args [] = self::$model->get_lists ( $cid );
 		if ($status == 0) { // 检查用户权限以及比赛是否开始
 			$args [] = self::$model->get_problem_list ( $cid );
