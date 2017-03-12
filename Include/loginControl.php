@@ -27,9 +27,10 @@ class loginControl {
 				) );
 				return;
 			}
-			if ($uid = self::$model->login ( $username, $password )) {
+			if ($arg = self::$model->login ( $username, $password )) {
 				$_SESSION ['username'] = $username;
-				$_SESSION ['user_id'] = $uid;
+				$_SESSION ['user_id'] = $arg[0];
+				$_SESSION ['privilege'] = $arg[1];
 				$_SESSION ['timeout'] = time() + LOGINTIMEOUT; //@config.php
 				echo json_encode ( array (
 						'status' => true 

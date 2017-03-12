@@ -26,7 +26,10 @@ class askModel extends DB {
 		return parent::query("INSERT INTO question (pro_id, user_id, topic_question, contest_id, ask_time) VALUES(?,?,?,?,?)", $pro_id, $user_id, $topic, $cid, $time);
 	}
 	
-	public function delete_question($ask_id, $user_id) {
+	public function delete_question($ask_id, $user_id, $cid, $pri) {
+		if($pri == 0 || $cid == $pri) {
+			return parent::query("DELETE FROM question WHERE question_id = ?", $ask_id);
+		}
 		$realId = parent::query("SELECT user_id FROM question WHERE question_id = ? AND user_id = ?", $ask_id, $user_id);
 		if($realId->rowCount() != 0) {
 			return parent::query("DELETE FROM question WHERE question_id = ?", $ask_id);
@@ -34,7 +37,10 @@ class askModel extends DB {
 		return false;
 	}
 	
-	public function delete_answer($question_id, $user_id) {
+	public function delete_answer($question_id, $user_id,  $cid, $pri) {
+		if($pri == 0 || $cid == $pri) {
+			return parent::query("DELETE FROM answer WHERE answer_id = ?", $question_id);
+		}
 		$realId = parent::query("SELECT user_id FROM answer WHERE answer_id = ? AND user_id = ?", $question_id, $user_id);
 		if($realId->rowCount() != 0) {
 			return parent::query("DELETE FROM answer WHERE answer_id = ?", $question_id);

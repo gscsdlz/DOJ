@@ -90,7 +90,7 @@
 					}
 					echo '<td>' . $row [3] . 'MS</td>';
 					echo '<td>' . $row [4] . 'KB</td>';
-					if ($loginStatus == true && $row [8] == $_SESSION ['username']) {
+					if ($loginStatus == true && ( $row [8] == $_SESSION ['username'] || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {
 						if ($contest) {
 							echo '<td><a href="/contest/code/' . $contest . '/' . $row [0] . '">' . $row [5] . 'B</a></td>';
 						} else {

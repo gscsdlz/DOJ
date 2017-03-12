@@ -6,14 +6,14 @@ class loginModel extends DB {
 	}
 	public function login($username, $password) {
 		if (! empty ( $username ) && ! empty ( $password )) {
-			$res = parent::query ( "SELECT password, user_id, nickname, username FROM users WHERE username=?", $username );
+			$res = parent::query ( "SELECT password, user_id, privilege FROM users WHERE username=?", $username );
 			$arr = $res->fetch ( PDO::FETCH_NUM );
 			
-			if ($res->rowCount () != 0 && $arr[3] == $username && sha1 ( $password ) == $arr [0]) { //暂时无法解决由于大小写带来的错误登录
-				return $arr [1];
+			if ($res->rowCount () != 0  && sha1 ( $password ) == $arr [0]) { //通过修改username字段为binary类型 解决
+				return array($arr [1], $arr[2]);
 			}
 		}
-		return false;
+		return null;
 	}
 	public function register($username, $password, $password2, $nickname, $email) {
 		if (! empty ( $username ) && ! empty ( $password ) && $password == $password2 && ! empty ( $email )) {

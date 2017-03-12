@@ -53,8 +53,9 @@ class askControl {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
 			$askid = ( int ) post ( 'question_id' );
 			$user_id = $_SESSION ['user_id'];
-			
-			if (self::$model->delete_question ( $askid, $user_id )) {
+			$privilege = $_SESSION['privilege'];
+			global $contest;
+			if (self::$model->delete_question ( $askid, $user_id , $contest, $privilege)) {
 				echo json_encode ( array (
 						'status' => true 
 				) );
@@ -69,8 +70,9 @@ class askControl {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST' && isset ( $_SESSION ['user_id'] )) {
 			$askid = ( int ) post ( 'answer_id' );
 			$user_id = $_SESSION ['user_id'];
-			
-			if (self::$model->delete_answer ( $askid, $user_id )) {
+			$privilege = $_SESSION['privilege'];
+			global $contest;
+			if (self::$model->delete_answer ( $askid, $user_id , $contest, $privilege)) {
 				echo json_encode ( array (
 						'status' => true 
 				) );

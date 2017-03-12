@@ -3,10 +3,11 @@
 		<div class="panel panel-success">
 			<div class="panel-heading">
 <?php
-if (isset ( $_SESSION ['username'] ) && $_SESSION ['user_id'] == $user_id) {
+global $contest;
+if (isset ( $_SESSION ['username'] ) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {
 	global $statusArr;
 	global $langArr;
-	global $contest;
+
 	echo '<h3 class="text-success">用户<a href="/user/show/'.$_SESSION ['username'].'">' . $_SESSION ['username'] . '</a>的提交记录  记录号：' . $submit_id . '</h3>';
 	if($contest) {
 		echo '<h4 class="text-muted">题目编号：<a href="/contest/problem/'.$contest.'/' . $pro_id . '">' . $pro_id . '</a></h4>';
@@ -30,7 +31,7 @@ EOD;
 ?>
 		</div>
 			<div class="panel-body">
-<?php if(isset($_SESSION['username']) && $_SESSION['user_id'] == $user_id) {?>
+<?php if(isset($_SESSION['username']) && ($_SESSION ['user_id'] == $user_id || $_SESSION['privilege'] == 0 || $_SESSION['privilege'] == $contest)) {?>
 <pre class="line-numbers command-line data-line"><code class="language-<?php
 	if ($lang == 1)
 		echo 'c';
