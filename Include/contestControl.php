@@ -1,13 +1,15 @@
 <?php
-
-require 'Model/contestModel.php';
-require 'Model/problemModel.php';
-require 'Model/statusModel.php';
-require 'Model/codeModel.php';
-require 'Model/rankModel.php';
-require 'View/VIEW.class.php';
-require 'Model/askModel.php';
-
+if (defined ( 'APPPATH' )) {
+	require APPPATH.'/Model/contestModel.php';
+	require APPPATH.'/Model/problemModel.php';
+	require APPPATH.'/Model/statusModel.php';
+	require APPPATH.'/Model/codeModel.php';
+	require APPPATH.'/Model/rankModel.php';
+	require APPPATH.'/View/VIEW.class.php';
+	require APPPATH.'/Model/askModel.php';
+} else {
+	die ();
+}
 class contestControl {
 	private static $model = null;
 	private static $problemModel = null;
@@ -52,9 +54,9 @@ class contestControl {
 		 * $status = 0 一切正常开始显示
 		 * = 1弹出需要输入密码框
 		 * = -1比赛未开始
-		 * = -2 比赛权限不足	
+		 * = -2 比赛权限不足
 		 */
-		if(isset($_SESSION['privilege']) && ($_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest])))
+		if (isset ( $_SESSION ['privilege'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$contest] )))
 			$status = 0;
 		$args [] = self::$model->get_lists ( $cid );
 		if ($status == 0) { // 检查用户权限以及比赛是否开始
@@ -164,22 +166,20 @@ class contestControl {
 			) );
 		}
 	}
-
-	
 	public function asklist() {
 		$cid = get ( 'id' );
 		global $contest;
 		$contest = $cid;
-		$args[] = self::$model->get_problem_list($cid);
-		$args[] = self::$askModel->get_list_by_cid($cid);
+		$args [] = self::$model->get_problem_list ( $cid );
+		$args [] = self::$askModel->get_list_by_cid ( $cid );
 		VIEW::show ( 'contest_asklist', $args );
 	}
 	public function ask() {
-		$cid = (int)get ( 'id' );
-		$topic = (int)get('pid');
+		$cid = ( int ) get ( 'id' );
+		$topic = ( int ) get ( 'pid' );
 		global $contest;
 		$contest = $cid;
-		$args = self::$askModel->get_answer($topic);
+		$args = self::$askModel->get_answer ( $topic );
 		VIEW::loopshow ( 'contest_ask', $args );
 	}
 }

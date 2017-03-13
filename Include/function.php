@@ -35,8 +35,24 @@ function session_check() {
 			$_SESSION = array ();
 			session_destroy ();
 			setcookie ( 'PHPSESSID', '', time () - 3600, '/', '', 0, 0 );
+			return false;
 		}
 		$_SESSION ['timeout'] = time () + LOGINTIMEOUT; // 刷新时间戳 @config.php
+		return true;
 	}
+	return false;
+}
+
+/**
+ * 登录权限检测 专用于后台模块
+ */
+function privilege_check() {
+	/*if(session_check()) {
+		if($_SESSION['privilege'][0] == 1) { //root
+			return 1;
+		} else if(isset($_SESSION['privilege'][1])) {
+			return $_SESSION['privilege']
+		}
+	}*/
 }
 ?>

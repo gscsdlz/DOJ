@@ -25,7 +25,7 @@
 						echo '<td><a href="/user/show/'.$row[6].'">'.$row[6].'</a></td>';
 						echo '<td>'.$row[1].'</td>';
 						echo '<td>'.date("Y-m-d H:i:s", $row[4]).'</td>';
-						if(isset($_SESSION['username']) && ($_SESSION ['user_id'] == $row[6] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {
+						if(isset($_SESSION['username']) && ($_SESSION ['username'] == $row[6] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest]))) {
 							echo '<td><button data-toggle="modal"  data-target="#deleteModal" type="button" class="btn btn-danger" id="del'.$row[0].'">删除</button></td>';
 						}
 						echo '</tr>';

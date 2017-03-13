@@ -1,7 +1,11 @@
 <?php
+if (defined ( 'APPPATH' )) {
+	require APPPATH.'/Model/rankModel.php';
+	require APPPATH.'/View/VIEW.class.php';
+} else {
+	die ();
+}
 
-require 'Model/rankModel.php';
-require 'View/VIEW.class.php';
 class rankControl {
 	private static $model = null;
 	public function __construct() {

@@ -1,5 +1,9 @@
 <?php
-require 'Model/askModel.php';
+if(defined('APPPATH')) {
+	require APPPATH.'/Model/askModel.php';
+} else {
+	die;
+}
 class askControl {
 	private static $model = null;
 	public function __construct() {

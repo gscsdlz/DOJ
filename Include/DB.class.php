@@ -1,5 +1,4 @@
 <?php
-require '/Config/config.php';
 class DB {
 	private static $pdo = null;
 	public function __construct() {
@@ -34,8 +33,8 @@ class DB {
 			echo $e->getMessage ();
 		}
 		
-		if ($result->rowCount () != 0) {			
-			$row =  $result->fetch ( PDO::FETCH_NUM );
+		if ($result->rowCount () != 0) {
+			$row = $result->fetch ( PDO::FETCH_NUM );
 			return $row;
 		} else {
 			return null;
@@ -45,7 +44,7 @@ class DB {
 	 * 支持事务处理的函数
 	 * 提交的语句必须经过转义
 	 * $args形式为字符串数组
-	 * 
+	 *
 	 * @var array $argArray
 	 */
 	public function transaction_query($args) {

@@ -1,8 +1,11 @@
 <?php
-require 'View/VIEW.class.php';
-require 'Model/userModel.php';
-require 'Model/rankModel.php';
-
+if (defined ( 'APPPATH' )) {
+	require APPPATH . '/Model/userModel.php';
+	require APPPATH . '/Model/rankModel.php';
+	require APPPATH . '/View/VIEW.class.php';
+} else {
+	die ();
+}
 class userControl {
 	private static $model = null;
 	private static $rankmodel = null;

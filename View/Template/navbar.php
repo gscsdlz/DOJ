@@ -64,7 +64,7 @@
 							<li><a href="/user/show/<?php echo $_SESSION['username']?>">用户界面</a></li>
 				<?php if($_SESSION['privilege'][0] == 1) 
 						  echo '<li><a href="/admin/">后台管理</a></li>';
-					  else if(count($_SESSION['privilege'][1]))
+					  else if(isset($_SESSION['privilege'][1]))
 					  	  echo '<li><a href="/admin/contestManager">比赛管理</a></li>';
 				?>
 							<li class="divider"></li>

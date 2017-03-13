@@ -1,5 +1,9 @@
 <?php
-require 'Model/submitModel.php';
+if (defined ( 'APPPATH' )) {
+	require APPPATH . '/Model/submitModel.php';
+} else {
+	die ();
+}
 class submitControl {
 	private static $model = null;
 	public function __construct() {

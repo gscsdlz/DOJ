@@ -1,7 +1,10 @@
 <?php
-
-require 'Model/statusModel.php';
-require 'View/VIEW.class.php';
+if (defined ( 'APPPATH' )) {
+	require APPPATH . '/Model/statusModel.php';
+	require APPPATH . '/View/VIEW.class.php';
+} else {
+	die ();
+}
 class statusControl {
 	private static $model = null;
 	public function __construct() {

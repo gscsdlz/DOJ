@@ -1,8 +1,11 @@
 <?php
 // /处理登录
-
-require 'Model/loginModel.php';
-require 'Include/vcode.class.php';
+if(defined('APPPATH')) {
+	require APPPATH.'/Model/loginModel.php';
+	require APPPATH.'/Include/vcode.class.php';
+} else {
+	die();
+}
 
 class loginControl {
 	private static $model = null;

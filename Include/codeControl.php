@@ -1,7 +1,10 @@
 <?php
-
-require_once 'Model/codeModel.php';
-require_once 'View/VIEW.class.php';
+if(defined('APPPATH')) {
+	require_once APPPATH.'/Model/codeModel.php';
+	require_once APPPATH.'/View/VIEW.class.php';
+} else {
+	die ();
+}
 class codeControl{
 	private static $model = null;
 	public function __construct() {

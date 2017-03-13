@@ -1,5 +1,9 @@
 <?php
-require 'View/VIEW.class.php';
+if(defined('APPPATH')) {
+	require APPPATH.'/View/VIEW.class.php';
+} else {
+	die();
+}
 class indexControl {
 	public function __construct() {
 	}
