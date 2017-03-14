@@ -23,6 +23,19 @@ class DB {
 			echo $e->getMessage ();
 		}
 	}
+	
+	public function update($args) {
+		$argArray = func_get_args ();
+		$q = array_shift ( $argArray );
+		try {
+			$result = self::$pdo->prepare ( $q );
+			$result->execute ( $argArray );
+			return $result->rowCount();
+		} catch ( PDOException $e ) {
+			echo $e->getMessage ();
+		}
+	}
+	
 	public function query_one($args) {
 		$argArray = func_get_args ();
 		$q = array_shift ( $argArray );
