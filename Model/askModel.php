@@ -27,7 +27,7 @@ class askModel extends DB {
 	}
 	
 	public function delete_question($ask_id, $user_id, $cid, $pri) {
-		if($pri == 0 || $cid == $pri) {
+		if($pri[0] == 1 || isset($pri[1][$cid])) {
 			return parent::query("DELETE FROM question WHERE question_id = ?", $ask_id);
 		}
 		$realId = parent::query("SELECT user_id FROM question WHERE question_id = ? AND user_id = ?", $ask_id, $user_id);
@@ -38,7 +38,7 @@ class askModel extends DB {
 	}
 	
 	public function delete_answer($question_id, $user_id,  $cid, $pri) {
-		if($pri == 0 || $cid == $pri) {
+		if($pri[0] == 1 || isset($pri[1][$cid])) {
 			return parent::query("DELETE FROM answer WHERE answer_id = ?", $question_id);
 		}
 		$realId = parent::query("SELECT user_id FROM answer WHERE answer_id = ? AND user_id = ?", $question_id, $user_id);
