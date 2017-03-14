@@ -10,7 +10,7 @@ class problemModel extends DB {
 	 * @return mixed|NULL
 	 */
 	public function get_problem($problemId) { // 从数据库选择指定ID的题目详情
-		$result = parent::query ( "SELECT * FROM problem WHERE pro_id = ? LIMIT 1", $problemId );
+		$result = parent::query ( "SELECT * FROM problem WHERE pro_id = ? AND visible=1 LIMIT 1", $problemId );
 		if ($result->rowCount () != 0) {
 			return $result->fetch ( PDO::FETCH_NAMED );
 		} else {
@@ -71,7 +71,7 @@ class problemModel extends DB {
 		$pms = PROBLEMPAGEMAXSIZE;
 		$listId *= $pms;
 		
-		$result = parent::query ( "SELECT pro_id, pro_title FROM problem LIMIT $listId, $pms" );
+		$result = parent::query ( "SELECT pro_id, pro_title FROM problem WHERE visible=1 LIMIT $listId, $pms" );
 		if ($result->rowCount () != 0) {
 			$arr [] = array (
 					$this->get_maxProblem (),

@@ -20,11 +20,11 @@
 				</div>
 				<div class="panel panel-default panel-danger">
 					<div class="panel-heading">样例输入</div>
-					<div class="panel-body"><?php echo $pro_dataIn;?></div>
+					<div class="panel-body"><pre><?php echo $pro_dataIn;?></pre></div>
 				</div>
 				<div class="panel panel-default  panel-danger">
 					<div class="panel-heading">样例输出</div>
-					<div class="panel-body"><?php echo $pro_dataOut;?></div>
+					<div class="panel-body"><pre><?php echo $pro_dataOut;?></pre></div>
 				</div>
 				<div class="panel panel-default">
 					<div class="panel-heading">来源</div>
