@@ -39,4 +39,16 @@ class aProblemModel extends problemModel {
 	public function set_problem($pro_id, $visible) {
 		return parent::update ( "UPDATE problem SET visible = ? WHERE pro_id = ? LIMIT 1", $visible, $pro_id );
 	}
+	
+	public function del_problem($pro_id) {
+		return parent::update("DELETE FROM problem WHERE pro_id = ? LIMIT 1", $pro_id);
+	}
+	
+	public function update_pro($pro_id, $pro_title, $time_limit, $memory_limit, $pro_descrip,$pro_in,$pro_out,$pro_dataIn,$pro_dataOut, $hint, $author) {
+		return parent::update("UPDATE problem SET pro_title = ?, time_limit = ?, memory_limit = ?, pro_descrip = ?, pro_in = ?, pro_out = ?, pro_dataIn = ?, pro_dataOut = ?, hint = ?, author=? WHERE pro_id = ?", $pro_title, $time_limit, $memory_limit, $pro_descrip,$pro_in,$pro_out,$pro_dataIn,$pro_dataOut, $hint, $author,$pro_id);
+	}
+	
+	public function insert_pro($pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author ){
+		return parent::update("INSERT INTO problem VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)", $pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author);
+	}
 }
