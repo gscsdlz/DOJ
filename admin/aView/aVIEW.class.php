@@ -9,7 +9,10 @@ class aVIEW {
 			header('HTTP/1.1 404 Not Found');
 		require APPPATH.'/admin/aView/Template/header.php';
 		require APPPATH.'/admin/aView/Template/navbar.php';
-		require APPPATH.'/admin/aView/Template/' . $fileName . '.php';
+		if($fileName == 'error')
+			require APPPATH.'/View/Template/error.php';
+		else
+			require APPPATH.'/admin/aView/Template/' . $fileName . '.php';
 		require APPPATH.'/admin/aView/Template/footer.php';
 	}
 

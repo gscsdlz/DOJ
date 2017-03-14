@@ -1,2 +1,1 @@
-<?php
-?>
+<h1 class="text-center" style="margin-top:200px">欢迎来到OJ后台管理</h1>

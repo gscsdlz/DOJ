@@ -17,8 +17,9 @@
 					aria-expanded="false">題目管理 <span class="caret"></span></a>
 					<ul class="dropdown-menu">
 						<li><a href="#">新增题目</a></li>
-						<li><a href="#">修改题目</a></li>
-						<li><a href="#">删除题目</a></li>
+						<li><a href="/admin/problemM/page">修改题目</a></li>
+						<li><a href="/admin/problemM/page">删除题目</a></li>
+						<li><a href="/admin/problemM/hidden">查看已隐藏的题目</a></li>
 					</ul>
 				</li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"

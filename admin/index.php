@@ -8,7 +8,8 @@ require APPPATH.'/admin/aInclude/aWORK.class.php';
 require APPPATH.'/Include/DB.class.php';
 require APPPATH.'/Include/function.php';
 
-session_check();
+if(!privilege_check())
+	die("privilege error");
 $router = new arouter ();
 $controlClass = $router->control;
 $action = $router->action;
@@ -18,8 +19,8 @@ if (file_exists ( APPPATH.'/admin/aInclude/' . $controlClass . '.php' )) {
 	$control = aWORK::create ( $controlClass );
 	$control->$action ();
 } else {
-	require APPPATH.'/admin/aInclude/indexControl.php';
-	$control = new indexControl ();
+	require APPPATH.'/admin/aInclude/aindexControl.php';
+	$control = new aindexControl ();
 	$control->index ();
 }
 ?>
