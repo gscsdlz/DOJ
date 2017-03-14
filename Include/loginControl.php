@@ -108,7 +108,7 @@ class loginControl {
 				'status' => false 
 		) );
 	}
-	public function update() {
+	public function updateInfo() {
 		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 			$password = post ( 'password' );
 			$password2 = post ( 'password2' );
@@ -119,7 +119,7 @@ class loginControl {
 			$group = ( int ) ('group');
 			if (isset ( $_SESSION ['user_id'] )) {
 				$userid = $_SESSION ['user_id'];
-				$status = self::$model->update ( $userid, $password, $password2, $nickname, $email, $qq, $motto, $group );
+				$status = self::$model->updateInfo ( $userid, $password, $password2, $nickname, $email, $qq, $motto, $group );
 				if($status == -1)
 					echo json_encode(array('status' => 'email error'));
 				else if($status == -2)

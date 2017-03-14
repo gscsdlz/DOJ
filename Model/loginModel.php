@@ -42,7 +42,7 @@ class loginModel extends DB {
 		}
 		return 1;
 	}
-	public function update($userid, $password, $password2, $nickname, $email, $qq, $motto, $group) {
+	public function updateInfo($userid, $password, $password2, $nickname, $email, $qq, $motto, $group) {
 		if ($password && $password == $password2) {
 			parent::query ( "UPDATE users SET password = sha1(?)	 WHERE user_id = ? LIMIT 1", $password, $userid );
 		}
