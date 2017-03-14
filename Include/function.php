@@ -30,8 +30,8 @@ function format_time($t) {
  */
 function session_check() {
 	session_start ();
-	if (isset ( $_SESSION ['timeout'] )) {
-		if ($_SESSION ['timeout'] < time ()) {
+	if (isset ( $_SESSION ['timeout'] )) { //检查登录情况
+		if ($_SESSION ['timeout'] < time ()) {  //登录超时
 			$_SESSION = array ();
 			session_destroy ();
 			setcookie ( 'PHPSESSID', '', time () - 3600, '/', '', 0, 0 );
@@ -47,12 +47,11 @@ function session_check() {
  * 登录权限检测 专用于后台模块
  */
 function privilege_check() {
-	/*if(session_check()) {
-		if($_SESSION['privilege'][0] == 1) { //root
-			return 1;
-		} else if(isset($_SESSION['privilege'][1])) {
-			return $_SESSION['privilege']
+	if(session_check()) {
+		if($_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1])) {
+			return true;
 		}
-	}*/
+	}
+	return false;
 }
 ?>
