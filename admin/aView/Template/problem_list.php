@@ -49,7 +49,7 @@
 						echo '<tr height="55px" id="'.$row[0].'tr">';
 					echo '<td>' . $row [0].'</td>';
 					echo '<td align="left"><a href="/problem/show/' . $row [0] . '">&nbsp;' . $row [1] . '</a></td>';
-					echo '<td width="300px"><button type="button" class="btn btn-success" id="'.$row[0].'edit">修改题目</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="'.$row[0].'del">删除题目</button>&nbsp;&nbsp;&nbsp;&nbsp;';
+					echo '<td width="300px"><button type="button" class="btn btn-success" id="'.$row[0].'edit">修改题目</button>&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" id="'.$row[0].'del">删除题目</button>&nbsp;&nbsp;&nbsp;&nbsp;';
 					if($row[2] == 0) //不可见
 						echo '<button type="button" class="btn btn-primary" id="'.$row[0].'show">显示题目</button></td></tr>';
 					else
@@ -87,12 +87,35 @@
 		<?php }?>
 	</div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+	aria-labelledby="deleteModal" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h3 class="modal-title" id="codeModalLabel">删除不可逆！确认删除吗？</h3>
+			</div>
+			<div class="model-body text-center" id="errorInfo"></div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal" id="closeModel">关闭</button>
+				<button type="button" class="btn btn-danger" id="deleteProblem">删除</button>
+			</div>
+		</div>
+	</div>
+</div>
 <script>
+	var deleteId;
 	$(document).ready(function(){
 		$("button").hide();
+		$("#deleteProblem").show();
+		$("#closeModel").show();
 		$("tr").mousemove(function(){
 			var id = parseInt($(this).attr("id"));
 			$("button").hide();
+			$("#deleteProblem").show();
+			$("#closeModel").show();
 			$("#" + id + "edit").show();
 			$("#" + id + "del").show();
 			$("#" + id + "show").show();
@@ -114,6 +137,28 @@
 				var arr = eval("(" + data + ")");
 				if(arr['status'] == true)
 					window.location.reload();
+			})
+		})
+
+		$(".btn-success").click(function(){
+			var id = parseInt($(this).attr("id"));
+			window.location.href= "/admin/problemM/edit/" + id;
+		})
+
+		$(".btn-danger").click(function(){
+			if($(this).attr("id") != 'deleteProblem')
+				deleteId = parseInt($(this).attr("id"));
+		})
+
+		$("#deleteProblem").click(function(){
+			$.post("/admin/problemM/del_problem", {pro_id:deleteId}, function(data){
+				var arr = eval("(" + data + ")");
+				if(arr['status'] == true) {
+					window.location.reload();
+				} else {
+					$("#errorInfo").html("");
+					$("#errorInfo").append('<h2 class="text-danger">'+arr['status']+"</h2>");
+				}
 			})
 		})
 	})
