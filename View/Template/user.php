@@ -348,7 +348,7 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 			else if(motto.length > 30)
 				$("#mottoError").show();
 			else
-			$.post("/login/update", {nickname:nickname, motto:motto, qq:qq, email:email, group:group, password:password, password2:password2}, function(data){
+			$.post("/login/updateInfo", {nickname:nickname, motto:motto, qq:qq, email:email, group:group, password:password, password2:password2}, function(data){
 				var arr = eval("(" + data + ")");
 				if (arr['status']) {
 					window.location.reload();
