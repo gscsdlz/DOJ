@@ -26,9 +26,9 @@
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">比赛管理<span class="caret"></span></a>
 					<ul class="dropdown-menu">
-						<li><a href="#">新增比赛</a></li>
-						<li><a href="#">修改比赛</a></li>
-						<li><a href="#">删除比赛</a></li>
+						<li><a href="/admin/contestM/edit">新增比赛</a></li>
+						<li><a href="/admin/contestM/page">修改比赛</a></li>
+						<li><a href="/admin/contestM/page">删除比赛</a></li>
 					</ul>
 				</li>
 			</ul>
