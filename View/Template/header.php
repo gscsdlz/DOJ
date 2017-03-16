@@ -15,4 +15,4 @@
 <title>欢迎来到NUC Online Judge</title>
 </head>
 
-<body style="overflow:scroll;overflow-x:hidden">	<!--禁止横向滑动-->
+<body style="overflow:scroll;overflow-x:hidden;background-color:rgb(248,248,248)">	<!--禁止横向滑动-->
