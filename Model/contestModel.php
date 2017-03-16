@@ -1,5 +1,5 @@
 <?php
-
+require_once APPPATH.'/Model/problemModel.php';
 class contestModel extends DB {
 	private $model;
 	public function __construct() {
@@ -57,7 +57,12 @@ class contestModel extends DB {
 			return false;
 		}
 	}
-	
+	/**
+	 * 返回比赛的详细信息，提供cid则返回该比赛的信息
+	 * 否则返回所有比赛信息
+	 * @param number $cid
+	 * @return mixed|NULL
+	 */
 	public function get_lists($cid = 0) {
 		if ($cid) {
 			$result = parent::query ( "SELECT contest.*, users.username FROM contest LEFT JOIN users ON (contest.user_id = users.user_id) WHERE contest_id = ? ORDER BY contest_id DESC", $cid );
@@ -74,12 +79,17 @@ class contestModel extends DB {
 			return null;
 		}
 	}
-	public function get_problem_list($contest_id) {
+	/**
+	 * 获取比赛中题目的列表
+	 * @param int $contest_id
+	 * @return unknown[]|unknown[][]|number[][]|mixed[][]|NULL
+	 */
+	public function get_problem_list($contest_id, $needGets = 0) {
 		$result = parent::query ( "SELECT inner_id, problem.pro_title, contest_pro.pro_id FROM contest_pro LEFT JOIN problem ON (problem.pro_id = contest_pro.pro_id) WHERE contest_id = ? ORDER BY inner_id", $contest_id );
 		if ($result->rowCount () != 0) {
-			$needGets = false; // 获取用户每道题的提交记录
-			if (isset ( $_SESSION ['user_id'] )) {
-				$needGets = true;
+			// 获取用户每道题的提交记录
+			if (isset ( $_SESSION ['user_id'] ) && $needGets == 0) {
+				$needGets = 1;
 				$user_id = $_SESSION ['user_id'];
 			}
 			$arr [] = array (
@@ -87,7 +97,7 @@ class contestModel extends DB {
 			);
 			while ( $row = $result->fetch ( PDO::FETCH_NUM ) ) {
 				$Submits = $this->model->get_submits ( $row [2], $contest_id );
-				if ($needGets) {
+				if ($needGets == 1) {
 					$mySubmits = $this->model->get_my_submits ( $row [2], $user_id, $contest_id );
 					$arr [] = array (
 							$row [0],
