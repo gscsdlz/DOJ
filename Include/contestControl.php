@@ -1,7 +1,7 @@
 <?php
 if (defined ( 'APPPATH' )) {
 	require APPPATH.'/Model/contestModel.php';
-	require APPPATH.'/Model/problemModel.php';
+	require_once APPPATH.'/Model/problemModel.php';
 	require APPPATH.'/Model/statusModel.php';
 	require APPPATH.'/Model/codeModel.php';
 	require APPPATH.'/Model/rankModel.php';
