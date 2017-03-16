@@ -115,7 +115,8 @@ class problemMControl {
 				$status = self::$model->insert_pro ( $pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author );
 				if ($status) {
 					echo json_encode ( array (
-							'status' => $status 
+							'status' => true,
+							'pro_id' => self::$model->get_maxId()
 					) );
 				}
 			} else {

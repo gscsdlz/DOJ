@@ -48,6 +48,10 @@ class aProblemModel extends problemModel {
 		return parent::update("UPDATE problem SET pro_title = ?, time_limit = ?, memory_limit = ?, pro_descrip = ?, pro_in = ?, pro_out = ?, pro_dataIn = ?, pro_dataOut = ?, hint = ?, author=? WHERE pro_id = ?", $pro_title, $time_limit, $memory_limit, $pro_descrip,$pro_in,$pro_out,$pro_dataIn,$pro_dataOut, $hint, $author,$pro_id);
 	}
 	
+	public function get_maxId() {
+		return parent::query_one("SELECT MAX(pro_id) FROM problem")[0];
+	}
+	
 	public function insert_pro($pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author ){
 		return parent::update("INSERT INTO problem VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)", $pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author);
 	}

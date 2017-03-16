@@ -1,6 +1,11 @@
+<h1 class="text-center">
 <?php
+	if(isset($pro_id)) 
+		echo '修改·编号'.$pro_id;
+	else
+		echo '新增题目';
 ?>
-<h1 class="text-center">修改或新增题目</h1>
+</h1>
 <p>&nbsp;</p>
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
@@ -67,7 +72,8 @@
 									<h1 class="text-center">输入样例描述</h1>
 								</div>
 								<div class="panel-body">
-									<textarea id="pro_dataIn" rows="" cols="" style="width: 100%; height: 100px"><?php if(isset($pro_dataIn)) echo $pro_dataIn;?></textarea>
+									<textarea id="pro_dataIn" rows="" cols=""
+										style="width: 100%; height: 100px"><?php if(isset($pro_dataIn)) echo $pro_dataIn;?></textarea>
 								</div>
 							</div>
 						</div>
@@ -77,7 +83,8 @@
 									<h1 class="text-center">输出样例描述</h1>
 								</div>
 								<div class="panel-body">
-									<textarea id="pro_dataOut" rows="" cols="" style="width: 100%; height: 100px"><?php if(isset($pro_dataOut)) echo $pro_dataOut;?></textarea>
+									<textarea id="pro_dataOut" rows="" cols=""
+										style="width: 100%; height: 100px"><?php if(isset($pro_dataOut)) echo $pro_dataOut;?></textarea>
 								</div>
 							</div>
 						</div>
@@ -96,8 +103,11 @@
 
 			<div class="form-group">
 				<div class="text-center">
-					<button type="button" class="btn btn-success" style="width: 100px" id="save">保存</button><br />
-					<button type="button" class="btn btn-danger" id="errorInfo" style="margin-top:10px;"></button>
+					<button type="button" class="btn btn-success" style="width: 100px"
+						id="save">保存</button>
+					<br />
+					<button type="button" class="btn btn-danger" id="errorInfo"
+						style="margin-top: 10px;"></button>
 				</div>
 			</div>
 		</form>
@@ -112,6 +122,9 @@
 	var ueOut = UE.getEditor('editorOut'); 
 	var ueHint = UE.getEditor('editorHint'); 
 	var arr;
+<?php
+	if(isset($pro_id)) {
+?>
 	ue.ready(function() {
 		ue.setContent(arr['pro_descrip']);
 	});
@@ -124,11 +137,15 @@
 	ueHint.ready(function(){
 		ueHint.setContent(arr['pro_hint']);
 	});
-
+<?php }?>
 	$(document).ready(function(){
+<?php
+	if(isset($pro_id)) {
+?>
 		$.post("/admin/problemM/editPost", {<?php if(isset($pro_id)) echo 'id:'.$pro_id?>} , function(data){
 			arr = eval("(" + data + ")");
 		})
+<?php }?>
 		$("#save").click(function(){
 			var time_limit = $("#time_limit").val();
 			var memory_limit = $("#memory_limit").val();
@@ -142,6 +159,9 @@
 			var hint = ueHint.getContent();
 			$.post("/admin/problemM/savePro", {<?php if(isset($pro_id)) echo 'pro_id:'.$pro_id.',';?>pro_title:pro_title, time_limit:time_limit, memory_limit:memory_limit, pro_descrip:pro_descrip, pro_in:pro_in,pro_out:pro_out, pro_dataIn:pro_dataIn, pro_dataOut:pro_dataOut, hint:hint, author:author}, function(data) {
 				var arr = eval("(" + data + ")");
+				if(arr['status'] == true)
+					window.location.href = "/admin/problemM/edit/" + arr['pro_id'];
+				else
 				$("#errorInfo").html(arr['status']);
 			})
 		})
