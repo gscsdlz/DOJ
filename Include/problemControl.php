@@ -26,7 +26,12 @@ class problemControl {
 			$problemId = '1000';
 		$body = self::$model->get_problem ( $problemId ); // 获取页面主体
 		$submits = self::$model->get_submits ( $problemId );
-		
+		/**
+		 * 管理员添加题目以后 允许查看隐藏题目 @/admin/aView/problem_list.php
+		 */
+		if($body['visible'] == 0)
+			if(!(isset($_SESSION['user_id']) && $_SESSION['privilege'][0] == 1))
+				$body = null;   
 		if ($body) {
 			$body ['aSubmit'] = $submits [0];
 			$body ['tSubmit'] = $submits [1];
