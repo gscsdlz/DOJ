@@ -1,12 +1,12 @@
 <?php
 if (defined ( 'APPPATH' )) {
-	require APPPATH.'/Model/contestModel.php';
-	require_once APPPATH.'/Model/problemModel.php';
-	require APPPATH.'/Model/statusModel.php';
-	require APPPATH.'/Model/codeModel.php';
-	require APPPATH.'/Model/rankModel.php';
-	require APPPATH.'/View/VIEW.class.php';
-	require APPPATH.'/Model/askModel.php';
+	require APPPATH . '/Model/contestModel.php';
+	require_once APPPATH . '/Model/problemModel.php';
+	require APPPATH . '/Model/statusModel.php';
+	require APPPATH . '/Model/codeModel.php';
+	require APPPATH . '/Model/rankModel.php';
+	require APPPATH . '/View/VIEW.class.php';
+	require APPPATH . '/Model/askModel.php';
 } else {
 	die ();
 }
@@ -102,7 +102,15 @@ class contestControl {
 		$innerId = get ( 'pid' );
 		$contestId = get ( 'id' );
 		$contest = $contestId;
-		if (self::$model->timeCheck ( $contestId ) == 0) { // 检查比赛是否开始
+		$admin = false;
+		if (isset ( $_SESSION ['user_id'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$contestId] )))
+			$admin = true;
+		
+		if (isset ( $_SESSION ['user_id'] ))
+			$uid = $_SESSION ['user_id'];
+		else
+			$uid = 0;
+		if ($admin || self::$model->privilege_check ( $contestId, $uid) == 0) { // 检查比赛是否开始
 			$problemId = self::$model->get_real_id ( $innerId, $contestId );
 			$body = self::$model->get_problem ( $problemId, $innerId );
 			$submits = self::$problemModel->get_submits ( $problemId, $contest );

@@ -105,14 +105,15 @@ class contestModel extends DB {
 							$Submits [0],
 							$Submits [1],
 							$mySubmits [0],
-							$mySubmits [1] 
+							$mySubmits [1]
 					);
 				} else {
 					$arr [] = array (
 							$row [0],
 							$row [1],
 							$Submits [0],
-							$Submits [1] 
+							$Submits [1],
+							$row[2]//专门用于/admin/contestM/edit
 					);
 				}
 			}
