@@ -32,7 +32,7 @@ class submitModel extends DB {
 		}
 		return false;
 	}
-	public function insert($user_id, $pro_id, $lang, $codes, $contestId) {
+	public function insertCode($user_id, $pro_id, $lang, $codes, $contestId) {
 		if ($contestId) {
 			if (!$this->timeCheck ( $contestId )) {
 				return false;
