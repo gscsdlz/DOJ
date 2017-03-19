@@ -28,7 +28,7 @@ class askModel extends DB {
 	
 	public function delete_question($ask_id, $user_id, $cid, $pri) {
 		if($pri[0] == 1 || isset($pri[1][$cid])) {
-			return parent::query("DELETE FROM question WHERE question_id = ?", $ask_id);
+			return parent::update("DELETE FROM question WHERE question_id = ?", $ask_id);
 		}
 		$realId = parent::query("SELECT user_id FROM question WHERE question_id = ? AND user_id = ?", $ask_id, $user_id);
 		if($realId->rowCount() != 0) {

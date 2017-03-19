@@ -58,8 +58,8 @@ class askControl {
 			$askid = ( int ) post ( 'question_id' );
 			$user_id = $_SESSION ['user_id'];
 			$privilege = $_SESSION['privilege'];
-			global $contest;
-			if (self::$model->delete_question ( $askid, $user_id , $contest, $privilege)) {
+			$cid = (int)post('cid');
+			if (self::$model->delete_question ( $askid, $user_id , $cid, $privilege)) {
 				echo json_encode ( array (
 						'status' => true 
 				) );

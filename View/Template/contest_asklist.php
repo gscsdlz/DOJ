@@ -105,7 +105,7 @@
 	var id;
 	$(document).ready(function(){
 			$("#deleteAsk").click(function(){
-				$.post("/ask/delete_question", {question_id:id}, function(data) {
+				$.post("/ask/delete_question", {question_id:id, <?php global $contest; echo 'cid:'.$contest;?>}, function(data) {
 					var arr = eval("(" + data + ")");
 					if(arr['status'] == true)
 						window.location.reload();
@@ -114,6 +114,7 @@
 				})	
 			})
 			$(".btn-danger").click(function(){	
+				if($(this).id != 'deleteAsk')
 				id = parseInt($(this).attr("id").substr(3));			
 			})
 			$("#topicEmptyError").hide();
