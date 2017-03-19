@@ -1,7 +1,6 @@
 <?php
 if (defined ( 'APPPATH' )) {
 	require APPPATH . '/admin/aModel/aProblemModel.php';
-	require APPPATH . '/admin/aView/aVIEW.class.php';
 } else {
 	die ( 'problemMControl' );
 }
