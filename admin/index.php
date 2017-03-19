@@ -7,10 +7,11 @@ require APPPATH . '/admin/aInclude/arouter.class.php';
 require APPPATH . '/admin/aInclude/aWORK.class.php';
 require APPPATH . '/Include/DB.class.php';
 require APPPATH . '/Include/function.php';
+require APPPATH.'/admin/aView/aVIEW.class.php';
 
 if (! privilege_check ()) {
-	aVIEW::show ( array (
-			'error' => 'Admin Error' 
+	aVIEW::show ( 'error', array (
+			'errorInfo' => 'Admin Error' 
 	) );
 	die();
 }

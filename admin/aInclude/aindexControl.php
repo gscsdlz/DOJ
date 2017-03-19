@@ -1,7 +1,5 @@
 <?php
-if(defined('APPPATH')) {
-	require APPPATH.'/admin/aView/aVIEW.class.php';
-} else {
+if(!defined('APPPATH')) {
 	die();
 }
 class aindexControl {
