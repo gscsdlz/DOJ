@@ -36,6 +36,19 @@ class DB {
 		}
 	}
 	
+	public function insert($args) {
+		$argArray = func_get_args ();
+		$q = array_shift ( $argArray );
+		try {
+			$result = self::$pdo->prepare ( $q );
+			$result->execute ( $argArray );
+			return self::$pdo->lastInsertId();
+		} catch ( PDOException $e ) {
+			echo $e->getMessage ();
+		}
+	}
+	
+	
 	public function query_one($args) {
 		$argArray = func_get_args ();
 		$q = array_shift ( $argArray );
