@@ -24,13 +24,14 @@ class submitControl {
 			$codes = post ( 'codes' );
 			$cid = ( int ) post ( 'contestId' );
 			$uid = $_SESSION ['user_id'];
-			if ($cid == 0 || self::$contestModel->privilege_check ( $cid, $uid ))
+			if ($cid == 0 || self::$contestModel->privilege_check ( $cid, $uid )) {
 				$res = self::$model->insertCode ( $uid, $pro_id, $lang, $codes, $cid );
-			if ($res) {
-				echo json_encode ( array (
-						'status' => true 
-				) );
-				return;
+				if ($res) {
+					echo json_encode ( array (
+							'status' => true 
+					) );
+					return;
+				}
 			}
 			echo json_encode ( array (
 					'status' => false 
