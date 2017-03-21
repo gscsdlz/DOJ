@@ -31,6 +31,13 @@
 						<li><a href="/admin/contestM/page">删除比赛</a></li>
 					</ul>
 				</li>
+				<li class="dropdown"><a href="#" class="dropdown-toggle"
+					data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false">用户管理<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/userM/group">小组管理</a></li>
+					</ul>
+				</li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="/">返回前台</a></li>
