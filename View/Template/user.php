@@ -111,7 +111,7 @@
 							<div class="form-group">
 								<label for="Group" class="col-sm-2 control-label">小组</label>
 								<div class="col-sm-10">
-									<select id="Gourp" class="form-cotrol">
+									<select id="Group" class="form-cotrol">
 								<?php
 			
 			foreach ( $args [5] as $row ) {
@@ -350,8 +350,8 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 			else
 			$.post("/login/updateInfo", {nickname:nickname, motto:motto, qq:qq, email:email, group:group, password:password, password2:password2}, function(data){
 				var arr = eval("(" + data + ")");
-				if (arr['status']) {
-					window.location.reload();
+				if (arr['status'] == true) {
+					//window.location.reload();
 				} else if(arr['status'] == 'email error'){
 					$("#emailError").show();	
 				}

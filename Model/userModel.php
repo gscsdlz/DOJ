@@ -64,7 +64,10 @@ class userModel extends DB {
 			return null;
 		}
 	}
-	
+	/**
+	 * 获取小组的所有信息
+	 * @return mixed
+	 */
 	public function get_group_info() {
 		$result = parent::query("SELECT * FROM `group`");
 		while($row = $result->fetch(PDO::FETCH_NUM)){
