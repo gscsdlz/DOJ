@@ -143,6 +143,16 @@ class contestModel extends DB {
 			return - 1;
 		}
 	}
+	
+	public function get_inner_Id($pid, $contest_id) {
+		$result = parent::query_one( "SELECT inner_id FROM contest_pro WHERE contest_id = ? AND pro_id = ? LIMIT 1", $contest_id, $pid );
+		if ($result) {
+			return $result[0];
+		} else {
+			return - 1;
+		}
+	}
+	
 	public function get_problem($pid, $inner_id) {
 		$body = $this->model->get_problem ( $pid );
 		if (isset ( $body ['pro_id'] )) {
