@@ -3,6 +3,10 @@ if (isset ( $args [0] [0] ))
 	$base = $args [0] [0];
 if (isset ( $args [1] ))
 	$prolist = $args [1];
+if (isset ( $args [2] ))
+	$groups = $args [2];
+if (isset ( $args [3] ))
+	$users = $args [3];
 ?>
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
@@ -12,8 +16,6 @@ if (isset ( $args [1] ))
 					aria-controls="home" role="tab" data-toggle="tab">比赛基本信息</a></li>
 				<li role="presentation"><a href="#user" aria-controls="profile"
 					role="tab" data-toggle="tab">用户管理</a></li>
-				<li role="presentation"><a href="#submit" aria-controls="messages"
-					role="tab" data-toggle="tab">提交管理</a></li>
 				<li role="presentation"><a href="#balloon" aria-controls="settings"
 					role="tab" data-toggle="tab">气球管理</a></li>
 			</ul>
@@ -108,22 +110,80 @@ if (isset ( $args [1] ))
 						</div>
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="user"></div>
-				<div role="tabpanel" class="tab-pane" id="submit"></div>
-				<div role="tabpanel" class="tab-pane" id="balloon"></div>
+				<div role="tabpanel" class="tab-pane" id="user">
+
+		<?php
+		if (! isset ( $base ))
+			echo '<h3 class="text-center text-danger">请先添加比赛</h3>';
+		else if ($base ['contest_pass'] != 2)
+			echo '<h3 class="text-center text-danger">用户管理仅针对私有比赛</h3>';
+		else {
+			?>
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 text-center"
+							style="margin-bottom: 20px;">
+							<span class="text-danger">点击保存之前所做的更改不会生效，请注意</span><br />
+							<button type="button" class="btn btn-primary" id="saveUser">保存</button>
+							<br /> <span class="text-danger" id="usererror"></span><br />
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-md-offset-1 well">
+							<h4 class="text-center">现有小组</h4>
+							<ul class="list-group" id="groupList">
+		<?php
+			foreach ( $groups as $row ) {
+				echo '<li id="groups' . $row [0] . '" class="list-group-item"><span class="badge">' . $row [2] . '</span>' . $row [1] . '</li>';
+			}
+			?>
+							</ul>
+						</div>
+						<div class="col-md-4 col-md-offset-2 well">
+							<h4 class="text-center">现有用户</h4>
+							<ul class="list-group" id="userList">
+		<?php
+			foreach ( $users as $row ) {
+				echo '<li ondblclick="delete_pro($(this))" id="users' . $row [0] . '"  class="list-group-item">' . $row [1] . '</li>';
+			}
+			?>
+							</ul>
+						</div>
+					</div>
+		<?php }?>
+					
+				</div>
+				<div role="tabpanel" class="tab-pane" id="balloon">
+					<div class="row">
+						<div class="col-md-6 col-md-offset-3 well">
+							<table class="table table-hover" id="ballonList">
+								<tr>
+									<th>提交号</th>
+									<th>用户名</th>
+									<th>通过题目</th>
+									<th>通过时间</th>
+									<th>座位号</th>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 <script>
 	var pro_id;
 	var pro_title;
 	var valid_id = false;
 	var prolist = new Array();
 	$(document).ready(function(){
-		$(window).bind('beforeunload',function(){
+		/*$(window).bind('beforeunload',function(){
 			return '您输入的内容尚未保存，确定离开此页面吗？';
-		});
+		});*/
+		get_balloon();
+		var t=setInterval("get_balloon", 5000);
+		
 		$("#pro_id").keyup(function(){
 			valid_id = false;
 			pro_id = parseInt($(this).val());
@@ -185,8 +245,59 @@ if (isset ( $args [1] ))
 				});
 			}
 		})
-	})
 
+		$("#groupList li").dblclick(function(){
+			var id = parseInt(($(this).attr("id").substr(6)));
+			$.post("/admin/userM/groupList", {gid:id}, function (data){
+				var arr = eval("(" + data + ")");
+				if(typeof arr == null)
+					return;
+				var idArr = new Array();
+				$("#userList li").each(function(index){
+					idArr[index] = parseInt($(this).attr("id").substr(5)); 
+				})
+				for(var i = 0; i < arr.length; i++){
+					if($.inArray(parseInt(arr[i][1]), idArr))
+						$("#userList").append('<li ondblclick="delete_pro($(this))" id="users' + arr[i] [1] + '"  class="list-group-item">'+ arr[i] [0] + '</li>');
+				}
+			})
+			$(this).remove();
+		})
+
+		$("#saveUser").click(function(){
+			var id = <?php if(isset($base['contest_id'])) echo $base['contest_id'];?>;
+			var idArr = new Array();
+			$("#userList li").each(function(index){
+				idArr[index] = parseInt($(this).attr("id").substr(5)); 
+			})
+			$.post("/admin/contestM/save_user", {cid:id, users:idArr}, function(data){
+				var arr = eval("(" + data + ")");
+				if(arr['status']) {
+					$(window).unbind('beforeunload');
+					window.location.reload();
+				} else {
+					$("#usererror").html(arr['info']);
+				}
+			})
+		})
+
+	})
+	
+	function get_balloon() {
+		$.post("/admin/contestM/get_balloon", {cid:<?php if(isset($base['contest_id'])) echo $base['contest_id'];?>}, function(data){
+			var arr = eval("(" + data + ")");
+			if(arr['status'] == true) {
+				var info = arr['info'];alert("123");
+				$("#ballonList").html("<tr><th>提交号</th><th>用户名</th><th>通过题目</th><th>通过时间</th><th>座位号</th></tr>");
+				for(var i = 0; i < arr['info'].length; ++i)
+					
+					/*for(var j = 0; j < info.length; ++i) {
+						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+info[i][4] +'</td><td>'+info[i][1]+'</td></tr>');
+					}*/
+			}
+		})
+	}
+	
 	function delete_pro(pro_dom) {
 		$(pro_dom).remove();
 	}

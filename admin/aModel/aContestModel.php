@@ -62,4 +62,63 @@ class aContestModel extends contestModel {
 		}
 		return false;
 	}
+	
+	public function get_users($cid) {
+		$res = parent::query("SELECT users.user_id, username FROM contest_user LEFT JOIN users ON(contest_user.user_id = users.user_id) WHERE contest_id = ?", $cid);
+		$args = array();
+		while($row = $res->fetch(PDO::FETCH_NUM)) {
+			$args[] = $row;
+		}
+		return $args;
+	}
+	
+	public function save_users($cid, $lists) {
+		if(count($lists) == 0)
+			return false;
+		$res = parent::query("SELECT user_id FROM contest_user WHERE contest_id = ?", $cid);
+		$ids = array();
+		while($row = $res->fetch(PDO::FETCH_NUM)) {
+			$ids[] = $row[0];
+		}
+		
+		foreach($lists as $id) {
+			if(!in_array($id, $ids))
+				parent::insert("INSERT INTO contest_user VALUES  (?, ?) ", $id, $cid);	
+		}
+		foreach($ids as $id) {
+			if(!in_array($id, $lists)) 
+				parent::update("DELETE FROM contest_user WHERE contest_id = ? AND user_id = ? LIMIT 1", $cid, $id);
+		}
+		return true;
+	}
+	
+	
+	
+	public function balloon($cid) {
+		
+		$res =  parent::query("SELECT username, seat, pro_id, users.user_id, submit_time, submit_id FROM users LEFT JOIN `status` ON (`status`.user_id = users.user_id) WHERE contest_id = ? AND status = 4 AND balloon = 0 ", $cid);
+		$args = array();
+		while($row = $res->fetch(PDO::FETCH_NUM)) {
+			$args[$row[5]] = $row;
+			$args[$row[5]][2] = parent::get_inner_Id($row[2], $cid);
+			$args[$row[5]][] = 0;
+		}
+
+		$fb = array();
+		foreach ($args as $row) {
+			if(!isset($fb[$row[2]])) {
+				$fb[$row[2]][0] = $row[4];
+				$fb[$row[2]][1] = $row[5];
+			} else {
+				if($fb[$row[2]] > $row[4]) {
+					$fb[$row[2]][0] = $row[4];
+					$fb[$row[2]][1] = $row[5];
+				}
+			}
+		}
+		foreach ($fb as $f) {
+			$args[$f[1]][] = 1;
+		}
+		return $args;
+	}
 }

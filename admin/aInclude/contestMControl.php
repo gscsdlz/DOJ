@@ -1,14 +1,19 @@
 <?php
 if (defined ( 'APPPATH' )) {
 	require APPPATH . '/admin/aModel/aContestModel.php';
+	require APPPATH . '/admin/aModel/aUserModel.php';
 } else {
 	die ( 'contestMControl' );
 }
 class contestMControl {
 	private static $model = null;
+	private static $userModel = null;
 	public function __construct() {
 		if (self::$model == null) {
 			self::$model = new aContestModel ();
+		}
+		if (self::$userModel == null) {
+			self::$userModel = new aUserModel ();
 		}
 	}
 	public function page() {
@@ -32,7 +37,7 @@ class contestMControl {
 			else
 				echo json_encode ( array (
 						'status' => false,
-						'info' => '删除失败'
+						'info' => '删除失败' 
 				) );
 		}
 	}
@@ -44,17 +49,19 @@ class contestMControl {
 				aVIEW::loopshow ( 'contest_edit', array () );
 			} else {
 				aVIEW::show ( 'error', array (
-						'errorInfo' => 'Admin Error'
+						'errorInfo' => 'Admin Error' 
 				) );
 			}
 		} else {
 			if (isset ( $_SESSION ['user_id'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$cid] ))) {
 				$args [] = self::$model->get_lists ( $cid );
 				$args [] = self::$model->get_problem_list ( $cid, - 2 );
+				$args [] = self::$userModel->get_group_info ();
+				$args [] = self::$model->get_users ( $cid );
 				aVIEW::loopshow ( 'contest_edit', $args );
 			} else {
 				aVIEW::show ( 'error', array (
-						'errorInfo' => 'Admin Error'
+						'errorInfo' => 'Admin Error' 
 				) );
 			}
 		}
@@ -117,6 +124,43 @@ class contestMControl {
 						'status' => false,
 						'info' => $info 
 				) );
+			}
+		}
+	}
+	public function save_user() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+			$cid = ( int ) post ( 'cid' );
+			if ($cid) {
+				if (isset ( $_SESSION ['username'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$cid] ))) {
+					$userlist = post ( 'users' );
+					$status = self::$model->save_users ( $cid, $userlist );
+					if ($status)
+						echo json_encode ( array (
+								'status' => true 
+						) );
+					else
+						echo json_encode ( array (
+								'status' => false,
+								'info' => '' 
+						) );
+				}
+			}
+		}
+	}
+	public function get_balloon() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+			$cid = ( int ) post ( 'cid' );
+			if ($cid != 0 && isset ( $_SESSION ['user_id'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$cid] ))) {
+				$args = self::$model->balloon ( $cid );
+				if ($args)
+					echo json_encode ( array (
+							'status' => true,
+							'info' => $args 
+					) );
+				else
+					echo json_encode ( array (
+							'status' => false 
+					) );
 			}
 		}
 	}
