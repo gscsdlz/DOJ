@@ -37,11 +37,11 @@ class loginModel extends DB {
 			if ($res->rowCount () != 0) {
 				return - 2; // email has already been used
 			}
-			parent::query ( "INSERT INTO users (username, password, nickname, email) VALUES (?, ?, ? ,?)", $username, sha1 ( $password ), $nickname, $email );
+			parent::insert( "INSERT INTO users (username, password, nickname, email) VALUES (?, ?, ? ,?)", $username, sha1 ( $password ), $nickname, $email );
 			return 0;
 		}
 		return 1;
-	}
+	} 
 	public function updateInfo($userid, $password, $password2, $nickname, $email, $qq, $motto, $group) {
 		if ($password && $password == $password2) {
 			parent::update ( "UPDATE users SET password = sha1(?)	 WHERE user_id = ? LIMIT 1", $password, $userid );
