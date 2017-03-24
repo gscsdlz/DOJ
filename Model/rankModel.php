@@ -59,7 +59,15 @@ class rankModel extends DB {
 			unset ( $this->users );
 			return $args;
 		}
-		return $this->users;
+		$rps = RANKPAGEMAXSIZE;
+		if(count($this->users) / $rps < $page) 
+			$page = (int)(count($this->users) / $rps + 1);
+		else if($page < 0)
+			$page = 0;
+		
+		$args = array_slice($this->users, $page * $rps, $rps);
+		unset($this->users);
+		return $args;
 	}
 	private function getAcNum() {
 		$res = parent::query ( "SELECT COUNT(DISTINCT pro_id), users.user_id FROM users LEFT JOIN status ON (users.user_id = status.user_id) WHERE status=4 AND contest_id=0 GROUP BY (status.user_id)" );
@@ -91,6 +99,13 @@ class rankModel extends DB {
 		 * 过程描述。遍历第三层 确定第一次正确提交前有多少次错误
 		 */
 		$tmp = array();
+		$res = parent::query("SELECT inner_id FROM contest_pro WHERE contest_id = ?", $cid);
+		$fb = array();
+		while($row = $res->fetch(PDO::FETCH_NUM)) {
+			$fb[$row[0]] = array(
+					0, 0
+			);
+		}
 		if ($c_stime && count ( $this->contestrank ) != 0) {
 			foreach ($this->contestrank as $key => $users) {
 				$tmp[$key] = array();
@@ -106,6 +121,11 @@ class rankModel extends DB {
 						if($status[0] != 4) {
 							$pro_wa++;
 						} else {  //一旦通过 之后的提交都不在计算
+
+							if($fb[$key2][0] < (int)$status[1]) {
+								$fb[$key2][0] = (int)$status[1];
+								$fb[$key2][1] = $key;
+							}
 							$pro_ac = true;
 							$pro_time += (int)$status[1] - $c_stime;
 							break;
@@ -142,6 +162,11 @@ class rankModel extends DB {
 			}
 		}
 		uasort ( $tmp, "cmp" );
+		foreach($fb as $key => $value){
+			if($value[0] > 0)
+				$tmp[$value[1]][$key][] = 1;
+		}
+		var_dump($tmp);
 		return $tmp;
 	}
 	
@@ -176,6 +201,5 @@ class rankModel extends DB {
 		$res = parent::query_one("SELECT username FROM users WHERE user_id = ?", $user_id);
 		return $res[0];
 	}
-	
 }
 ?>

@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-8 col-md-offset-2">
-	<table class="table table-hover" style="vertical-align: middle;" >
+	<table class="table table-hover table-bordered" style="vertical-align: middle;" >
 		<tr>
 			<th>排名</th>
 			<th>用户名</th>
@@ -29,7 +29,9 @@
 					for($i = 1000; $i <= $maxInnerId; $i++) {
 						if(isset($row[$i])) {
 							echo '<td ';
-							if($row[$i][0] && !$row[$i][1])  //通过且没有罚时
+							if(isset($row[$i][2]) && $row[$i][2] == 1) //第一个通过该题
+								echo 'class="bg-primary">'.format_time($row[$i][0]);
+							else if($row[$i][0] && !$row[$i][1])  //通过且没有罚时
 								echo 'class="bg-success">'.format_time($row[$i][0]);
 							else if($row[$i][0] && $row[$i][1]) //通过且有罚时
 								echo 'class="bg-success">'.format_time($row[$i][0]).'<br/>(-'.$row[$i][1].')';

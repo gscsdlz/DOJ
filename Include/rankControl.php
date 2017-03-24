@@ -20,7 +20,7 @@ class rankControl {
 	
 	public function page() {
 		$page = (int)get('id');
-		$args = self::$model->getRank();
+		$args = self::$model->getRank($page);
 		VIEW::loopshow('ranklist', $args);
 	}
 }
