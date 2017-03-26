@@ -7,6 +7,7 @@ class DB {
 		if (self::$pdo == null) {
 			try {
 				self::$pdo = new PDO ( "mysql:dbname=$dbname;host=$dbhost", $dbuser, $dbpass );
+				self::$pdo->exec("SET NAMES 'UTF8';");
 			} catch ( PDOException $e ) {
 				echo $e->getMessage ();
 			}
