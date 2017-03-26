@@ -52,7 +52,7 @@
 			<small><?php if(isset($nickname)) echo $nickname;?></small>
 		</h1>
 		<h3>
-			<small><?php if(isset($motto)) echo $motto;?></small>
+			<small><?php if(isset($motto)) echo htmlspecialchars($motto);?></small>
 		</h3>
 		<?php
 		if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {
