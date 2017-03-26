@@ -20,6 +20,7 @@ class loginModel extends DB {
 			$arr = $res->fetch ( PDO::FETCH_NUM );
 			
 			if ($res->rowCount () != 0  && sha1 ( $password ) == $arr [0]) { //通过修改username字段为binary类型 解决
+				parent::update("UPDATE users SET lasttime = ?, lastip = ? WHERE user_id = ?", time(), $_SERVER['REMOTE_ADDR'], $arr[1]);
 				if($arr[2] == -1)
 					return array($arr[1], $this->get_privilege($arr[1]));
 				return array($arr [1], 1);
