@@ -193,7 +193,7 @@
 									class="control-label text-danger">验证码不能为空</label> <label
 									id="rvcodeError" class="control-label text-danger">验证码错误</label>
 							</div>
-							<img src="/login/vcode" alt="验证码区域" id="loginvcodeImg" /> <a
+							<img src="/login/vcode" alt="验证码区域" id="regvcodeImg" /> <a
 								href="#" id="regnewVcode">看不清楚,换一张</a>
 						</div>
 					</form>
