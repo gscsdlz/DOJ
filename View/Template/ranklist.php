@@ -19,7 +19,7 @@
 						}
 						echo '<td>'.$row[4].'</td>';
 						echo '<td><a href="/user/show/'.$row[0].'">'.$row[0].'</a></td>';
-						echo '<td>'.$row[1].'</td>';
+						echo '<td>'.htmlspecialchars($row[1]).'</td>';
 						echo '<td>'.$row[2].'</td>';
 						echo '<td>'.$row[3].'</td>';
 						if($row[3] == 0)
