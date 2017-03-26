@@ -71,7 +71,7 @@ EOT;
 					continue;
 					// $row[4] => 是否通过
 					// $row[5] => 次数
-				if (isset ( $row [4] ))
+				if (isset ( $row [4] ) && $row[4] < 1000) //订正由于contestModel.php @116
 					echo '<tr class="success">';
 				else if (isset ( $row [5] ) && $row [5] > 0)
 					echo '<tr class="danger">';
