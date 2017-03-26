@@ -96,12 +96,14 @@ class aContestModel extends contestModel {
 	
 	public function balloon($cid) {
 		
-		$res =  parent::query("SELECT username, seat, pro_id, users.user_id, submit_time, submit_id FROM users LEFT JOIN `status` ON (`status`.user_id = users.user_id) WHERE contest_id = ? AND status = 4 AND balloon = 0 ", $cid);
+		$res =  parent::query("SELECT username, seat, pro_id, users.user_id, submit_time, submit_id FROM users LEFT JOIN `status` ON (`status`.user_id = users.user_id) WHERE contest_id = ? AND status = 4 AND balloon = 0 ORDER BY submit_time ASC", $cid);
 		$args = array();
-		while($row = $res->fetch(PDO::FETCH_NUM)) {
-			$args[$row[5]] = $row;
-			$args[$row[5]][2] = parent::get_inner_Id($row[2], $cid);
-			$args[$row[5]][] = 0;
+		$k = 0;
+		while($row = $res->fetch(PDO::FETCH_NUM)) {			
+				$args[$k] = $row;
+				$args[$k][4] = date('Y-m-d H:i:s', $row[4]);
+				$args[$k][2] = parent::get_inner_Id($row[2], $cid);
+				$args[$k++][] = 0;
 		}
 
 		$fb = array();
@@ -110,15 +112,22 @@ class aContestModel extends contestModel {
 				$fb[$row[2]][0] = $row[4];
 				$fb[$row[2]][1] = $row[5];
 			} else {
-				if($fb[$row[2]] > $row[4]) {
+				if($fb[$row[2]] < $row[4]) {
 					$fb[$row[2]][0] = $row[4];
 					$fb[$row[2]][1] = $row[5];
 				}
 			}
 		}
+		$len = count($args);
 		foreach ($fb as $f) {
-			$args[$f[1]][] = 1;
+			for($i = 0; $i < $len; ++$i)
+				if($args[$i][5] == $f[1])
+					$args[$i][6] = 1;
 		}
 		return $args;
+	}
+	
+	public function setballoon($sid) {
+		return parent::update("UPDATE status SET balloon = 1 WHERE submit_id = ?", $sid);
 	}
 }

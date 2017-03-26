@@ -164,4 +164,23 @@ class contestMControl {
 			}
 		}
 	}
+	
+	public function send_balloon() {
+		if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
+			$cid = ( int ) post ( 'cid' );
+			if ($cid != 0 && isset ( $_SESSION ['user_id'] ) && ($_SESSION ['privilege'] [0] == 1 || isset ( $_SESSION ['privilege'] [1] [$cid] ))) {
+				$submit_id = (int)post('sid');
+				$args = self::$model->setballoon ( $submit_id);
+				if ($args == 1)
+					echo json_encode ( array (
+							'status' => true,
+					) );
+					else
+						echo json_encode ( array (
+								'status' => false,
+								'info' => '操作失败，请重试'
+						) );
+			}
+		}
+	}
 }

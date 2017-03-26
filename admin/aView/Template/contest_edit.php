@@ -154,14 +154,15 @@ if (isset ( $args [3] ))
 				</div>
 				<div role="tabpanel" class="tab-pane" id="balloon">
 					<div class="row">
-						<div class="col-md-6 col-md-offset-3 well">
-							<table class="table table-hover" id="ballonList">
+						<div class="col-md-8 col-md-offset-2">
+							<table class="table table-hover table-bordered" id="balloonList">
 								<tr>
 									<th>提交号</th>
 									<th>用户名</th>
 									<th>通过题目</th>
 									<th>通过时间</th>
 									<th>座位号</th>
+									<th>发出气球</th>
 								</tr>
 							</table>
 						</div>
@@ -280,20 +281,23 @@ if (isset ( $args [3] ))
 				}
 			})
 		})
-
 	})
 	
 	function get_balloon() {
+		$("#balloonList").html("<tr><th>提交号</th><th>用户名</th><th>通过题目</th><th>通过时间</th><th>座位号</th><th>发出气球</th></tr>");
+		
 		$.post("/admin/contestM/get_balloon", {cid:<?php if(isset($base['contest_id'])) echo $base['contest_id'];?>}, function(data){
 			var arr = eval("(" + data + ")");
 			if(arr['status'] == true) {
-				var info = arr['info'];alert("123");
-				$("#ballonList").html("<tr><th>提交号</th><th>用户名</th><th>通过题目</th><th>通过时间</th><th>座位号</th></tr>");
-				for(var i = 0; i < arr['info'].length; ++i)
-					
-					/*for(var j = 0; j < info.length; ++i) {
-						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+info[i][4] +'</td><td>'+info[i][1]+'</td></tr>');
-					}*/
+				
+				var info = arr['info'];
+				
+				for(var i = 0; i < info.length; ++i) {	
+					if(info[i][6])
+						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+ info[i][4] +'</td><td>'+info[i][1]+'</td><td><button type="button" class="btn btn-danger" onclick="sendBalloon('+ info[i][5] +')">一血气球</button></td></tr>');
+					else
+						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+ info[i][4] +'</td><td>'+info[i][1]+'</td><td><button type="button" class="btn btn-success" onclick="sendBalloon('+ info[i][5] +')">送出</button></td></tr>');
+				}
 			}
 		})
 	}
@@ -301,4 +305,14 @@ if (isset ( $args [3] ))
 	function delete_pro(pro_dom) {
 		$(pro_dom).remove();
 	}
+
+	function sendBalloon(id) {
+		$.post("/admin/contestM/send_balloon", {cid:<?php if(isset($base['contest_id'])) echo $base['contest_id'];?>, sid:id}, function(data){
+			var arr = eval("(" + data + ")");
+			if(arr['status'] == true)
+				get_balloon();
+		})
+	}
+
+		
 </script>
