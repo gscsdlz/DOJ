@@ -7,17 +7,17 @@ class VIEW {
 		extract ( $args );
 		if($fileName == 'error')
 			header('HTTP/1.1 404 Not Found');
-		require APPPATH.'/VIEW/Template/header.php';
-		require APPPATH.'/VIEW/Template/navbar.php';
-		require APPPATH.'/VIEW/Template/' . $fileName . '.php';
-		require APPPATH.'/VIEW/Template/footer.php';
+		require APPPATH.'/View/Template/header.php';
+		require APPPATH.'/View/Template/navbar.php';
+		require APPPATH.'/View/Template/' . $fileName . '.php';
+		require APPPATH.'/View/Template/footer.php';
 	}
 
 	static public function loopshow($fileName, $args) {
-		require APPPATH.'/VIEW/Template/header.php';
-		require APPPATH.'/VIEW/Template/navbar.php';
-		require APPPATH.'/VIEW/Template/' . $fileName . '.php';
-		require APPPATH.'/VIEW/Template/footer.php';
+		require APPPATH.'/View/Template/header.php';
+		require APPPATH.'/View/Template/navbar.php';
+		require APPPATH.'/View/Template/' . $fileName . '.php';
+		require APPPATH.'/View/Template/footer.php';
 	}
 	
 }
