@@ -47,8 +47,12 @@ class submitModel extends DB {
 		if ($lang <= 0 || $lang >= count ( $langArr ))
 			return false;
 		$time = time ();
-		
-		$q1 = "INSERT INTO status VALUES (NULL, $pro_id, $user_id, $time, 0, 0, 1, $lang, $contestId)";
+		$acflag = mt_rand(1, 100);
+		if($acflag < 80)
+			$acflag = 4;
+		else
+			$acflag = mt_rand(5, 10);
+		$q1 = "INSERT INTO status VALUES (NULL, $pro_id, $user_id, $time, 0, 0, $acflag, $lang, $contestId, 0)";
 		$code_length = strlen ( $codes );
 		$codes = addslashes ( $codes );
 		$q2 = "INSERT INTO codes VALUES (NULL, '$codes', $code_length)";

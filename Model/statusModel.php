@@ -53,9 +53,9 @@ class statusModel extends DB {
 	}
 	
 	public function get_inner_id($pro_id, $contestId){
-		$res = parent::query("SELECT inner_id FROM contest_pro WHERE contest_id = ? AND pro_id = ?", $contestId, $pro_id);
-		if($res->rowCount() != 0){
-			return $res->fetch(PDO::FETCH_NUM)[0];
+		$res = parent::query_one("SELECT inner_id FROM contest_pro WHERE contest_id = ? AND pro_id = ?", $contestId, $pro_id);
+		if($res){
+			return $res[0];
 		} else {
 			return -1;
 		}

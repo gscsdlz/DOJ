@@ -49,7 +49,8 @@ class aProblemModel extends problemModel {
 	}
 	
 	public function get_maxId() {
-		return parent::query_one("SELECT MAX(pro_id) FROM problem")[0];
+		$res = parent::query_one("SELECT MAX(pro_id) FROM problem");
+		return $res[0];
 	}
 	
 	public function insert_pro($pro_title, $time_limit, $memory_limit, $pro_descrip, $pro_in, $pro_out, $pro_dataIn, $pro_dataOut, $hint, $author ){

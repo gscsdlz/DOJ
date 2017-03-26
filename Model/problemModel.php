@@ -46,10 +46,10 @@ class problemModel extends DB {
 	 * @return NULL[]|boolean[]|mixed[]
 	 */
 	public function get_my_submits($problemId, $user_id, $contest_id = 0) {
-		$result = parent::query ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND status = 4 AND user_id = ? AND contest_id = ? ", $problemId, $user_id, $contest_id);
+		$result = parent::query_one ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND status = 4 AND user_id = ? AND contest_id = ? ", $problemId, $user_id, $contest_id);
 		$aSubmit = null;
 		$wSubmit = null;
-		if ($result->rowCount () != 0 && $result->fetch(PDO::FETCH_NUM)[0] > 0) {
+		if ($result && $result[0] > 0) {
 			$aSubmit = true;
 		} else {
 			$result2 = parent::query_one ( "SELECT COUNT(*) FROM status WHERE pro_id = ? AND user_id = ? AND contest_id = ?", $problemId, $user_id, $contest_id );

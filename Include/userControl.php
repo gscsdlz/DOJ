@@ -57,7 +57,8 @@ class userControl {
 				 * 4无文件
 				 * }
 				 */
-				$fileinfo = explode ( '.', $file ['name'] )[1];
+				$fileinfos = explode ( '.', $file ['name'] );
+				$fileinfo = $fileinfos[1];
 				if ($file ['error'] == 0 
 						&& in_array ( strtolower ( $fileinfo), $allowType )
 						&& in_array ( $file ['type'], $allowMIME )) {
