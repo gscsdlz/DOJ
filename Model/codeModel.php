@@ -4,9 +4,9 @@ class codeModel extends DB {
 		parent::__construct ();
 	}
 	public function get_inner_id($contest_id, $pro_id) {
-		$res = parent::query ( "SELECT inner_id FROM contest_pro WHERE contest_id = ? AND pro_id = ?", $contest_id, $pro_id );
-		if ($res->rowCount () != 0)
-			return $res->fetch ( PDO::FETCH_NUM ) [0];
+		$res = parent::query_one ( "SELECT inner_id FROM contest_pro WHERE contest_id = ? AND pro_id = ?", $contest_id, $pro_id );
+		if ($res)
+			return $res[0];
 	}
 	public function getCode($submit_id, $contest_id = 0) {
 		$result = parent::query ( "SELECT status.*, codes.code FROM codes LEFT JOIN status ON (status.submit_id = codes.submit_id) WHERE status.submit_id = ?", $submit_id );

@@ -121,8 +121,7 @@ class rankModel extends DB {
 						if($status[0] != 4) {
 							$pro_wa++;
 						} else {  //一旦通过 之后的提交都不在计算
-
-							if($fb[$key2][0] < (int)$status[1]) {
+							if($fb[$key2][0] == 0 || $fb[$key2][0] > (int)$status[1]) {
 								$fb[$key2][0] = (int)$status[1];
 								$fb[$key2][1] = $key;
 							}
@@ -166,7 +165,6 @@ class rankModel extends DB {
 			if($value[0] > 0)
 				$tmp[$value[1]][$key][] = 1;
 		}
-		var_dump($tmp);
 		return $tmp;
 	}
 	

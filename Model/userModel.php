@@ -5,8 +5,8 @@ class userModel extends DB {
 		parent::__construct ();
 	}
 	public function getId($username) {
-		$result = parent::query ( "SELECT user_id FROM users WHERE username = ? LIMIT 1", $username );
-		return $result->fetch ( PDO::FETCH_NUM ) [0];
+		$result = parent::query_one ( "SELECT user_id FROM users WHERE username = ? LIMIT 1", $username );
+		return $result[0];
 	}
 	
 	public function getStatus($user_id) {
