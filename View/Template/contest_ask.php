@@ -35,7 +35,7 @@
 					if (isset ( $_SESSION ['user_id'] ) && ($_SESSION ['user_id'] == $args [$i] [3] || $_SESSION['privilege'][0] == 1 || isset($_SESSION['privilege'][1][$contest])))
 						echo '<li><button id="del'.$args[$i][0].'"type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" >删除</button></li>';
 					echo '</ol></div><div class="panel-body">';
-					echo $args [$i] [2];
+					echo htmlspecialchars($args [$i] [2]);
 					echo "</div></div>\n";
 				}
 				?>
