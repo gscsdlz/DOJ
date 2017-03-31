@@ -7,10 +7,12 @@ require APPPATH.'/Include/router.class.php';
 require APPPATH.'/Include/WORK.class.php';
 require APPPATH.'/Include/DB.class.php';
 require APPPATH.'/Include/function.php';
+require APPPATH.'/Include/redisDB.class.php';
 session_check();
 $router = new router ();
 $controlClass = $router->control;
 $action = $router->action;
+$redis = new redisDB();
 
 if (file_exists ( APPPATH.'/Include/' . $controlClass . '.php' )) {
 	require APPPATH.'/Include/' . $controlClass . '.php';

@@ -3,17 +3,17 @@
 	<div class="col-md-8 col-md-offset-2  text-center">
 		<form class="form-inline" role="form" action="" method="get">
 			<div class="form-group">
-				<label>提交号</label> <input type="text" class="form-control"
+				<input type="hidden" placeholder="提交号" class="form-control"
 					name="rid"
 					value="<?php if(isset($_GET['rid'])) echo $_GET['rid']?>" />
 			</div>
 			<div class="form-group">
-				<label>题目编号</label> <input type="text" class="form-control"
+				 <input type="text" placeholder="题目编号" class="form-control"
 					name="pid"
 					value="<?php if(isset($_GET['pid'])) echo $_GET['pid']?>" />
 			</div>
 			<div class="form-group">
-				<label>用户名</label> <input type="text" class="form-control"
+				 <input type="text" placeholder="用户名" class="form-control"
 					name="Programmer"
 					value="<?php if(isset($_GET['Programmer'])) echo $_GET['Programmer']?>" />
 			</div>

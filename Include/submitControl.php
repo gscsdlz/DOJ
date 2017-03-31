@@ -24,9 +24,10 @@ class submitControl {
 			$codes = post ( 'codes' );
 			$cid = ( int ) post ( 'contestId' );
 			$uid = $_SESSION ['user_id'];
+			$_SESSION['lang'] = $lang; //记录用户提交语言
 			if ($cid == 0 || self::$contestModel->privilege_check ( $cid, $uid ) == 0) {
 				$res = self::$model->insertCode ( $uid, $pro_id, $lang, $codes, $cid );
-				if ($res) {
+				if ($res == true) {
 					echo json_encode ( array (
 							'status' => true 
 					) );

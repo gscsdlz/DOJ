@@ -75,7 +75,10 @@ if (isset ( $_SESSION ['username'] )) {
 			$i ++;
 			continue;
 		}
-		echo '<option value="' . $i ++ . '">' . $row . '</option>';
+		if(isset($_SESSION['lang']) && $_SESSION['lang'] == $i)
+			echo '<option selected="true" value="' . $i ++ . '">' . $row . '</option>';
+		else
+			echo '<option value="' . $i ++ . '">' . $row . '</option>';
 	}
 	?>
 						</select>

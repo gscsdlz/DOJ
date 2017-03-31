@@ -17,6 +17,7 @@ class contestControl {
 	private static $codeModel = null;
 	private static $rankModel = null;
 	private static $askModel = null;
+	private static $userModel = null;
 	public function __construct() {
 		if (self::$model == null) {
 			self::$model = new contestModel ();

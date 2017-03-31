@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" >
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed"
@@ -24,7 +24,7 @@
 					<li><a href="/status">状态</a></li>
 					<li><a href="/rank/page">排名</a></li>
 					<li><a href="/contest/page">比赛</a></li>
-					<li><a href="#">帮助</a></li>
+					<li><a href="/index/help">帮助</a></li>
 				</ul>
 				<form class="navbar-form navbar-left" role="search" method="get"
 					action="/problem/search">
@@ -77,6 +77,8 @@
 		</div>
 		<!-- /.container-fluid -->
 	</nav>
+	<div class="row"  style="margin-bottom: 60px">
+	</div>
 	<?php if(!$loginStatus) { ?>
 	<div class="modal fade" id="signModal" tabindex="-1" role="dialog"
 		aria-labelledby="signModalLabel" aria-hidden="true">

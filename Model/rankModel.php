@@ -88,6 +88,13 @@ class rankModel extends DB {
 	 * @param int $cid        	
 	 */
 	public function contest_rank($cid) {
+		
+		$status = redisDB::$conn->get('contest_rank');
+		if($status) {
+			$tmp = json_decode($status, true);
+			echo '该数据来自缓存';
+			return $tmp;
+		}
 		$this->get_all_status( $cid );
 		$c_stime = $this->get_contest_stime($cid);
 		/**
@@ -147,6 +154,7 @@ class rankModel extends DB {
 				$tmp[$key][0] = $total_time;
 				$tmp[$key][1] = $total_ac;
 				$tmp[$key][2] = $this->get_username($key);
+				$tmp[$key][3] = $this->get_groupname($key);
 			} //users
 		}
 		unset($this->contestrank);
@@ -165,6 +173,8 @@ class rankModel extends DB {
 			if($value[0] > 0)
 				$tmp[$value[1]][$key][] = 1;
 		}
+		redisDB::$conn->set('contest_rank', json_encode($tmp));
+		redisDB::$conn->setTimeout('contest_rank', REDISCACHETIME);
 		return $tmp;
 	}
 	
@@ -197,6 +207,11 @@ class rankModel extends DB {
 	
 	private function get_username($user_id) {
 		$res = parent::query_one("SELECT username FROM users WHERE user_id = ?", $user_id);
+		return $res[0];
+	}
+	
+	private function get_groupname($user_id) {
+		$res = parent::query_one("SELECT group_name FROM users LEFT JOIN `group` ON (group.group_id = users.group_id) WHERE users.user_id = ?", $user_id);
 		return $res[0];
 	}
 }

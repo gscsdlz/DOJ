@@ -13,6 +13,28 @@ function post($arg) {
 		return null;
 	}
 }
+
+function get_ip_location($ip) {
+	if(strlen($ip) <= 7)
+		return '未知地址';
+	else {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "http://ip.chinaz.com/".$ip);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output = curl_exec($ch);
+		curl_close($ch);
+		$location = strrpos($output, "Whwtdhalf w50-0");
+		$i = 0;
+		for($i = $location; $i < $location + 100; $i++) {
+			if($output[$i] == '<') 
+				break;
+		}
+		return substr($output, $location + 17, $i - ($location + 17));
+		
+	}
+	return $ip;
+}
+
 /**
  * 格式化时间为小时:分钟:秒
  */

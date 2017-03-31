@@ -103,26 +103,6 @@ class aContestModel extends contestModel {
 				$args[$k] = $row;
 				$args[$k][4] = date('Y-m-d H:i:s', $row[4]);
 				$args[$k][2] = parent::get_inner_Id($row[2], $cid);
-				$args[$k++][] = 0;
-		}
-
-		$fb = array();
-		foreach ($args as $row) {
-			if(!isset($fb[$row[2]])) {
-				$fb[$row[2]][0] = $row[4];
-				$fb[$row[2]][1] = $row[5];
-			} else {
-				if($fb[$row[2]] < $row[4]) {
-					$fb[$row[2]][0] = $row[4];
-					$fb[$row[2]][1] = $row[5];
-				}
-			}
-		}
-		$len = count($args);
-		foreach ($fb as $f) {
-			for($i = 0; $i < $len; ++$i)
-				if($args[$i][5] == $f[1])
-					$args[$i][6] = 1;
 		}
 		return $args;
 	}

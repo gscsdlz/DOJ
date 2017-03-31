@@ -18,7 +18,7 @@
 		echo $headerpath;
 		?>
 		"
-			alt="" class="img-circle" width="200px" height="200px" id="header">
+			alt="" class="img-rounded" width="100%" height="100%" id="header">
 		<?php if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {?>
 		<form id="uploadImg" class="form-horizontal" role="form" method="post"
 			action="" enctype="multipart/form-data">
@@ -49,7 +49,7 @@
 			if (isset ( $username ))
 				echo $username;
 			?> 
-			<small><?php if(isset($nickname)) echo $nickname;?></small>
+			<small><?php if(isset($nickname)) echo htmlspecialchars($nickname);?></small>
 		</h1>
 		<h3>
 			<small><?php if(isset($motto)) echo htmlspecialchars($motto);?></small>
@@ -88,7 +88,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="Nickname"
 										name="newNickname" placeholder="Nickname"
-										value="<?php  if(isset($nickname)) echo $nickname?>">
+										value="<?php  if(isset($nickname)) echo htmlspecialchars($nickname)?>">
 								</div>
 							</div>
 							<div class="form-group">
@@ -96,7 +96,7 @@
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="Motto"
 										placeholder="签名"
-										value="<?php  if(isset($motto)) echo $motto?>"> <label
+										value="<?php  if(isset($motto)) echo htmlspecialchars($motto)?>"> <label
 										id="mottoError" class="control-label text-danger">签名超过最大字数</label>
 								</div>
 							</div>
@@ -115,7 +115,10 @@
 								<?php
 			
 			foreach ( $args [5] as $row ) {
-				echo '<option value="' . $row [0] . '">' . $row [1] . '</option>';
+				if($row[1] == $group_name)
+					echo '<option selected="true" value="' . $row [0] . '">' . $row [1] . '</option>';
+				else
+					echo '<option value="' . $row [0] . '">' . $row [1] . '</option>';
 			}
 			?>
 							</select>
@@ -168,23 +171,41 @@
 				<td><?php if(isset($group_name)) echo $group_name;?></td>
 			</tr>
 			<tr>
-				<td>QQ</td>
-				<td><?php if(isset($qq) && $qq > 0) echo $qq;?></td>
+				<td>座位号</td>
+				<td><?php if(isset($seat )) echo $seat;?></td>
 			</tr>
+
 			<tr>
 				<td>加入时间</td>
 				<td><?php if(isset($regtime)) echo $regtime;?></td>
 			</tr>
 			<tr>
+				<td>上次登录时间</td>
+				<td><?php if(isset($lasttime)) echo date("Y-m-d H:i:s", $lasttime);?></td>
+			</tr>
+<?php 
+if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {
+?>
+
+			<tr>
+				<td>上次登录地点</td>
+				<td id="lastaddr"></td>
+			</tr>
+			<tr>
+				<td>QQ</td>
+				<td><?php if(isset($qq) && $qq > 0) echo $qq;?></td>
+			</tr>
+			<tr>
 				<td>电子邮箱</td>
 				<td><?php if(isset($email)) echo $email;?></td>
 			</tr>
+<?php }?>
 		</table>
 	</div>
 
 	<div class="col-md-3 well" id="AllStatus"
 		style="height: 300px; margin-left: 10px;"></div>
-	<div class="col-md-3" style="height: 300px; margin-left: 10px;">
+	<div class="col-md-3" style=" margin-left: 10px;">
 		<div class=" panel panel-success">
 			<div class="panel-heading">
 				<h4 class="text-center">排名</h4>
@@ -327,6 +348,16 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 
 <script>
 	$(document).ready(function(){
+<?php 
+if (isset ( $_SESSION ['username'] ) && $_SESSION ['username'] == $username) {
+?>
+
+		$.post("/user/get_ip_addr", {uid:<?php echo $_SESSION['user_id'],','?>ip_addr:"<?php echo $lastip;?>"}, function(data){
+			var arr = eval("(" + data + ")");
+			$("#lastaddr").html(arr['info']);
+		})
+<?php }?>		
+		
 		$("#mottoError").hide();
 		$("#emailError").hide();
 		$("#passwordError").hide();
@@ -351,7 +382,7 @@ if (isset ( $args [2] ) && count ( $args [2] )) {
 			$.post("/login/updateInfo", {nickname:nickname, motto:motto, qq:qq, email:email, group:group, password:password, password2:password2}, function(data){
 				var arr = eval("(" + data + ")");
 				if (arr['status'] == true) {
-					//window.location.reload();
+					window.location.reload();
 				} else if(arr['status'] == 'email error'){
 					$("#emailError").show();	
 				}

@@ -183,7 +183,7 @@ if (isset ( $args [3] ))
 			return '您输入的内容尚未保存，确定离开此页面吗？';
 		});*/
 		get_balloon();
-		var t=setInterval("get_balloon", 5000);
+		self.setInterval("get_balloon()", 10000);
 		
 		$("#pro_id").keyup(function(){
 			valid_id = false;
@@ -293,10 +293,7 @@ if (isset ( $args [3] ))
 				var info = arr['info'];
 				
 				for(var i = 0; i < info.length; ++i) {	
-					if(info[i][6])
-						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+ info[i][4] +'</td><td>'+info[i][1]+'</td><td><button type="button" class="btn btn-danger" onclick="sendBalloon('+ info[i][5] +')">一血气球</button></td></tr>');
-					else
-						$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+ info[i][4] +'</td><td>'+info[i][1]+'</td><td><button type="button" class="btn btn-success" onclick="sendBalloon('+ info[i][5] +')">送出</button></td></tr>');
+					$("#balloonList").append('<tr><td>'+ info[i][5] +'</td><td>'+ info[i][0]  +'</td><td>' + info[i][2] + '</td><td>'+ info[i][4] +'</td><td>'+info[i][1]+'</td><td><button type="button" class="btn btn-success" onclick="sendBalloon('+ info[i][5] +')">送出</button></td></tr>');
 				}
 			}
 		})

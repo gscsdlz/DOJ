@@ -16,10 +16,10 @@ class loginModel extends DB {
 	
 	public function login($username, $password) {
 		if (! empty ( $username ) && ! empty ( $password )) {
-			$res = parent::query ( "SELECT password, user_id, privilege FROM users WHERE username=?", $username );
+			$res = parent::query ( "SELECT password, user_id, privilege, username FROM users WHERE username=?", $username );
 			$arr = $res->fetch ( PDO::FETCH_NUM );
 			
-			if ($res->rowCount () != 0  && sha1 ( $password ) == $arr [0]) { //通过修改username字段为binary类型 解决
+			if ($res->rowCount () != 0  && $arr[3] == $username && sha1 ( $password ) == $arr [0]) { //通过修改username字段为binary类型 解决
 				parent::update("UPDATE users SET lasttime = ?, lastip = ? WHERE user_id = ?", time(), $_SERVER['REMOTE_ADDR'], $arr[1]);
 				if($arr[2] == -1)
 					return array($arr[1], $this->get_privilege($arr[1]));
@@ -38,7 +38,7 @@ class loginModel extends DB {
 			if ($res->rowCount () != 0) {
 				return - 2; // email has already been used
 			}
-			parent::insert( "INSERT INTO users (username, password, nickname, email) VALUES (?, ?, ? ,?)", $username, sha1 ( $password ), $nickname, $email );
+			parent::insert( "INSERT INTO users (user_id, username, password, nickname, email) VALUES (NULL, ?, ?, ? ,?)", $username, sha1 ( $password ), $nickname, $email);
 			return 0;
 		}
 		return 1;

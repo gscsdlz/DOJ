@@ -24,7 +24,7 @@ class loginControl {
 			$username = post ( 'username' );
 			$password = post ( 'password' );
 			$vcode = post('vcode');
-			if($vcode != $_SESSION['vcode']) {
+			if(strtolower($vcode) != strtolower($_SESSION['vcode'])) {
 				echo json_encode ( array (
 						'status' => 'vcode error' 
 				) );
